@@ -1,0 +1,80 @@
+<html><head>
+
+    <link rel="stylesheet" href="registeredUser.css">
+    <!-- relative path-name to access js -->
+    <script type='text/javascript' src='initializeRegisterUser.js'></script>
+    <script type='text/javascript' src='handelAdd.js'></script>
+    <script type='text/javascript' src='handelAddTopLevel.js'></script>
+    <script type='text/javascript' src='handelAlgorithmDelete.js'></script>
+    <script type='text/javascript' src='handelAlgorithmView.js'></script>
+    <script type='text/javascript' src='handelClassificationDelete.js'></script>
+    <script type='text/javascript' src='handelClassificationMerge.js'></script>
+    <script type='text/javascript' src='handelLogOut.js'></script>
+
+    <script type="text/javascript">
+    function initialize() {
+      
+       // get all constants
+       console.log("working")
+       processListResponse()
+    }
+    </script>
+    </head>
+    <body onload="initialize()">
+    
+
+    <div style="background-color: cadetblue; padding: 20px;">
+    <h1 style="display:inline;">User 1 </h1>
+    <h3 style="display:inline; margin-left: 80%; background-color: aqua; padding: 10px 10px;" onclick="handelLogOut()">Log out </h3>
+    </div>
+    <br></br>
+    <h3 style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px; outline: 2px solid black; outline-offset: -1px;"
+    onclick="handelAddTopLevelPrep()">
+        Add Top Level Classification
+    </h3>
+    <div id='AddTopForm'></div>
+    <div id='Heirarchy'></div>
+    
+<!--
+    <ol style="list-style: none;">
+        <li style="background-color:lightgray; width: 25%; padding: 10px 10px; outline: 2px solid black; outline-offset: -1px;">
+            <h3 style="display:inline;">+</h3>
+            <h3 style="display:inline; margin-left: 20px;">Greed</h3>
+            <h3 style=" background-color: purple; margin-left: 50px;" class="button">Merge</h3>
+            <h3 style="background-color: green; margin-left: 10px;" class="button">Add</h3>
+            <h3 style="background-color: red; margin-left: 10px;" class="button">Del</h3>
+        </li>
+        <li style="list-style-type:none">
+            <ul style="list-style: none;">
+                <li style="background-color:lightgray; width: 25%; padding: 10px 10px; outline: 2px solid black; outline-offset: -1px;">
+                    <h3 style="display:inline;">+</h3>
+                    <h3 style="display:inline; margin-left: 20px;">Recursive</h3>
+                    <h3 style="display:inline; background-color: purple; margin-left: 50px; padding: 5px 5px;" >Merge</h3>
+                    <h3 style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px;" onclick='handelAdd(this)'>Add</h3>
+                    <h3 style="display:inline; background-color: red; margin-left: 10px; padding: 5px 5px; ">Del</h3>
+                </li>
+
+              <li style="list-style-type:none">
+                <ul style="list-style: none;">
+                    <li style="background-color:lightgray; width: 25%; padding: 10px 10px; outline: 2px solid black; outline-offset: -1px;">
+                        <h3 style="display:inline;">+</h3>
+                        <h3 style="display:inline; margin-left: 20px;">Prim's</h3>
+                        <h3 style="display:inline; background-color: red; margin-left: 60px; padding: 5px 5px; ">Del</h3>
+                    </li>
+                </ul>
+              </li>
+
+            </ul>
+        </li>
+        <li style="background-color:lightgray; width: 25%; padding: 10px 10px; outline: 2px solid black; outline-offset: -1px;">
+            <h3 style="display:inline;">+</h3>
+            <h3 style="display:inline; margin-left: 20px;">Divide</h3>
+            <h3 style="display:inline; background-color: purple; margin-left: 50px; padding: 5px 5px;">Merge</h3>
+            <h3 style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px;">Add</h3>
+            <h3 style="display:inline; background-color: red; margin-left: 10px; padding: 5px 5px; ">Del</h3>
+        </li>
+    </ol>
+-->
+
+    </body>
+    </html>
