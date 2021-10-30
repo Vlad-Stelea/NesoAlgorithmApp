@@ -1,5 +1,5 @@
 /**
- * Refresh Heirarchy
+ * Refresh hierarchy
  *
  *    GET tree_url
  *    RESPONSE  tree of name constants 
@@ -27,7 +27,7 @@
  /**
   * Respond to server JSON object.
   *
-  * Replace the contents of 'Heirarchy' with a <br>-separated list of name,value pairs.
+  * Replace the contents of 'Hierarchy' with a <br>-separated list of name,value pairs.
   */
  function processListResponse() {
      /*
@@ -35,18 +35,18 @@
    // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
    var js = JSON.parse(result);
     */
-   data = '{"Heirarchy": [{"Name": "Greed", "Children": [{"Name": "Recursive", "Children": [{"Algorithm": "Prims"}]}, {"Name": "Other", "Children": []}]}, {"Name": "Divide", "Children": [{"Algorithm": "Merge"}]}]}'
+   data = '{"Hierarchy": [{"Name": "Greed", "Children": [{"Name": "Recursive", "Children": [{"Algorithm": "Prims"}]}, {"Name": "Other", "Children": []}]}, {"Name": "Divide", "Children": [{"Algorithm": "Merge"}]}]}'
     var js = JSON.parse(data);
 
     var output = '<ol style="list-style: none;">';
-    for (var i = 0; i < js.Heirarchy.length; i++) {
-        output = output + addListItem(js.Heirarchy[i])
+    for (var i = 0; i < js.Hierarchy.length; i++) {
+        output = output + addListItem(js.Hierarchy[i])
     }
     output = output + '</ol>'
   
-   var heirarchy = document.getElementById('Heirarchy');
-   // Update Heirarchy result
-   heirarchy.innerHTML = output;
+   var hierarchy = document.getElementById('Hierarchy');
+   // Update hierarchy result
+   hierarchy.innerHTML = output;
  }
 
 
@@ -57,17 +57,17 @@
         //algorythem
         output = '<li class="listItem">'+
                         '<h3 style="display:inline;">+</h3>' + 
-                        '<h3 style="display:inline; margin-left: 20px;" onclick="handelAlgorithmView(this)">'+item.Algorithm + '</h3>'+
-                        '<h3 style="background-color: red; margin-left: 60px;" class="button" onclick="handelAlgorithmDelete(this)">Del</h3>'+
+                        '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+item.Algorithm + '</h3>'+
+                        '<h3 style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</h3>'+
                   '</li>'
     }else{
         //classification
         output = '<li class="listItem">'+
                         '<h3 style="display:inline;">+</h3>'+
                         '<h3 style="margin-left: 20px;" class="button">' + item.Name + '</h3>'+
-                        '<h3 style="background-color: purple; margin-left: 50px;" class="button" onclick="handelClassificationMerge(this)">Merge</h3>'+
-                        '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handelAdd(this)">Add</h3>'+
-                        '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handelClassificationDelete(this)">Del</h3>'+
+                        '<h3 style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</h3>'+
+                        '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</h3>'+
+                        '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</h3>'+
                     '</li>'+
                     '<li style="list-style-type:none">'+
                         '<ul style="list-style: none;">'

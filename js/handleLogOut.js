@@ -1,4 +1,4 @@
-function handelLogOut(){
+function handleLogOut(){
     console.log("logout")
     
 
