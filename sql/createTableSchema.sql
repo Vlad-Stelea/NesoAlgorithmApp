@@ -7,8 +7,6 @@ DROP TABLE `algoApp`.`implementation`;
 DROP TABLE `algoApp`.`algorithm`;
 DROP TABLE `algoApp`.`classification`;
 
-insert into classification(classname, parentClassName) values ("hello", null);
-
 CREATE TABLE `algoApp`.`classification` (
   `className` VARCHAR(40) NOT NULL,
   `parentClassName` VARCHAR(40),
