@@ -10,7 +10,8 @@ DROP TABLE `algoApp`.`classification`;
 CREATE TABLE `algoApp`.`classification` (
   `className` VARCHAR(40) NOT NULL,
   `parentClassName` VARCHAR(40),
-  PRIMARY KEY (`className`)
+  PRIMARY KEY (`className`),
+  FOREIGN KEY (`parentClassName`) REFERENCES classification(`className`)
 );
 CREATE TABLE `algoApp`.`algorithm` (
 	`algoName` VARCHAR(40),
@@ -20,7 +21,7 @@ CREATE TABLE `algoApp`.`algorithm` (
 );
 CREATE TABLE `algoApp`.`implementation` (
     `implName` VARCHAR(40),
-    `codeURL` VARCHAR(120),
+    `codeURL` VARCHAR(150),
     `language` VARCHAR(30),
     `algoName` VARCHAR(40),
     PRIMARY KEY (`implName`, `algoName`),
@@ -37,7 +38,7 @@ CREATE TABLE `algoApp`.`machineConfiguration` (
 CREATE TABLE `algoApp`.`problemInstance` (
 	`probInstanceUUID` CHAR(36),
     `probInstanceName` VARCHAR(40),
-    `dataset` VARCHAR(500),
+    `datasetURL` VARCHAR(150),
     `algoName` VARCHAR(40),
     PRIMARY KEY (`probInstanceUUID`),
     FOREIGN KEY (`algoName`) REFERENCES algorithm(`algoName`)
@@ -66,7 +67,7 @@ CREATE TABLE `algoApp`.`user` (
 CREATE TABLE `algoApp`.`activityLog` (
 	`activityLogUUID` CHAR(36),
     `username` VARCHAR(20),
-    `action` VARCHAR(100),
+    `action` VARCHAR(200),
     `date` DATE,
     PRIMARY KEY (`activityLogUUID`),
     FOREIGN KEY (`username`) REFERENCES user(`username`)
