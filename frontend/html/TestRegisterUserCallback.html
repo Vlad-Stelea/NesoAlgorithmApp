@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="../js/getAuthToken.js"></script>
+    <script type="text/javascript">
+        function initialize() {
+            const authToken = extractAuthToken();
+            document.getElementById("token").textContent = authToken
+        }
+    </script>
+</head>
+
+<body onload="initialize()">
+<div>
+    <h1 id="token" style="display:inline">Token</h1>
+</div>
+
+</body>
+</html>
