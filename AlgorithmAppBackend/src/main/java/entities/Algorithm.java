@@ -1,4 +1,8 @@
-package java.entities;
+package entities;
+
+import entities.*;
+
+import java.util.ArrayList;
 
 public class Algorithm {
 

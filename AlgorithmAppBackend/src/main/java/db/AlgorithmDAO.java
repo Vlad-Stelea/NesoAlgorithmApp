@@ -1,6 +1,7 @@
-package java.db;
+package db;
 
-import java.entities.Algorithm;
+import entities.Algorithm;
+import entities.Classification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,7 +64,7 @@ public class AlgorithmDAO {
     public boolean removeAlgorithmsAndChildren(String algoName) throws SQLException {
         // make sure the Classification exists first
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
-        ps.setString(1, className);
+        ps.setString(1, algoName);
         ResultSet rs = ps.executeQuery();
 
         if(rs.next()) {
@@ -72,7 +73,7 @@ public class AlgorithmDAO {
             //TODO delete children
 
             PreparedStatement psDeleteAlgos = conn.prepareStatement("DELETE FROM algorithm WHERE algoName = ?;");
-            psDeleteAlgos.setString(1, className);
+            psDeleteAlgos.setString(1, algoName);
             psDeleteAlgos.execute();
 
             return true;
@@ -81,21 +82,21 @@ public class AlgorithmDAO {
         return false;
     }
 
-    private Classification generateBasicAlgorithm(ResultSet rs) throws SQLException {
+    private Algorithm generateBasicAlgorithm(ResultSet rs) throws SQLException {
         String className = rs.getString("className");
         String parentClassName = rs.getString("parentClassName");
 
 
-        return new Classification(className, new Classification(parentClassName));
+        return new Algorithm(className, new Classification(parentClassName));
     }
 
-    private Classification generateFullAlgorithm(ResultSet rs) throws SQLException {
+    private Algorithm generateFullAlgorithm(ResultSet rs) throws SQLException {
         String className = rs.getString("className");
         String parentClassName = rs.getString("parentClassName");
 
         //TODO add method to get the children impls, benchmarks, and PIs
 
-        return new Classification(className, new Classification(parentClassName));
+        return new Algorithm(className, new Classification(parentClassName));
     }
 
 }
