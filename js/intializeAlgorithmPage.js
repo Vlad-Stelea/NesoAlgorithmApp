@@ -35,12 +35,13 @@
 
             output = '<li class="listItem">' +
                             '<button type="button" class="collapsible"> +  Implementation: ' + item.Name +'</button>'+
+                            '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</h3>'+
                               '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleImplementationDelete(this)">Del</h3>'+
                               '<h3 style="margin-left: 20px;" class="button"> Language: ' + item.Language + '</h3>'+
-                               '<h3 style="margin-left: 20px;" class="button"> CodeUrl: ' + item.codeURL + '</h3>'+
+                               '<h3 style="margin-left: 20px;" class="button"> CodeUrl: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
                              '<div class="content">'+
-                            '<h3 style="; margin-left: 20px;" onclick="handleAlgorithmView(this)"> Language: '+item.Language + '</h3>'+
-                            '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">Url: '+item.codeURL + '</h3>'+
+                            '<h3 style="; margin-left: 20px;" "> Language: '+item.Language + '</h3>'+
+                            '<h3 style="display:inline; margin-left: 20px;" ">Url: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
                             '</div>'+
                       '</li>'+
                         '<li style="list-style-type:none">'+
@@ -62,9 +63,8 @@
    //Problem Instance
                   output = '<li class="listItem">'+
                                   '<button type="button" class="collapsible"> +  ProblemInstance: ' + item.Name +'</button>'+
-                                  '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</h3>'+
                                   '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleProblemInstanceDelete(this)">Del</h3>'+
-                                  '<h3 style="margin-left: 20px;" class="button"> Data set Location: ' + item.datasetURL + '</h3>'+
+                                  '<h3 style="margin-left: 20px;" class="button"> Data set Location: <a href='+ item.datasetUR +'>' + item.datasetURL + '</a></h3>'+
                               '</li>'+
                               '<li style="list-style-type:none">'+
                                   '<ul style="list-style: none;">'
@@ -85,8 +85,8 @@
                                                '<button type="button" class="collapsible"> +  Benchmark: ' + item.Name +'</button>'+
                                                   '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</h3>'+
                                                   '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleBenchmarkDelete(this)">Del</h3>'+
-                                             '<h3 style="margin-left: 20px;" class="button"> TimeToRun: ' + item.timeToRun + '</h3>'+
-                                             '<h3 style="margin-left: 20px;" class="button"> data run on: ' + item.dataRun + '</h3>'+
+                                             '<h3 style="margin-left: 20px;" class="button"> Time To Run: ' + item.timeToRun + ' Seconds </h3>'+
+                                             '<h3 style="margin-left: 20px;" class="button"> Data run on: <a href=' + item.dataRun + '>' +item.dataRun + '</a></h3>'+
                                               '</li>'
 
 
