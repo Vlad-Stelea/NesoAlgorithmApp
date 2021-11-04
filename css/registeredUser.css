@@ -1,0 +1,13 @@
+.button{
+    padding: 5px 5px;
+    display: inline;
+    
+}
+
+.listItem{
+    background-color:lightgray; 
+    width: 25%; 
+    padding: 10px 10px; 
+    outline: 2px solid black; 
+    outline-offset: -1px;
+}
