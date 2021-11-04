@@ -8,6 +8,10 @@ public class Algorithm {
 
     }
 
+    public Algorithm(String algoName) {
+        this.algoName = algoName;
+    }
+
     public String getAlgoName() {
         return algoName;
     }
