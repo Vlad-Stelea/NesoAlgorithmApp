@@ -101,6 +101,7 @@ hs_err_pid*
 # Build artifacts
 .gradle
 .build
+AlgorithmAppBackend/build
 
 # SAM Build artifacts
 AlgorithmAppBackend/src/main/.aws-sam
