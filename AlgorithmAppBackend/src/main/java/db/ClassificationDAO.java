@@ -1,6 +1,6 @@
-package java.db;
+package db;
 
-import java.entities.Classification;
+import entities.Classification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
