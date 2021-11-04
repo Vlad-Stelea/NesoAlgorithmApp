@@ -94,9 +94,14 @@ public class UserPoolEvent<Req, Res> {
         return gson.toJson(this);
     }
 
-    private static class CallerContext {
+    public static class CallerContext {
         String awsSdkVersion;
         String clientId;
+
+        public CallerContext() {
+            awsSdkVersion = "";
+            clientId = "";
+        }
 
         public String getAwsSdkVersion() {
             return awsSdkVersion;
@@ -113,5 +118,14 @@ public class UserPoolEvent<Req, Res> {
         public void setClientId(String clientId) {
             this.clientId = clientId;
         }
+
+        @Override
+        public boolean equals(Object otherObj) {
+            if(otherObj == this) return true;
+            if(!(otherObj instanceof CallerContext)) return false;
+            CallerContext castOther = (CallerContext) otherObj;
+            return (castOther.awsSdkVersion.equals(this.awsSdkVersion))
+                    && (castOther.clientId.equals(this.clientId));
+         }
     }
 }
