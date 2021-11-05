@@ -35,8 +35,16 @@ public class AlgorithmDAO {
     }
 
     public Algorithm getAlgorithm(String algoName) throws SQLException {
+        System.out.println("quereing");
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
         ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        return generateBasicAlgorithm(rs);
+    }
+
+    public Algorithm getAllAlgorithms() throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm ");
         ResultSet rs = ps.executeQuery();
 
         return generateBasicAlgorithm(rs);
@@ -83,7 +91,8 @@ public class AlgorithmDAO {
     }
 
     private Algorithm generateBasicAlgorithm(ResultSet rs) throws SQLException {
-        String className = rs.getString("className");
+        System.out.println(rs);
+        String className = rs.getString("algoName");
         String parentClassName = rs.getString("parentClassName");
 
 
@@ -91,7 +100,7 @@ public class AlgorithmDAO {
     }
 
     private Algorithm generateFullAlgorithm(ResultSet rs) throws SQLException {
-        String className = rs.getString("className");
+        String className = rs.getString("algoName");
         String parentClassName = rs.getString("parentClassName");
 
         //TODO add method to get the children impls, benchmarks, and PIs
