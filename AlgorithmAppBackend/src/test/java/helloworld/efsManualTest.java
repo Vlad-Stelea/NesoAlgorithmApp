@@ -6,6 +6,7 @@ import entities.Algorithm;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
@@ -18,10 +19,20 @@ public class efsManualTest {
 
         try {
             AlgorithmDAO a = new AlgorithmDAO();
-            System.out.println("connected");
-            Algorithm ret = a.getAlgorithm("efsTest");
-            System.out.println(ret.getAlgoName());
-            System.out.println(ret.getParentClassification());
+            a.createAlgorithm("efsTestCrete", null);
+            ArrayList<Algorithm> ret1 = a.getAllAlgorithms();
+            System.out.println("first");
+            for(int i = 0; i < ret1.size(); i++) {
+                System.out.println(ret1.get(i).getAlgoName());
+                System.out.println(ret1.get(i).getParentClassification());
+            }
+            a.removeAlgorithm("efsTestCrete");
+            ArrayList<Algorithm> ret2 = a.getAllAlgorithms();
+            System.out.println("second");
+            for(int i = 0; i < ret2.size(); i++) {
+                System.out.println(ret2.get(i).getAlgoName());
+                System.out.println(ret2.get(i).getParentClassification());
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -29,7 +40,7 @@ public class efsManualTest {
 
         System.out.println("***************************\n***************************\n***************************\n***************************\n***************************\n");
 
-        assertTrue(true);
+        assertTrue(false);
     }
 
 

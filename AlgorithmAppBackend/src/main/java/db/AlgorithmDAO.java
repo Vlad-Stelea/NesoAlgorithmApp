@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AlgorithmDAO {
     private Connection conn;
@@ -35,7 +36,6 @@ public class AlgorithmDAO {
     }
 
     public Algorithm getAlgorithm(String algoName) throws SQLException {
-        System.out.println("quereing");
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
         ps.setString(1, algoName);
         ResultSet rs = ps.executeQuery();
@@ -43,11 +43,12 @@ public class AlgorithmDAO {
         return generateBasicAlgorithm(rs);
     }
 
-    public Algorithm getAllAlgorithms() throws SQLException {
+    public ArrayList<Algorithm> getAllAlgorithms() throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm ");
         ResultSet rs = ps.executeQuery();
 
-        return generateBasicAlgorithm(rs);
+
+        return generateBasicAlgorithms(rs);
     }
 
     // could be useful for merging; will have to test, as we might get foreign key errors when deleting a className
@@ -91,17 +92,34 @@ public class AlgorithmDAO {
     }
 
     private Algorithm generateBasicAlgorithm(ResultSet rs) throws SQLException {
-        System.out.println(rs);
+        rs.next();
         String className = rs.getString("algoName");
-        String parentClassName = rs.getString("parentClassName");
+        String parentClassName = rs.getString("className");
 
+        if(parentClassName != null) {
+            return new Algorithm(className, new Classification(parentClassName));
+        }
+        return new Algorithm(className);
+    }
 
-        return new Algorithm(className, new Classification(parentClassName));
+    private ArrayList<Algorithm> generateBasicAlgorithms(ResultSet rs) throws SQLException {
+        ArrayList<Algorithm> ret = new ArrayList<>();
+        while(rs.next()) {
+            String className = rs.getString("algoName");
+            String parentClassName = rs.getString("className");
+
+            if (parentClassName != null) {
+                ret.add(new Algorithm(className, new Classification(parentClassName)));
+            }
+            ret.add(new Algorithm(className));
+        }
+        return ret;
     }
 
     private Algorithm generateFullAlgorithm(ResultSet rs) throws SQLException {
+        rs.next();
         String className = rs.getString("algoName");
-        String parentClassName = rs.getString("parentClassName");
+        String parentClassName = rs.getString("className");
 
         //TODO add method to get the children impls, benchmarks, and PIs
 
