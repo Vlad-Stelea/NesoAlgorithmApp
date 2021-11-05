@@ -90,6 +90,7 @@ public class ClassificationDAO {
     }
 
     private Classification generateClassification(ResultSet rs) throws SQLException {
+        rs.next();
         String className = rs.getString("className");
         String parentClassName = rs.getString("parentClassName");
 
