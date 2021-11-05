@@ -1,2 +1,4 @@
-package db;public class databaseUtil {
+package db;
+
+public class databaseUtil {
 }
