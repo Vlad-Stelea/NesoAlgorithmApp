@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.iml" filepath="$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/AlgorithmAppBackend.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/NesoAlgorithmApp.iml" filepath="$PROJECT_DIR$/.idea/NesoAlgorithmApp.iml" />
     </modules>
   </component>
