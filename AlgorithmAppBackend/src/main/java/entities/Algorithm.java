@@ -60,4 +60,13 @@ public class Algorithm {
     public boolean removeImplementation(String implName) {
         return implementations.removeIf(a -> a.getImplName().equals(implName));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(!(obj instanceof Classification)) return false;
+        Algorithm a = (Algorithm) obj;
+        return a.getAlgoName().equals(this.className);
+    }
+
 }
