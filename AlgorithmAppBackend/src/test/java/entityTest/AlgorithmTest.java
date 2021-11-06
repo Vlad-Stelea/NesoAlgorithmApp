@@ -7,7 +7,6 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import entities.Algorithm;
 import entities.Classification;
 import entities.Implementation;
-import helloworld.App;
 import org.junit.Test;
 
 import java.util.ArrayList;

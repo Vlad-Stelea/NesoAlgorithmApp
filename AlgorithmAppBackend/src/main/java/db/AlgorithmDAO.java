@@ -92,7 +92,9 @@ public class AlgorithmDAO {
     }
 
     private Algorithm generateBasicAlgorithm(ResultSet rs) throws SQLException {
-        rs.next();
+        if(!rs.next()){
+            return null;
+        }
         String className = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
@@ -117,7 +119,9 @@ public class AlgorithmDAO {
     }
 
     private Algorithm generateFullAlgorithm(ResultSet rs) throws SQLException {
-        rs.next();
+        if(!rs.next()){
+            return null;
+        }
         String className = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
