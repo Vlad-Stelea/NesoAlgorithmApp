@@ -90,15 +90,18 @@ public class ClassificationDAO {
     }
 
     private Classification generateClassification(ResultSet rs) throws SQLException {
-        rs.next();
-        String className = rs.getString("className");
-        String parentClassName = rs.getString("parentClassName");
+        if(rs.next()) {
+            String className = rs.getString("className");
+            String parentClassName = rs.getString("parentClassName");
 
-        // NOTE With the way things are currently set up, we'll be returning Classifications with null parents.
-        //      Would it be better to match database structure and set the Classification entity to have a parent name String?
-        //      Or is having this flexibility easier for potential future applications? I'm inclined to keep it this way,
-        //      it just seems a bit janky.
-        return new Classification(className, new Classification(parentClassName));
+            // NOTE With the way things are currently set up, we'll be returning Classifications with null parents.
+            //      Would it be better to match database structure and set the Classification entity to have a parent name String?
+            //      Or is having this flexibility easier for potential future applications? I'm inclined to keep it this way,
+            //      it just seems a bit janky.
+            return new Classification(className, new Classification(parentClassName));
+        }
+
+        return null;
     }
 
 }
