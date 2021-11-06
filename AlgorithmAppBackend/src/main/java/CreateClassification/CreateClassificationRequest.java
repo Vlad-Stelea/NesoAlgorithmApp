@@ -1,4 +1,4 @@
-package http;
+package CreateClassification;
 
 public class CreateClassificationRequest {
 
