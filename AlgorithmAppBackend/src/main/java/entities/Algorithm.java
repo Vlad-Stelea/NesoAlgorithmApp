@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import entities.Classification;
 
 public class Algorithm {
 
@@ -66,7 +67,7 @@ public class Algorithm {
         if(obj == this) return true;
         if(!(obj instanceof Classification)) return false;
         Algorithm a = (Algorithm) obj;
-        return a.getAlgoName().equals(this.className);
+        return a.getAlgoName().equals(this.algoName);
     }
 
 }
