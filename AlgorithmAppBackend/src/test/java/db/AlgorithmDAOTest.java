@@ -23,7 +23,7 @@ public class AlgorithmDAOTest {
     @Test
     public void testCreateAlgorithm() throws SQLException {
         // create an Algorithm then check that we can find it in the database
-
+        dao.removeAlgorithm("daoTest");
         assertTrue(dao.createAlgorithm("daoTest", null));
         Algorithm expectedAlgorithm = new Algorithm("daoTest");
         assertEquals(expectedAlgorithm, dao.getAlgorithm("daoTest"));
@@ -47,17 +47,19 @@ public class AlgorithmDAOTest {
 
     @Test
     public void testGetAlgorithm() throws SQLException {
+        dao.removeAlgorithm("daoTest3");
         // shouldn't be able to get a non-existent Algorithm
         assertNull(dao.getAlgorithm("daoTest3"));
 
         // create an Algorithm then get it from the database
         assertTrue(dao.createAlgorithm("daoTest3", null));
-        Algorithm expectedAlgorithm = new Algorithm("daoTest3");
         Algorithm actualAlgorithm = dao.getAlgorithm("daoTest3");
+        assertTrue(dao.removeAlgorithm("daoTest3"));
+        Algorithm expectedAlgorithm = new Algorithm("daoTest3");
         assertEquals(expectedAlgorithm, actualAlgorithm);
 
         // clean up
-        assertTrue(dao.removeAlgorithm("daoTest3"));
+
     }
 
     @Test
@@ -74,43 +76,16 @@ public class AlgorithmDAOTest {
         dao.removeAlgorithm("daoTest7");
         ArrayList<Algorithm> retEmpty = dao.getAllAlgorithms();
 
-        boolean four = false;
-        boolean five = false;
-        boolean six = false;
-        boolean seven = false;
-        for(int i = 0; i < rets.size(); i++){
-            if(rets.get(i).getAlgoName().equals("daoTest4")){
-                four = rets.get(i).getParentClassification() == null;
-            }else if(rets.get(i).getAlgoName().equals("daoTest5")){
-                five = rets.get(i).getParentClassification() == null;
-            }else if(rets.get(i).getAlgoName().equals("daoTest6")){
-                six = rets.get(i).getParentClassification() == null;
-            }else if(rets.get(i).getAlgoName().equals("daoTest7")){
-                seven = rets.get(i).getParentClassification() == null;
-            }
-        }
+        assertTrue(rets.contains(new Algorithm("daoTest4")));
+        assertTrue(rets.contains(new Algorithm("daoTest5")));
+        assertTrue(rets.contains(new Algorithm("daoTest6")));
+        assertTrue(rets.contains(new Algorithm("daoTest7")));
 
-        // clean up
-        assertTrue(four);
-        assertTrue(five);
-        assertTrue(six);
-        assertTrue(seven);
+        assertFalse(retEmpty.contains(new Algorithm("daoTest4")));
+        assertFalse(retEmpty.contains(new Algorithm("daoTest5")));
+        assertFalse(retEmpty.contains(new Algorithm("daoTest6")));
+        assertFalse(retEmpty.contains(new Algorithm("daoTest7")));
 
-        //make sure 4 elements were deleted from the db
-        assertTrue(rets.size() == 4 + retEmpty.size() );
-        //make sure it was the 4 test Algos
-        for(int i = 0; i < retEmpty.size(); i++){
-            if(retEmpty.get(i).getAlgoName().equals("daoTest4")){
-                assertTrue(false);
-            }else if(retEmpty.get(i).getAlgoName().equals("daoTest5")){
-                assertTrue(false);
-            }else if(retEmpty.get(i).getAlgoName().equals("daoTest6")){
-                assertTrue(false);
-            }else if(retEmpty.get(i).getAlgoName().equals("daoTest7")){
-                assertTrue(false);
-            }
-        }
-        assertTrue(true); //did not find the test algorithms so they were all deleted
-    }
+       }
 
 }
