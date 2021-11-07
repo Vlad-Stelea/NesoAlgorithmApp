@@ -99,17 +99,18 @@ public class AlgorithmDAOTest {
         //make sure 4 elements were deleted from the db
         assertTrue(rets.size() == 4 + retEmpty.size() );
         //make sure it was the 4 test Algos
-        for(int i = 0; i < rets.size(); i++){
-            if(rets.get(i).getAlgoName().equals("daoTest4")){
+        for(int i = 0; i < retEmpty.size(); i++){
+            if(retEmpty.get(i).getAlgoName().equals("daoTest4")){
                 assertTrue(false);
-            }else if(rets.get(i).getAlgoName().equals("daoTest5")){
+            }else if(retEmpty.get(i).getAlgoName().equals("daoTest5")){
                 assertTrue(false);
-            }else if(rets.get(i).getAlgoName().equals("daoTest6")){
+            }else if(retEmpty.get(i).getAlgoName().equals("daoTest6")){
                 assertTrue(false);
-            }else if(rets.get(i).getAlgoName().equals("daoTest7")){
+            }else if(retEmpty.get(i).getAlgoName().equals("daoTest7")){
                 assertTrue(false);
             }
         }
+        assertTrue(true); //did not find the test algorithms so they were all deleted
     }
 
 }
