@@ -5,10 +5,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Load the navigation script -->
     <script src="../js/navigation/navigation.js"></script>
+    <!-- load the ViewModel scripts -->
+    <script src="../js/viewModel/viewModel.js"></script>
+    <script src="../js/viewModel/user.js"></script>
+    <!-- load all auth scripts we might need -->
+    <script src="../js/auth/getAuthToken.js"></script>
+    <!-- load the configs -->
+    <script src="../js/config/devConfig.js"></script>
+    <script src="../js/config/liveConfig.js"></script>
+    <!-- Initialize everything -->
     <script type="text/javascript">
+        const DEV_MODE = true;
+        // TODO add a deployment config
+        const config = DEV_MODE ? DevConfig : LiveConfig;
         // Initialize the nav component
-        const navigation = new Navigation("#viewContainer");
+        const navigation = new Navigation("#viewContainer", config.LOGIN_URL_CALLBACK);
+        const vm = new ViewModel();
         function initContainer() {
+            vm.user.token = extractAuthToken();
             navigation.goToRegisteredUsersPage();
         }
     </script>
