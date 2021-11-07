@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Import the jquery lib to make development more simple -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Load the navigation script -->
+    <script src="../js/navigation/navigation.js"></script>
+    <script type="text/javascript">
+        // Initialize the nav component
+        const navigation = new Navigation("#viewContainer");
+        function initContainer() {
+            navigation.goToRegisteredUsersPage();
+        }
+    </script>
+</head>
+
+<body onload="initContainer()">
+<!-- Container div where our views will be rendered -->
+<div id="viewContainer"></div>
+
+</body>
+
+</html>
