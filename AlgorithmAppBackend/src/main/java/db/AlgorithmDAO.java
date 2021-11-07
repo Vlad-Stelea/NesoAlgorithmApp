@@ -68,7 +68,7 @@ public class AlgorithmDAO {
     }
 
     public boolean removeAlgorithmsAndChildren(String algoName) throws SQLException {
-        
+
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
         ps.setString(1, algoName);
         ResultSet rs = ps.executeQuery();
