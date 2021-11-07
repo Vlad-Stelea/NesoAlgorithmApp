@@ -27,6 +27,7 @@ public class Algorithm {
     }
 
     //getters and setters
+
     public String getAlgoName() {
         return algoName;
     }
