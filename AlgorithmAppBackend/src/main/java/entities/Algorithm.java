@@ -16,4 +16,9 @@ public class Algorithm {
         return algoName;
     }
 
+    public boolean setAlgoName(String algoName) {
+        this.algoName = algoName;
+        return true;
+    }
+
 }
