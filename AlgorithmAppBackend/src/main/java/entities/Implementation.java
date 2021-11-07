@@ -1,3 +1,4 @@
+
 package java.entities;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,5 @@ public class Implementation {
 
 
 }
-
-
 
 
