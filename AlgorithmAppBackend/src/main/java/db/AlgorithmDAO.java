@@ -51,9 +51,7 @@ public class AlgorithmDAO {
         return generateBasicAlgorithms(rs);
     }
 
-    // could be useful for merging; will have to test, as we might get foreign key errors when deleting a className
     public boolean removeAlgorithm(String algoName) throws SQLException {
-        // make sure the Classification exists first
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
         ps.setString(1, algoName);
         ResultSet rs = ps.executeQuery();
@@ -69,9 +67,8 @@ public class AlgorithmDAO {
         return false;
     }
 
-    // figured this might be useful when deleting classifications rather than merging
     public boolean removeAlgorithmsAndChildren(String algoName) throws SQLException {
-        // make sure the Classification exists first
+        
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
         ps.setString(1, algoName);
         ResultSet rs = ps.executeQuery();
@@ -79,7 +76,7 @@ public class AlgorithmDAO {
         if(rs.next()) {
 
             Algorithm a = generateFullAlgorithm(rs);
-            //TODO delete children
+            //TODO? delete children iplementations, benchmarks, ect.(we might also just do this in the handler idk
 
             PreparedStatement psDeleteAlgos = conn.prepareStatement("DELETE FROM algorithm WHERE algoName = ?;");
             psDeleteAlgos.setString(1, algoName);
@@ -95,25 +92,25 @@ public class AlgorithmDAO {
         if(!rs.next()){
             return null;
         }
-        String className = rs.getString("algoName");
+        String algoName = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
         if(parentClassName != null) {
-            return new Algorithm(className, new Classification(parentClassName));
+            return new Algorithm(algoName, new Classification(parentClassName));
         }
-        return new Algorithm(className);
+        return new Algorithm(algoName);
     }
 
     private ArrayList<Algorithm> generateBasicAlgorithms(ResultSet rs) throws SQLException {
         ArrayList<Algorithm> ret = new ArrayList<>();
         while(rs.next()) {
-            String className = rs.getString("algoName");
+            String algoName = rs.getString("algoName");
             String parentClassName = rs.getString("className");
 
             if (parentClassName != null) {
-                ret.add(new Algorithm(className, new Classification(parentClassName)));
+                ret.add(new Algorithm(algoName, new Classification(parentClassName)));
             }
-            ret.add(new Algorithm(className));
+            ret.add(new Algorithm(algoName));
         }
         return ret;
     }
@@ -122,12 +119,14 @@ public class AlgorithmDAO {
         if(!rs.next()){
             return null;
         }
-        String className = rs.getString("algoName");
+        String algoName = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
-        //TODO add method to get the children impls, benchmarks, and PIs
-
-        return new Algorithm(className, new Classification(parentClassName));
+        //TODO? add method to get the children impls, benchmarks, and PIs, we also might do this in the handler idk
+        if(parentClassName != null) {
+            return new Algorithm(algoName, new Classification(parentClassName));
+        }
+        return new Algorithm(algoName);
     }
 
 }

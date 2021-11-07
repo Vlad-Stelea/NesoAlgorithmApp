@@ -74,7 +74,6 @@ public class AlgorithmDAOTest {
         dao.removeAlgorithm("daoTest7");
         ArrayList<Algorithm> retEmpty = dao.getAllAlgorithms();
 
-        assertTrue(rets.size() == 4 + retEmpty.size() );
         boolean four = false;
         boolean five = false;
         boolean six = false;
@@ -92,7 +91,25 @@ public class AlgorithmDAOTest {
         }
 
         // clean up
-        assertTrue(four && five && six && seven);
+        assertTrue(four);
+        assertTrue(five);
+        assertTrue(six);
+        assertTrue(seven);
+
+        //make sure 4 elements were deleted from the db
+        assertTrue(rets.size() == 4 + retEmpty.size() );
+        //make sure it was the 4 test Algos
+        for(int i = 0; i < rets.size(); i++){
+            if(rets.get(i).getAlgoName().equals("daoTest4")){
+                assertTrue(false);
+            }else if(rets.get(i).getAlgoName().equals("daoTest5")){
+                assertTrue(false);
+            }else if(rets.get(i).getAlgoName().equals("daoTest6")){
+                assertTrue(false);
+            }else if(rets.get(i).getAlgoName().equals("daoTest7")){
+                assertTrue(false);
+            }
+        }
     }
 
 }

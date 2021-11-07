@@ -68,7 +68,7 @@ public class Algorithm {
         if(obj == this) return true;
         if(!(obj instanceof Algorithm)) return false;
         Algorithm a = (Algorithm) obj;
-        return a.getAlgoName().equals(this.algoName);
+        return a.getAlgoName().equals(this.algoName) && a.getParentClassification().equals(this.parentClassification);
     }
 
 }
