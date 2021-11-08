@@ -20,7 +20,7 @@ public class CreateImplementationHandler{
 
         try {
             if(dao.createImplementation(request.getImplName(), request.getAlgoName())) {
-                response = new CreateImplementationResponse(request.getImplName() + "," + request.getAlgoName(), 200);
+                response = new CreateImplementationResponse(request.getImplName() + "," + request.getAlgoName() + "," + request.getCodeUrl() + "," + request.getLanguage(), 200);
             } else {
                 response = new CreateImplementationResponse(request.getImplName(), 409, "Classification already exists.");
             }
