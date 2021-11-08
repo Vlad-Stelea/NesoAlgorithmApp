@@ -1,5 +1,7 @@
 package CreateClassification;
 
+import com.google.gson.Gson;
+
 public class CreateClassificationResponse {
 
     public final String response;
@@ -18,12 +20,10 @@ public class CreateClassificationResponse {
         this.error = error;
     }
 
+    @Override
     public String toString() {
-        if (httpCode == 200) {
-            return "CreateClassificationResponse(" + response + ")";
-        } else {
-            return "ErrorResult(httpCode = " + httpCode + ", error = " + error + ")";
-        }
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
 }

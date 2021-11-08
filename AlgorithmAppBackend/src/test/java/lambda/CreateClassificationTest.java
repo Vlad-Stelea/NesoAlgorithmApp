@@ -34,32 +34,29 @@ public class CreateClassificationTest extends LambdaTest {
     @Test
     public void testCreateClassification() throws SQLException {
         // add the "child" and make sure we get the correct response
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(reqWithParent, new CreateClassificationResponse("", 400));
         when(dao.createClassification("childTest", "createTest")).thenReturn(true);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "childTest,createTest");
-        assertEquals(handleResult.getResponse().httpCode, 200);
+        CreateClassificationResponse handleResult = ccHandler.handle(reqWithParent);
+        assertEquals(handleResult.response, "childTest,createTest");
+        assertEquals(handleResult.httpCode, 200);
     }
 
     @Test
     public void testCreateClassification_NullParent() throws SQLException {
         // add the classification with a null parent and make sure we get the correct response
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(req, new CreateClassificationResponse("", 400));
         when(dao.createClassification("createTest", null)).thenReturn(true);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "createTest,null");
-        assertEquals(handleResult.getResponse().httpCode, 200);
+        CreateClassificationResponse handleResult = ccHandler.handle(req);
+        assertEquals(handleResult.response, "createTest,null");
+        assertEquals(handleResult.httpCode, 200);
     }
 
     @Test
     public void testFailCreateClassification() throws SQLException {
         // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(req, new CreateClassificationResponse("", 400));
         when(dao.createClassification("createTest", null)).thenReturn(false);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "createTest");
-        assertEquals(handleResult.getResponse().httpCode, 409);
-        assertEquals(handleResult.getResponse().error, "Classification already exists.");
+        CreateClassificationResponse handleResult = ccHandler.handle(req);
+        assertEquals(handleResult.response, "createTest");
+        assertEquals(handleResult.httpCode, 409);
+        assertEquals(handleResult.error, "Classification already exists.");
     }
 
 

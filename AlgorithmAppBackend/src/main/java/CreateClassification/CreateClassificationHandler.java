@@ -10,22 +10,20 @@ public class CreateClassificationHandler {
         this.dao = dao;
     }
 
-    public CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handle(CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> request) {
+    public CreateClassificationResponse handle(CreateClassificationRequest request) {
         CreateClassificationResponse response;
 
-        CreateClassificationRequest req = request.getRequest();
-
         try {
-            if(dao.createClassification(req.getName(), req.getParentClassName())) {
-                response = new CreateClassificationResponse(req.getName() + "," + req.getParentClassName(), 200);
+            if(dao.createClassification(request.getName(), request.getParentClassName())) {
+                response = new CreateClassificationResponse(request.getName() + "," + request.getParentClassName(), 200);
             } else {
-                response = new CreateClassificationResponse(req.getName(), 409, "Classification already exists.");
+                response = new CreateClassificationResponse(request.getName(), 409, "Classification already exists.");
             }
         } catch (Exception e) {
-            response = new CreateClassificationResponse("Unable to create classification: " + req.getName() + " with parent " + req.getParentClassName() + "\n(" + e.getMessage() + ")", 400);
+            response = new CreateClassificationResponse("Unable to create classification: " + request.getName() + " with parent " + request.getParentClassName() + "\n(" + e.getMessage() + ")", 400);
         }
 
-        return new CreateClassificationEvent<>(request.getRequest(), response);
+        return response;
     }
 
 }

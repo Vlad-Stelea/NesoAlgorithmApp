@@ -6,12 +6,17 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import db.ClassificationDAO;
 
-public class CreateClassification implements RequestHandler<CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse>, CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse>> {
+public class CreateClassification implements RequestHandler<CreateClassificationRequest, CreateClassificationResponse> {
 
     public LambdaLogger logger = null;
+    CreateClassificationHandler handler;
+
+    public CreateClassification() {
+        handler = new CreateClassificationHandler(new ClassificationDAO());
+    }
 
     @Override
-    public CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleRequest(CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> req, Context context) {
+    public CreateClassificationResponse handleRequest(CreateClassificationRequest req, Context context) {
 
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create classification...");
@@ -19,11 +24,9 @@ public class CreateClassification implements RequestHandler<CreateClassification
         CreateClassificationResponse response;
         logger.log("Create classification: " + req.toString());
 
-        CreateClassificationHandler handler = new CreateClassificationHandler(new ClassificationDAO());
+        handler = new CreateClassificationHandler(new ClassificationDAO());
 
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> result = handler.handle(req);
-
-        return new CreateClassificationEvent<>(req.getRequest(), result.getResponse());
+        return handler.handle(req);
 
     }
 
