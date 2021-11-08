@@ -9,6 +9,11 @@ import db.AlgorithmDAO;
 public class CreateAlgorithm implements RequestHandler<CreateAlgorithmRequest, CreateAlgorithmResponse> {
 
     public LambdaLogger logger = null;
+    CreateAlgorithmHandler handler;
+
+    public CreateAlgorithm(){
+        handler = new CreateAlgorithmHandler(new AlgorithmDAO());
+    }
 
     @Override
     public CreateAlgorithmResponse handleRequest(CreateAlgorithmRequest req, Context context) {
@@ -16,10 +21,8 @@ public class CreateAlgorithm implements RequestHandler<CreateAlgorithmRequest, C
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create Algorithm...");
 
+        logger.log("Create classification: " + req.toString());
 
-        logger.log("Create classification: efs" + req.toString());
-
-        CreateAlgorithmHandler handler = new CreateAlgorithmHandler(new AlgorithmDAO());
         CreateAlgorithmResponse result = handler.handle(req);
         return result;
 

@@ -1,5 +1,7 @@
 package CreateAlgorithm;
 
+import com.google.gson.Gson;
+
 public class CreateAlgorithmResponse {
     public final String response;
     public final int httpCode;
@@ -15,7 +17,9 @@ public class CreateAlgorithmResponse {
         this.httpCode = 200;
     }
 
+    @Override
     public String toString() {
-        return "CreateAlgorithmResponse(" + response + ")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
