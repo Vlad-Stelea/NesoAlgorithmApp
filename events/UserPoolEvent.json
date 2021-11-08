@@ -1,0 +1,20 @@
+{
+  "version": "1",
+  "region": "region",
+  "userPoolId": "userpoolid",
+  "userName": "testacc",
+  "callerContext": {
+    "awsSdkVersion": "aws-sdk-version",
+    "clientId": "323rkdf"
+  },
+  "triggerSource": "PreSignUp_SignUp",
+  "request": {
+    "userAttributes": {},
+    "validationData": null
+  },
+  "response": {
+    "autoConfirmUser": false,
+    "autoVerifyEmail": false,
+    "autoVerifyPhone": false
+  }
+}

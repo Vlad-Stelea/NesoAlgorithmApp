@@ -1,6 +1,6 @@
-package java.db;
+package db;
 
-import java.entities.Classification;
+import entities.Classification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,37 +67,19 @@ public class ClassificationDAO {
         return false;
     }
 
-    // figured this might be useful when deleting classifications rather than merging
-    public boolean removeClassificationAndAlgos(String className) throws SQLException {
-        // make sure the Classification exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE className = ?;");
-        ps.setString(1, className);
-        ResultSet rs = ps.executeQuery();
-
+    private Classification generateClassification(ResultSet rs) throws SQLException {
         if(rs.next()) {
-            PreparedStatement psDeleteAlgos = conn.prepareStatement("DELETE FROM algorithm WHERE className = ?;");
-            psDeleteAlgos.setString(1, className);
-            psDeleteAlgos.execute();
+            String className = rs.getString("className");
+            String parentClassName = rs.getString("parentClassName");
 
-            PreparedStatement psDeleteClassification = conn.prepareStatement("DELETE FROM classification WHERE className = ?;");
-            psDeleteClassification.setString(1, className);
-            psDeleteClassification.execute();
-
-            return true;
+            // NOTE With the way things are currently set up, we'll be returning Classifications with null parents.
+            //      Would it be better to match database structure and set the Classification entity to have a parent name String?
+            //      Or is having this flexibility easier for potential future applications? I'm inclined to keep it this way,
+            //      it just seems a bit janky.
+            return new Classification(className, new Classification(parentClassName));
         }
 
-        return false;
-    }
-
-    private Classification generateClassification(ResultSet rs) throws SQLException {
-        String className = rs.getString("className");
-        String parentClassName = rs.getString("parentClassName");
-
-        // NOTE With the way things are currently set up, we'll be returning Classifications with null parents.
-        //      Would it be better to match database structure and set the Classification entity to have a parent name String?
-        //      Or is having this flexibility easier for potential future applications? I'm inclined to keep it this way,
-        //      it just seems a bit janky.
-        return new Classification(className, new Classification(parentClassName));
+        return null;
     }
 
 }
