@@ -1,0 +1,3 @@
+function  handleLogin() {
+    navigation.goToLogin();
+}

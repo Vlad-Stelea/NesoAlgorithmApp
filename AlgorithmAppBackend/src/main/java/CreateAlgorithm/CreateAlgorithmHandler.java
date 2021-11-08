@@ -16,7 +16,7 @@ public class CreateAlgorithmHandler{
 
         try {
             if(dao.createAlgorithm(req.algoName, req.className)){
-                response = new CreateAlgorithmResponse(req.algoName + ", " + req.className);
+                response = new CreateAlgorithmResponse(req.algoName + ", " + req.className, 200);
             }else{
                 response = new CreateAlgorithmResponse(req.algoName, 409, "Algorithm Already Exists");
             }

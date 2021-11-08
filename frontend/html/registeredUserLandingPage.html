@@ -9,28 +9,49 @@
     <script type='text/javascript' src='../js/handleAlgorithmView.js'></script>
     <script type='text/javascript' src='../js/handleClassificationDelete.js'></script>
     <script type='text/javascript' src='../js/handleClassificationMerge.js'></script>
-    <script type='text/javascript' src='../js/handleLogOut.js'></script>
+    <script type='text/javascript' src='../js/auth/handleLogOut.js'></script>
+    <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
 
     <script type="text/javascript">
-    function initialize() {
-      
-       console.log("working")
-       processListResponse()
-    }
+        function renderBanner(user) {
+            // Render the login/ logout button
+            $("#loginButton").text(
+                user.token ? "Logout" : "Login"
+            );
+        }
+
+        function initialize() {
+           processListResponse();
+           renderBanner(vm.user);
+        }
+
+        // Need to do this because document isn't stable pre-ready
+        $(document).ready(function(){
+            initialize();
+        });
     </script>
     </head>
-    <body onload="initialize()">
+    <body>
     
 
     <div style="background-color: cadetblue; padding: 20px;">
-    <h1 style="display:inline;">User 1 </h1>
-    <h3 style="display:inline; margin-left: 80%; background-color: aqua; padding: 10px 10px;" onclick="handleLogOut()">Log out </h3>
+        <!-- Comment out for now because not sure how to get the user name yet-->
+<!--        <h1 style="display:inline;">User 1 </h1>-->
+        <button
+                id="loginButton";
+                style="display:inline;
+                 margin-left: 80%;
+                 background-color: aqua;
+                 padding: 10px 10px;"
+                onclick="vm.user.token ? handleLogOut() : handleLogin()">
+            Login
+        </button>
     </div>
-    <br/>
-    <h3 style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px; outline: 2px solid black; outline-offset: -1px;"
+    <br>
+    <button style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px; outline: 2px solid black; outline-offset: -1px;"
     onclick="handleAddTopLevelPrep()">
         Add Top Level Classification
-    </h3>
+    </button>
     <div id='AddTopForm'></div>
     <div id='Hierarchy'></div>
    
