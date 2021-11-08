@@ -67,7 +67,7 @@ public class Implementation {
 
     //Other methods
     public boolean addBenchmark(Benchmark b){
-        return this.benchmark.add(b);
+        return benchmark.add(b);
     }
     public boolean removeBenchmark(String benName){
         return benchmark.removeIf(b -> b.getBenchmarkName().equals(benName));
@@ -77,7 +77,6 @@ public class Implementation {
 
 
 }
-
 
 
 
