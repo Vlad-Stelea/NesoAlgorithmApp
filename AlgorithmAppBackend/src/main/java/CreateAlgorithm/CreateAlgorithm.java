@@ -15,16 +15,12 @@ public class CreateAlgorithm implements RequestHandler<CreateAlgorithmRequest, C
 
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create Algorithm...");
-        System.out.println(req.toString());
+
 
         logger.log("Create classification: efs" + req.toString());
-        AlgorithmDAO a = new AlgorithmDAO();
-        logger.log("\nconnected to db\n");
 
-        CreateAlgorithmHandler handler = new CreateAlgorithmHandler(a);
-        logger.log("\nconnected to db\n");
+        CreateAlgorithmHandler handler = new CreateAlgorithmHandler(new AlgorithmDAO());
         CreateAlgorithmResponse result = handler.handle(req);
-        logger.log("return");
         return result;
 
     }
