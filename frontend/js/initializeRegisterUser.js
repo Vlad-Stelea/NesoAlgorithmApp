@@ -1,50 +1,57 @@
-
- 
  /**
   * Respond to server JSON object.
   *
   * Replace the contents of 'Hierarchy' with a <br>-separated list of name,value pairs.
   */
  function processListResponse() {
-  
-   data = '{"Hierarchy": [{"Name": "Greed", "Children": [{"Name": "Recursive", "Children": [{"Algorithm": "Prims"}]}, {"Name": "Other", "Children": []}]}, {"Name": "Divide", "Children": [{"Algorithm": "Merge"}]}]}'
-    var js = JSON.parse(data);
+    // TODO this structure can't be right can it?
+    let js = {"Hierarchy": [{"Name": "Greed", "Children": [{"Name": "Recursive", "Children": [{"Algorithm": "Prims"}]}, {"Name": "Other", "Children": []}]}, {"Name": "Divide", "Children": [{"Algorithm": "Merge"}]}]}
 
-    var output = '<ol style="list-style: none;">';
-    for (var i = 0; i < js.Hierarchy.length; i++) {
+    let output = '<ol style="list-style: none;">';
+    for (let i = 0; i < js.Hierarchy.length; i++) {
         output = output + addListItem(js.Hierarchy[i])
     }
     output = output + '</ol>'
   
-   var hierarchy = document.getElementById('Hierarchy');
+   let hierarchy = document.getElementById('Hierarchy');
    // Update hierarchy result
    hierarchy.innerHTML = output;
  }
 
+function createAlgorithmView(algoName) {
+     return '<li class="listItem">'+
+         '<h3 style="display:inline;">+</h3>' +
+         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'+
+         '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'+
+         '</li>'
+}
 
+function createClassificationView(classificationName, isUserRegistered) {
+     let output ='<li class="listItem">'+
+         '<h3 style="display:inline;">+</h3>'+
+         '<h3 style="margin-left: 20px;" class="button">' + classificationName + '</h3>'
+         if(isUserRegistered) {
+             output +=
+                 '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'+
+                 '<button style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</button>'+
+                 '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</button>'
+         }
+        output += '</li>' +
+            '<li style="list-style-type:none">'+
+            '<ul style="list-style: none;">'
+
+    return output
+}
 
  function addListItem(item){
-     output = ""
+     let output = ""
     if(item.Algorithm != undefined){
-        //algorythem
-        output = '<li class="listItem">'+
-                        '<h3 style="display:inline;">+</h3>' + 
-                        '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+item.Algorithm + '</h3>'+
-                        '<h3 style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</h3>'+
-                  '</li>'
+        output = createAlgorithmView(item.Algorithm);
     }else{
         //classification
-        output = '<li class="listItem">'+
-                        '<h3 style="display:inline;">+</h3>'+
-                        '<h3 style="margin-left: 20px;" class="button">' + item.Name + '</h3>'+
-                        '<h3 style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</h3>'+
-                        '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add</h3>'+
-                        '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</h3>'+
-                    '</li>'+
-                    '<li style="list-style-type:none">'+
-                        '<ul style="list-style: none;">'
-        
-        for (var j = 0; j < item.Children.length; j++) {
+        output = createClassificationView(item.Name, vm.user.token != null)
+
+        for (let j = 0; j < item.Children.length; j++) {
             output = output + addListItem(item.Children[j])
         }
     
@@ -54,5 +61,3 @@
 
     return output
  }
-
-
