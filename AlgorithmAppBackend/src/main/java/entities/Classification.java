@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Classification {
@@ -61,6 +62,7 @@ public class Classification {
     }
 
 
+  
     // non-getter and setter methods
     public boolean addAlgorithm(Algorithm a) {
         return algorithms.add(a);
@@ -90,4 +92,11 @@ public class Classification {
         return parentClassification == null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(!(obj instanceof Classification)) return false;
+        Classification c = (Classification) obj;
+        return c.getClassName().equals(this.className);
+    }
 }
