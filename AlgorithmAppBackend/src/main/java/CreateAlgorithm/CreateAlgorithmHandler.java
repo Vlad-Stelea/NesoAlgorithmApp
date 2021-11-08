@@ -1,21 +1,23 @@
 package CreateAlgorithm;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import db.AlgorithmDAO;
 import entities.Algorithm;
 
-public class CreateAlgorithmHandler implements RequestHandler<CreateAlgorithmRequest,CreateAlgorithmResponse> {
+public class CreateAlgorithmHandler{
 
-    LambdaLogger logger;
+    AlgorithmDAO dao;
 
-    @Override
-    public CreateAlgorithmResponse handleRequest(CreateAlgorithmRequest req, Context context)  {
-        logger = context.getLogger();
-        logger.log(req.toString());
+    public CreateAlgorithmHandler(AlgorithmDAO dao) {
+        this.dao = dao;
+    }
+
+
+    public CreateAlgorithmEvent<CreateAlgorithmRequest, CreateAlgorithmResponse> handle(CreateAlgorithmEvent<CreateAlgorithmRequest, CreateAlgorithmResponse> event)  {
+
 
         CreateAlgorithmResponse response;
+        CreateAlgorithmRequest req = event.getRequest();
+
         try {
             AlgorithmDAO db = new AlgorithmDAO();
             db.createAlgorithm(req.algoName, req.className);
@@ -25,7 +27,7 @@ public class CreateAlgorithmHandler implements RequestHandler<CreateAlgorithmReq
             response = new CreateAlgorithmResponse("Unable to create Algorithm: " + req.algoName + "(" + e.getMessage() + ")", 400);
         }
 
-        return response;
+        return new CreateAlgorithmEvent<>(event.getRequest(), response);
     }
 
 }
