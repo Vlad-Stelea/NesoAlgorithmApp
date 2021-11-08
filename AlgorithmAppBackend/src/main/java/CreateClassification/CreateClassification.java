@@ -20,9 +20,7 @@ public class CreateClassification implements RequestHandler<CreateClassification
 
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create classification...");
-
-        CreateClassificationResponse response;
-        logger.log("Create classification: " + req.toString());
+        logger.log("Create classification request: " + req.toString());
 
         handler = new CreateClassificationHandler(new ClassificationDAO());
 
