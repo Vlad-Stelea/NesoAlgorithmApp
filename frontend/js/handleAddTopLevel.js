@@ -13,6 +13,9 @@ function handleAddTopLevelSubmit(ele){
     console.log("addTopSubmit")
     console.log(ele.parentElement.children[2].value)
     var addTopClassForm = document.getElementById('AddTopForm');
+
+
+
    // Update Hierarchy result
    addTopClassForm.innerHTML = ''
 }

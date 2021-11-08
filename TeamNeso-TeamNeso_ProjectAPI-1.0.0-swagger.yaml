@@ -1,0 +1,1066 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: "Neso"
+  description: "Neso's api spec"
+# host: currentlyUnknown.com
+# basePath: /Neso
+schemes:
+  - https
+
+tags:
+  - name: Classification
+  - name: Algorithm
+  - name: ProblemInstance
+  - name: Implementation
+  - name: Benchmark
+  - name: Admin
+  - name: AnonymousUser
+  - name: RegisteredUser
+
+paths:
+  /Classification/{classificationName}:
+    get:
+      tags:
+        - Classification
+        - RegisteredUser
+        - AnonymousUser
+      summary: Get a classification by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: classificationName
+          required: true
+          type: string
+          description: The ID of the classification object we want to get
+      responses:
+        200:
+          description: Classification retrieved successfully
+          schema:
+            $ref: "#/definitions/Classification"
+        400:
+          description: Bad request
+        404:
+          description: Classification not found
+
+  /Classification:
+    post:
+      tags:
+        - Classification
+        - RegisteredUser
+      summary: Create a new classification object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: classificationObject_and_parentName
+          description: The Classification Object to be created, along with its parent class
+          schema:
+            $ref: "#/definitions/AddClassificationRequest"
+      responses:
+        200:
+          description: Classification created successfully
+          schema:
+            $ref: "#/definitions/Classification"
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+
+  /Classification/Remove/{classificationName}:
+    post:
+      tags:
+        - Classification
+        - Admin
+        - RegisteredUser
+      summary: remove a Classification based on its name
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: classificationName
+          required: true
+          type: string
+          description: the id of the classification object to delete
+      responses:
+        200:
+          description: classification object deleted successfully
+          schema:
+            $ref: "#/definitions/Classification"
+        400:
+          description: Error deleting the classification object
+
+  /Classification/Merge:
+    post:
+      tags:
+        - Classification
+        - RegisteredUser
+      summary: merge two Classifications so they share children
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: classifications_to_merge
+          required: true
+          description: the names of the Classification objects that will be merged
+          schema:
+            $ref: "#/definitions/MergeClassificationsRequest"
+      responses:
+        200:
+          description: Classifications merged successfully
+          schema:
+            $ref: "#/definitions/Classification"
+        400:
+          description: Bad request
+
+  /Classification/Hierachy:
+    get:
+      tags:
+        - Classification
+        - RegisteredUser
+        - AnonymousUser
+      summary: get the hierarchy of Classifications
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Classifications succesfully retrieved
+          schema:
+            $ref: "#/definitions/ClassificationHierachyResponse"
+        400:
+          description: Error retrieving classifications
+
+  /Algorithm/{algorithm_id}:
+    get:
+      tags:
+        - Algorithm
+        - RegisteredUser
+        - AnonymousUser
+      summary: Get an Algorithm by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: algorithm_id
+          required: true
+          type: string
+          description: The ID of the Algorithm object we want to get
+      responses:
+        200:
+          description: Algorithm retrieved successfully
+          schema:
+            $ref: "#/definitions/Algorithm"
+        400:
+          description: Bad request
+        404:
+          description: Algorithm not found
+
+  /Algorithm:
+    post:
+      tags:
+        - Algorithm
+        - RegisteredUser
+      summary: Create a new Algorithm object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Algorithm Object
+          description: The Algorithm Object to be created
+          schema:
+            $ref: "#/definitions/AddAlgorithmRequest"
+      responses:
+        200:
+          description: Algorithm created successfully
+          schema:
+            $ref: "#/definitions/Algorithm"
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+
+  /Algorithm/Reclassify:
+    post:
+      tags:
+        - Algorithm
+        - RegisteredUser
+      summary: reclassify an algorithm to a different Classification
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: algorithm_to_reclassify
+          required: true
+          description: the name of the Algorithm to reclassify and what Classification to reclassify to
+          schema:
+            $ref: "#/definitions/ReclassifyAlgorithmRequest"
+      responses:
+        200:
+          description: Algorithm reclassified successfully
+          schema:
+            $ref: "#/definitions/Algorithm"
+        400:
+          description: Bad request
+        404:
+          description: Algorithm/Classification not found
+
+  /Algorithm/Remove/{algorithm_id}:
+    post:
+      tags:
+        - Algorithm
+        - Admin
+        - RegisteredUser
+      summary: remove an Algorithm based on its id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: algorithm_id
+          type: string
+          required: true
+          description: the id of the Algorithm to remove
+      responses:
+        200:
+          description: Algorithm removed successfully
+          schema:
+            $ref: "#/definitions/Algorithm"
+        400:
+          description: Bad request
+        404:
+          description: Algorithm not found
+
+  /Algorithm/GetAllAlgorithms:
+    get:
+      tags:
+        - Algorithm
+        - RegisteredUser
+        - AnonymousUser
+      summary: list all Algorithms
+      description: request to list all Algorithms in the hierarchy
+      produces:
+        - application/json
+      responses:
+        200:
+          description: obtained algorithms successfully
+        400:
+          description: Bad request
+
+  /Algorithm/GetProblemInstanceForAlgorithm/{algorithm_id}:
+    get:
+      tags:
+        - Algorithm
+        - RegisteredUser
+        - AnonymousUser
+      summary: get a problem instance for a specific algorithm
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: algorithm_id
+          type: string
+          required: true
+          description: the name of the Algorithm to we want the ProblemInstances of
+      responses:
+        200:
+          description: ProblemInstance removed successfully
+          schema:
+            $ref: "#/definitions/ProblemInstance"
+        400:
+          description: Bad request
+        404:
+          description: ProblemInstance not found
+
+  /ProblemInstance/{problemInstance_id}:
+    get:
+      tags:
+        - ProblemInstance
+        - RegisteredUser
+        - AnonymousUser
+      summary: Get a ProblemInstance by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: problemInstance_id
+          required: true
+          type: string
+          description: The ID of the ProblemInstance object we want to get
+      responses:
+        200:
+          description: ProblemInstance retrieved successfully
+          schema:
+            $ref: "#/definitions/ProblemInstanceArrayResponse"
+        400:
+          description: Bad request
+        404:
+          description: ProblemInstance not found
+
+  /ProblemInstance:
+    post:
+      tags:
+        - ProblemInstance
+        - RegisteredUser
+      summary: Create a new ProblemInstance object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: ProblemInstance Object
+          description: The ProblemInstance Object to be created
+          schema:
+            $ref: "#/definitions/AddProblemInstanceRequest"
+      responses:
+        200:
+          description: ProblemInstance created successfully
+          schema:
+            $ref: "#/definitions/ProblemInstance"
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+
+  /ProblemInstance/Remove/{problem_instance_id}:
+    post:
+      tags:
+        - ProblemInstance
+        - Admin
+        - RegisteredUser
+      summary: Remove a specific problem instance based on id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: problem_instance_id
+          type: string
+          required: true
+          description: the name of the ProblemInstance to remove
+      responses:
+        200:
+          description: ProblemInstance removed successfully
+          schema:
+            $ref: "#/definitions/ProblemInstance"
+        400:
+          description: Bad request
+        404:
+          description: ProblemInstance not found
+
+  /Implementation/{implementation_id}:
+    get:
+      tags:
+        - Implementation
+        - RegisteredUser
+        - AnonymousUser
+      summary: Get an Implementation by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: implementation_id
+          required: true
+          type: string
+          description: The ID of the Implementation object we want to get
+      responses:
+        200:
+          description: Implementation retrieved successfully
+          schema:
+            $ref: "#/definitions/Implementation"
+        400:
+          description: Bad request
+        404:
+          description: Implementation not found
+
+  /Implementation:
+    post:
+      tags:
+        - Implementation
+        - RegisteredUser
+      summary: Upload a new Implementation object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Implementation Object
+          description: The Implementation Object to be created
+          schema:
+            $ref: "#/definitions/UploadImplementationRequest"
+      responses:
+        200:
+          description: Implementation created successfully
+          schema:
+            $ref: "#/definitions/Implementation"
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+
+  /Implementation/Remove/{implementation_id}:
+    post:
+      tags:
+        - Implementation
+        - Admin
+        - RegisteredUser
+      summary: Remove an implementation based on its id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: implementation_id
+          type: string
+          required: true
+          description: the implementation the user wants to remove
+      responses:
+        200:
+          description: Implementation removed successfully
+        400:
+          description: Bad request
+
+  /Benchmark/{benchmark_id}:
+    get:
+      tags:
+        - Benchmark
+        - AnonymousUser
+        - RegisteredUser
+      summary: Get a Benchmark by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: benchmark_id
+          required: true
+          type: string
+          description: The ID of the Benchmark object we want to get
+      responses:
+        200:
+          description: Benchmark retrieved successfully
+          schema:
+            $ref: "#/definitions/Benchmark"
+        400:
+          description: Bad request
+        404:
+          description: Benchmark not found
+
+  /Benchmark:
+    post:
+      tags:
+        - Benchmark
+        - AnonymousUser
+        - RegisteredUser
+      summary: Create a new Benchmark object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Benchmark Object
+          description: The Benchmark Object to be created
+          schema:
+            $ref: "#/definitions/UploadBenchmarkRequest"
+      responses:
+        200:
+          description: Benchmark created successfully
+          schema:
+            $ref: "#/definitions/Benchmark"
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+
+  /Benchmark/Remove/{benchmark_id}:
+    post:
+      tags:
+        - Benchmark
+        - Admin
+      summary: remove a benchmark based on its id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: benchmark_id
+          type: string
+          required: true
+          description: the Benchmark the user wants to remove
+      responses:
+        200:
+          description: Benchmark removed successfully
+          schema:
+            $ref: "#/definitions/Benchmark"
+        400:
+          description: Bad request
+
+  /User/Register:
+    post:
+      tags:
+        - AnonymousUser
+      summary: register as a new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: username
+          required: true
+          description: the username to be registered
+          schema:
+            $ref: "#/definitions/RegisterUserRequest"
+      responses:
+        200:
+          description: User registered successfully
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Bad request
+
+
+  /Admin/Users:
+    get:
+      tags:
+        - Admin
+      summary: fetch a list of all Users
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Users fetched succesfully
+          schema:
+            $ref: "#/definitions/GetUsersResponse"
+        400:
+          description: Error fetching users
+
+  /Admin/Activity/{username}:
+    get:
+      tags:
+        - Admin
+      summary: Get the activity of a specific user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          required: true
+          type: string
+          description: The username of the User we want to get the activity of
+      responses:
+        200:
+          description: User activity retrieved successfully
+          schema:
+            $ref: "#/definitions/ActivityLogfileArrayResponse"
+        400:
+          description: Bad request
+        404:
+          description: Username not found
+
+  /Admin/RemoveUser/{username}:
+    post:
+      tags:
+        - Admin
+      summary: remove a specific User
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          type: string
+          required: true
+          description: the Registered User the Admin wants to remove
+      responses:
+        200:
+          description: User removed successfully
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Bad request
+
+
+
+definitions:
+  # define classes first
+  Classification:
+    type: object
+    required:
+      - subClassification
+      - algorithms
+      - classificationName
+      - parentClassification
+      - level
+    properties:
+      subClassifications:
+        type: array
+        items:
+          $ref: "#/definitions/Classification"
+      algorithms:
+        type: array
+        items:
+          $ref: "#/definitions/Algorithm"
+      classificationName:
+        type: string
+      parentClassification:
+        allOf:
+          - $ref: "#/definitions/Classification"
+      level:
+        type: string
+
+  Algorithm:
+    type: object
+    required:
+      - implementations
+      - problemInstance
+      - name
+    properties:
+      implementations:
+        type: array
+        items:
+          $ref: "#/definitions/Implementation"
+      problemInstance:
+        type: array
+        items:
+          $ref: "#/definitions/ProblemInstance"
+      name:
+        type: string
+
+  Implementation:
+    type: object
+    required:
+      - codeUrl # Enough for us to be able to download
+      - benchmarks
+      - name
+      - language
+      - id
+    properties:
+      codeUrl:
+        type: string
+      benchmarks:
+        type: array
+        items:
+          $ref: "#/definitions/Benchmark"
+      name:
+        type: string
+      language:
+        type: string
+      id:
+        type: string
+
+  ProblemInstance:
+    type: object
+    required:
+      - dataset
+      - name
+      - id
+    properties:
+      dataset:
+        type: string
+      name:
+        type: string
+      id:
+        type: string
+
+  Benchmark:
+    type: object
+    required:
+      - timeToRun
+      - dayRun
+      - machineConfiguration
+      - problemInstance
+      - name
+      - id
+    properties:
+      timeToRun:
+        type: string
+      name:
+        type: string
+      id:
+        type: string
+      machineConfiguration:
+        allOf:
+          - $ref: "#/definitions/MachineConfiguration"
+      problemInstance:
+        allOf:
+          - $ref: "#/definitions/ProblemInstance"
+      dayRun:
+        type: string
+
+  LoginInfo:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+  User:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+  AdminUser:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+
+  MachineConfiguration:
+    type: object
+    required:
+      - name
+      - cpu
+      - id
+      - L1cache
+      - L2cache
+      - numCores
+    properties:
+      name:
+        type: string
+      cache:
+        type: string
+      numCores:
+        type: integer
+      ID:
+        type: integer
+      L1cache:
+        type: string
+      L2cache:
+        type: string
+      id:
+        type: string
+
+  ActivityLogfile:
+    type: object
+    required:
+      - action
+      - username
+      - time
+    properties:
+      username:
+        type: string
+      action:
+        type: string
+      time:
+        type: string
+
+
+  GetClassificationRequest:
+    type: object
+    required:
+      - classification
+    properties:
+      classification:
+        type: string
+
+  AddClassificationRequest:
+    type: object
+    required:
+      - classification
+      - parentClassification
+    properties:
+      classification:
+        type: string
+      parentClassification:
+        type: string
+
+  RemoveClassificationRequest:
+    type: object
+    required:
+      - classification
+    properties:
+      classification:
+        type: string
+
+  MergeClassificationsRequest:
+    type: object
+    required:
+      - classifications
+    properties:
+      classifications:
+        description: List of classifications to merge
+        type: array
+        items:
+          type: string
+
+  GetClassificationHierarchyRequest:
+    type: object
+    required:
+      - classification
+    properties:
+      classification:
+        type: string
+
+  GetAlgorithmRequest:
+    type: object
+    required:
+      - algorithm
+    properties:
+      algorithm:
+        type: string
+
+  AddAlgorithmRequest:
+    type: object
+    required:
+      - algorithm
+      - classification
+    properties:
+      algorithm:
+        type: string
+      classification:
+        type: string
+
+  ReclassifyAlgorithmRequest:
+    type: object
+    required:
+      - algorithm
+      - classification
+    properties:
+      algorithm:
+        type: string
+      classification:
+        type: string
+
+  RemoveAlgorithmRequest:
+    type: object
+    required:
+      - algorithm
+    properties:
+      algorithm:
+        type: string
+
+  GetAllAlgorithmsRequest:
+    type: object
+
+  AddProblemInstanceRequest:
+    type: object
+    required:
+      - algorithm
+      - dataset
+      - problemInstanceName
+    properties:
+      algorithm:
+        type: string
+      dataset:
+        type: string
+      problemInstanceName:
+        type: string
+
+  RemoveProblemInstanceRequest:
+    type: object
+    required:
+      - problemInstanceID
+    properties:
+      problemInstanceID:
+        type: string
+
+  GetProblemInstanceForAlgorithmRequest:
+    type: object
+    required:
+      - algorithm
+    properties:
+      algorithm:
+        type: string
+
+  UploadImplementationRequest:
+    type: object
+    required:
+      - algorithm
+      - implementation
+      - language
+    properties:
+      algorithm:
+        type: string
+      implementation:
+        type: string
+      language:
+        type: string
+
+  DownloadImplementationRequest:
+    type: object
+    required:
+      - implementationID
+    properties:
+      implementationID:
+        type: string
+
+  RemoveImplementationRequest:
+    type: object
+    required:
+      - implementationID
+    properties:
+      implementationID:
+        type: string
+
+  GetImplementationRequest:
+    type: object
+    required:
+      - algorithm
+    properties:
+      algorithm:
+        type: string
+
+  RegisterUserRequest:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+  GetRegisteredUsersRequest:
+    type: object
+
+  GetActivityForRegisteredUserRequest:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+  RemoveRegisteredUserRequest:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+
+  UploadBenchmarkRequest:
+    type: object
+    required:
+      - implementationID
+      - problemInstanceID
+      - date
+      - benchmark
+      - configuration
+    properties:
+      implementationID:
+        type: string
+      problemInstanceID:
+        type: string
+      date:
+        type: string
+      benchmark:
+        type: string
+      configuration:
+        type: string
+
+
+  GetBenchmarkRequest:
+    type: object
+    required:
+      - implementationID
+      - problemInstanceID
+    properties:
+      implementationID:
+        type: string
+      problemInstanceID:
+        type: string
+
+  RemoveBenchmarkRequest:
+    type: object
+    required:
+      - benchmarkID
+    properties:
+      implementationID:
+        type: string
+      problemInstanceID:
+        type: string
+
+
+  RegisterAccountRequest:
+    type: object
+    required:
+      - username
+    properties:
+      username:
+        type: string
+
+  ClassificationHierachyResponse:
+    type: object
+    required:
+      - classifications
+    properties:
+      classifications:
+        type: array
+        items:
+          $ref: "#/definitions/Classification"
+
+  ProblemInstanceArrayResponse:
+    type: object
+    required:
+      - problemInstances
+    properties:
+      problemInstances:
+        type: array
+        items:
+          $ref: "#/definitions/ProblemInstance"
+
+  ActivityLogfileArrayResponse:
+    type: object
+    required:
+      - activityLogfiles
+    properties:
+      activityLogfiles:
+        type: array
+        items:
+          $ref: "#/definitions/ActivityLogfile"
+
+  GetUsersResponse:
+    type: object
+    required:
+      - users
+    properties:
+      users:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /TeamNeso/TeamNeso_ProjectAPI/1.0.0
