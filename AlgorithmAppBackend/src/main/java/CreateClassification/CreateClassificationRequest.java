@@ -2,8 +2,15 @@ package CreateClassification;
 
 public class CreateClassificationRequest {
 
-    public String className;
-    public String parentClassName;
+    String className;
+    String parentClassName;
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+    public void setParentClassName(String parentClassName) {
+        this.parentClassName = parentClassName;
+    }
 
     public String getName() { return className; }
     public String getParentClassName() { return parentClassName; }
