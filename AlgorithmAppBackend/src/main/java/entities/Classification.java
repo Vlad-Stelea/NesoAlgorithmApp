@@ -61,6 +61,8 @@ public class Classification {
         this.subclassifications = subclassifications;
     }
 
+
+  
     // non-getter and setter methods
     public boolean addAlgorithm(Algorithm a) {
         return algorithms.add(a);
@@ -71,11 +73,19 @@ public class Classification {
     }
 
     public boolean addSubclassification(Classification c) {
+        c.setParentClassification(this);
         return subclassifications.add(c);
     }
 
     public boolean removeSubclassification(String className) {
-        return subclassifications.removeIf(c -> c.getClassName().equals(className));
+        for(Classification c : subclassifications) {
+            if(c.getClassName().equals(className)) {
+                c.setParentClassification(null);
+                return subclassifications.remove(c);
+            }
+        }
+
+        return false;
     }
 
     public boolean isTopLevel() {
@@ -89,5 +99,4 @@ public class Classification {
         Classification c = (Classification) obj;
         return c.getClassName().equals(this.className);
     }
-
 }
