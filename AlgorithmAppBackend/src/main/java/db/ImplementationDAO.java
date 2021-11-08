@@ -37,19 +37,20 @@ public class Implementation {
 
 
 
-    public Implementation getImplementation(String implName) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ?;");
+    public Implementation getImplementation(String implName, String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ? AND algoName = ?;");
         ps.setString(1, ImplName);
+        ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
 
         return generateImplementation(rs);
     }
 
-    // could be useful for merging; will have to test, as we might get foreign key errors when deleting a className
-    public boolean removeImplementation(String impName) throws SQLException {
-        // make sure the Classification exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ?;");
+
+    public boolean removeImplementation(String impName, ) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ? AND algoName = ?;");
         ps.setString(1, ImplName);
+        ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
         //delete all benchmarks
         /**if(rs.next()) {
