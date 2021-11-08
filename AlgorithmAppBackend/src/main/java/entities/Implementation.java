@@ -1,3 +1,4 @@
+
 package entities;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,17 +8,17 @@ public class Implementation {
     private String name;
     private String codeURL;
     private String language;
-    private String algorithmName;
+    private Algorithm algorithmName;
     private List<Benchmarks> benchmark;
 
 
-    public Implementation(String name, String codeURL,String language,String algorithmName) {
+    public Implementation(String name, String codeURL,String language,Algorithm algorithmName) {
         this.name = name;
         this.codeURL = codeURL;
         this.language = language;
         this.benchmark = new ArrayList<>();
     }
-    public Implementation(String name, String codeURL,String language,String algorithmName,ArrayList<Benchmarks> benchmark) {
+    public Implementation(String name, String codeURL,String language,Algorithm algorithmName,ArrayList<Benchmarks> benchmark) {
         this.name = name;
         this.codeURL = codeURL;
         this.language = language;
@@ -49,11 +50,11 @@ public class Implementation {
         this.language = language;
     }
 
-    public String getAlgorithmName() {
-        return algorithmName;
+    public Algorithm getAlgorithmName() {
+        return algorithmName.getName();
     }
 
-    public void setAlgorithmName(String algorithmName) {
+    public void setAlgorithmName(Algorithm algorithmName) {
         this.algorithmName = algorithmName;
     }
 
@@ -67,7 +68,7 @@ public class Implementation {
 
     //Other methods
     public boolean addBenchmark(Benchmark b){
-        return this.benchmark.add(b);
+        return benchmark.add(b);
     }
     public boolean removeBenchmark(String benName){
         return benchmark.removeIf(b -> b.getBenchmarkName().equals(benName));
@@ -77,7 +78,4 @@ public class Implementation {
 
 
 }
-
-
-
 
