@@ -21,7 +21,7 @@ public class CreateAlgorithm implements RequestHandler<CreateAlgorithmRequest, C
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create Algorithm...");
 
-        logger.log("Create classification: " + req.toString());
+        logger.log("Create Algorithm: " + req.toString());
 
         CreateAlgorithmResponse result = handler.handle(req);
         return result;
