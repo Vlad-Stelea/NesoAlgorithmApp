@@ -12,26 +12,14 @@ public class CreateAlgorithmHandler{
     }
 
 
-    public CreateAlgorithmEvent<CreateAlgorithmRequest, CreateAlgorithmResponse> handle(CreateAlgorithmEvent<CreateAlgorithmRequest, CreateAlgorithmResponse> event)  {
+    public CreateAlgorithmResponse handle(CreateAlgorithmRequest req)  {
 
 
         CreateAlgorithmResponse response;
-        CreateAlgorithmRequest req = event.getRequest();
 
         try {
-            System.out.println("kdjvndv");
-            if(req.className == null){
-                System.out.println("444444");
-            }else{
-                System.out.println("555555");
-            }
-            System.out.println("444444");
             AlgorithmDAO db = new AlgorithmDAO();
-            if(req.className.equals("")){
-                db.createAlgorithm(req.algoName, null);
-            }else{
-                db.createAlgorithm(req.algoName, req.className);
-            }
+            db.createAlgorithm(req.algoName, req.className);
 
             response = new CreateAlgorithmResponse(req.algoName);
 
@@ -40,7 +28,7 @@ public class CreateAlgorithmHandler{
             response = new CreateAlgorithmResponse("Unable to create Algorithm: " + req.algoName + "(" + e.getMessage() + ")", 400);
         }
 
-        return new CreateAlgorithmEvent<>(event.getRequest(), response);
+        return  response;
     }
 
 }
