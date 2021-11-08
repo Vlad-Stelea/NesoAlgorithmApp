@@ -67,28 +67,6 @@ public class ClassificationDAO {
         return false;
     }
 
-    // figured this might be useful when deleting classifications rather than merging
-    public boolean removeClassificationAndAlgos(String className) throws SQLException {
-        // make sure the Classification exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE className = ?;");
-        ps.setString(1, className);
-        ResultSet rs = ps.executeQuery();
-
-        if(rs.next()) {
-            PreparedStatement psDeleteAlgos = conn.prepareStatement("DELETE FROM algorithm WHERE className = ?;");
-            psDeleteAlgos.setString(1, className);
-            psDeleteAlgos.execute();
-
-            PreparedStatement psDeleteClassification = conn.prepareStatement("DELETE FROM classification WHERE className = ?;");
-            psDeleteClassification.setString(1, className);
-            psDeleteClassification.execute();
-
-            return true;
-        }
-
-        return false;
-    }
-
     private Classification generateClassification(ResultSet rs) throws SQLException {
         if(rs.next()) {
             String className = rs.getString("className");
