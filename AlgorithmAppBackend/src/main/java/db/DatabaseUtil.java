@@ -48,7 +48,6 @@ public class DatabaseUtil {
             ex.printStackTrace();
             throw new Exception("Failed in database connection");
         }
-
     }
 
 }
