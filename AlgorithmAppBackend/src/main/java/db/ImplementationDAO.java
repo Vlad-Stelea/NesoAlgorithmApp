@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Implementation {
     private Connection conn;
@@ -51,15 +52,27 @@ public class Implementation {
         ps.setString(1, ImplName);
         ResultSet rs = ps.executeQuery();
         //delete all benchmarks
-        if(rs.next()) {
+        /**if(rs.next()) {
             PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ?;");
             psDelete.setString(1, rs.getString(benchmarkName);
             psDelete.execute();
 
             return true;
-        }
+        }*/
 
         return false;
+    }
+
+    public ArrrayList<Implementation> getImplementation(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ArrayList imps = new ArrayList<>();
+        if(rs.next()) {
+              imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),algoName))
+        }
+        ResultSet rs = ps.executeQuery();
+
+        return imps;
     }
 
     private Implementation generateImplementationn(ResultSet rs) throws SQLException {
