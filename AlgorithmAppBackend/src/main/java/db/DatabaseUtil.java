@@ -35,7 +35,6 @@ public class DatabaseUtil {
     protected static Connection connect() throws Exception {
         if (conn != null) { return conn; }
 
-
         System.out.println("start connecting......");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
