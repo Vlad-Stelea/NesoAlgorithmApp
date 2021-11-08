@@ -45,11 +45,11 @@ function createClassificationView(classificationName, isUserRegistered) {
 
  function addListItem(item){
      let output = ""
-    if(item.Algorithm != undefined){
+    if(item.Algorithm !== undefined){
         output = createAlgorithmView(item.Algorithm);
     }else{
         //classification
-        output = createClassificationView(item.Name, vm.user.token != null)
+        output = createClassificationView(item.Name, vm.user.token !== '')
 
         for (let j = 0; j < item.Children.length; j++) {
             output = output + addListItem(item.Children[j])
