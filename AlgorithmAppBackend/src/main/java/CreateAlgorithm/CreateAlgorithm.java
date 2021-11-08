@@ -15,9 +15,13 @@ public class CreateAlgorithm implements RequestHandler<CreateAlgorithmEvent<Crea
 
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to create Algorithm...");
-
-        CreateAlgorithmResponse response;
-        logger.log("Create classification: " + req.toString());
+        System.out.println(req.toString());
+        if(req.getRequest() == null){
+            System.out.println("fuck me");
+        }
+        System.out.println(req.getRequest().toString());
+        logger.log("Create classification: efs" + req.toString());
+        req.log(logger);
 
         CreateAlgorithmHandler handler = new CreateAlgorithmHandler(new AlgorithmDAO());
 

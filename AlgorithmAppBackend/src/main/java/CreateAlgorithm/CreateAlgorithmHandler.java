@@ -19,11 +19,24 @@ public class CreateAlgorithmHandler{
         CreateAlgorithmRequest req = event.getRequest();
 
         try {
+            System.out.println("kdjvndv");
+            if(req.className == null){
+                System.out.println("444444");
+            }else{
+                System.out.println("555555");
+            }
+            System.out.println("444444");
             AlgorithmDAO db = new AlgorithmDAO();
-            db.createAlgorithm(req.algoName, req.className);
+            if(req.className.equals("")){
+                db.createAlgorithm(req.algoName, null);
+            }else{
+                db.createAlgorithm(req.algoName, req.className);
+            }
+
             response = new CreateAlgorithmResponse(req.algoName);
 
         } catch (Exception e) {
+            e.printStackTrace();
             response = new CreateAlgorithmResponse("Unable to create Algorithm: " + req.algoName + "(" + e.getMessage() + ")", 400);
         }
 

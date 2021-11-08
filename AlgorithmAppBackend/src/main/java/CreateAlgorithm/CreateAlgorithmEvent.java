@@ -1,5 +1,7 @@
 package CreateAlgorithm;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
 public class CreateAlgorithmEvent<Req, Res> {
 
     String className;
@@ -23,5 +25,9 @@ public class CreateAlgorithmEvent<Req, Res> {
 
     public Req getRequest() {
         return request;
+    }
+
+    public void log(LambdaLogger logger) {
+        logger.log("running int event");
     }
 }
