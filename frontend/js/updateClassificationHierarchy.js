@@ -38,9 +38,11 @@ function processHierarchyResponse(response) {
 function createAlgorithmView(algoName) {
     return '<li class="listItem">'+
         '<h3 style="display:inline;">+</h3>' +
-        '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'+
-        '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'+
-        '</li>'
+        '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'
+    if(isUserRegistered) {
+        output += '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'
+    }
+        output += '</li>'
 }
 
 function createClassificationView(classificationName, isUserRegistered) {
