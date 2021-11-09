@@ -34,7 +34,7 @@ function handleAddAlgorithmSubmit(className, ele){
     var js = JSON.stringify(data);
     console.log("JS:" + js);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://jdkme371z4.execute-api.us-east-2.amazonaws.com/preAlpha/Algorithm", true);
+    xhr.open("POST", createAlgorithm_url, true);
 
     // send the collected data as JSON
     xhr.send(js);
