@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ImplementationDAO {
     private Connection conn;
-    private AlgorithmDAO algoConn = new AlgorithmDAO();
+
     public ImplementationDAO() {
         try {
             conn = DatabaseUtil.connect();
