@@ -15,6 +15,6 @@ function updateHierarchy() {
 }
 
 function processHierarchyResponse(response) {
-    // TODO
+    // TODO pack the hierarchy up, then pass it along to display
     console.log("hierarchy response: " + response);
 }

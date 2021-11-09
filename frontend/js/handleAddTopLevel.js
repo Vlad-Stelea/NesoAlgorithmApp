@@ -22,7 +22,11 @@ function handleAddTopLevelSubmit(ele){
     let className = ele.parentElement.children[2].value
     let cData = {}
     cData["className"] = className
-    // TODO need to update this when we get the form to accept non-top level classifications
+
+
+    // TODO need to update this when we get the above addTopClassForm to accept non-top level classifications
+
+
     cData["parentClassName"] = null
 
 
