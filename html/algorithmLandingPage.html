@@ -8,6 +8,7 @@
     <script type='text/javascript' src='../js/handleBenchmarkDelete.js'></script>
     <script type='text/javascript' src='../js/handleMachineConfigDelete.js'></script>
     <script type='text/javascript' src='../js/handleProblemInstanceDelete.js'></script>
+    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
     <script type='text/javascript' src='../js/handleLogOut.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
 </head>
@@ -32,7 +33,8 @@
 
         <div >
             <h2>Implementations</h2>
-            <button class="button">Add Implementation</button>
+            <button class="button" onclick="handleAddImpPrep()">Add Implementation</button>
+            <div id='AddImpForm'></div>
             <button class="button">Add Problem Instance</button>
             <div id='Implementation'></div>
 
