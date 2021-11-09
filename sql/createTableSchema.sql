@@ -21,7 +21,7 @@ CREATE TABLE `algoApp`.`algorithm` (
 );
 CREATE TABLE `algoApp`.`implementation` (
     `implName` VARCHAR(40),
-    `codeURL` VARCHAR(150),
+    `codeURL` VARCHAR(1000),
     `language` VARCHAR(30),
     `algoName` VARCHAR(40),
     PRIMARY KEY (`implName`, `algoName`),

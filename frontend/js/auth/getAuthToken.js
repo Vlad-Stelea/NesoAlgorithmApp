@@ -1,6 +1,5 @@
 function extractAuthToken() {
     const hashString = window.location.hash;
-    console.log(hashString)
     return parseToken(hashString, "id_token");
 }
 
