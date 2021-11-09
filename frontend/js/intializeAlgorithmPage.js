@@ -1,8 +1,4 @@
-
-
-
-
- /**
+/**
   * Respond to server JSON object.
   *
   * Replace the contents of 'Hierarchy' with a <br>-separated list of name,value pairs.

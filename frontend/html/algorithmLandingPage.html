@@ -9,18 +9,27 @@
     <script type='text/javascript' src='../js/handleMachineConfigDelete.js'></script>
     <script type='text/javascript' src='../js/handleProblemInstanceDelete.js'></script>
     <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
-    <script type='text/javascript' src='../js/handleLogOut.js'></script>
+    <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
 
 </head>
 
 <script type="text/javascript">
+    function renderBanner(user) {
+        // Render the login/ logout button
+        $("#loginButton").text(
+            user.token ? "Logout" : "Login"
+        );
+    }
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgoName)
        console.log("working")
        processListResponse()
+        renderBanner(vm.user);
+
 
     }
+
     </script>
 
 <body onload="initialize()">
@@ -29,7 +38,15 @@
     <h1 style="display:inline;">User 1 </h1>
     <!--TODO:Figure out how to get algorithm name to display-->
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
-    <button style="display:inline; margin-left: 10%; background-color: aqua; padding: 30px 60px;" onclick="handleLogOut()">Log out </button>
+    <button
+        id="loginButton";
+        style="display:inline;
+                 margin-left: 80%;
+                 background-color: aqua;
+                 padding: 10px 10px;"
+        onclick="vm.user.token ? handleLogOut() : handleLogin()">
+    Login
+</button>
 </div>
 
 
