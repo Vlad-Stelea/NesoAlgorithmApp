@@ -109,8 +109,9 @@ public class AlgorithmDAO {
 
             if (parentClassName != null) {
                 ret.add(new Algorithm(algoName, new Classification(parentClassName)));
+            }else{
+                ret.add(new Algorithm(algoName));
             }
-            ret.add(new Algorithm(algoName));
         }
         return ret;
     }
@@ -125,8 +126,9 @@ public class AlgorithmDAO {
         //TODO? add method to get the children impls, benchmarks, and PIs, we also might do this in the handler idk
         if(parentClassName != null) {
             return new Algorithm(algoName, new Classification(parentClassName));
+        }else {
+            return new Algorithm(algoName);
         }
-        return new Algorithm(algoName);
     }
 
 }

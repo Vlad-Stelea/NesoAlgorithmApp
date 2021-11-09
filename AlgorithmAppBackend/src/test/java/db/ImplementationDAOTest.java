@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ImplementationDAOTest {
-
+/*
     static ImplementationDAO dao;
 
     @BeforeClass
@@ -33,7 +33,7 @@ public class ImplementationDAOTest {
         assertTrue(dao.removeImplementation("daoTest","daoTest"));
     }
 
-
+*/
 
 
 }

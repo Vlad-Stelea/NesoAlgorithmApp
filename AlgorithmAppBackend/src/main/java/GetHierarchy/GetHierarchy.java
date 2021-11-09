@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import db.AlgorithmDAO;
 import db.ClassificationDAO;
+import db.ImplementationDAO;
 
 public class GetHierarchy implements RequestHandler<Object, GetHierarchyResponse> {
 
@@ -12,10 +13,7 @@ public class GetHierarchy implements RequestHandler<Object, GetHierarchyResponse
     GetHierarchyHandler handler;
 
     public GetHierarchy() {
-        // TODO add implementation DAO
-        //handler = new GetHierarchyHandler(null, null);
-        handler = new GetHierarchyHandler(new ClassificationDAO(), new AlgorithmDAO());
-        //handler = new GetHierarchyHandler(new ClassificationDAO(), new AlgorithmDAO(), new ImplementationDAO());
+        handler = new GetHierarchyHandler(new ClassificationDAO(), new AlgorithmDAO(), new ImplementationDAO());
     }
 
     @Override
