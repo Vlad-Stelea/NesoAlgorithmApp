@@ -18,12 +18,15 @@
    hierarchy.innerHTML = output;
  }
 
-function createAlgorithmView(algoName) {
-     return '<li class="listItem">'+
+function createAlgorithmView(algoName, isUserRegistered) {
+     let output = '<li class="listItem">'+
          '<h3 style="display:inline;">+</h3>' +
-         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'+
-         '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'+
-         '</li>'
+         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'
+    if(isUserRegistered) {
+        output += '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'
+    }
+    output += '</li>'
+    return output;
 }
 
 function createClassificationView(classificationName, isUserRegistered) {
@@ -46,7 +49,7 @@ function createClassificationView(classificationName, isUserRegistered) {
  function addListItem(item){
      let output = ""
     if(item.Algorithm !== undefined){
-        output = createAlgorithmView(item.Algorithm);
+        output = createAlgorithmView(item.Algorithm, vm.user.token !== '');
     }else{
         //classification
         output = createClassificationView(item.Name, vm.user.token !== '')
