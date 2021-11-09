@@ -24,6 +24,7 @@ public class ClassificationTest {
         Classification childClass = new Classification("childClass", null);
         // add a subclassification and check that its parent is this classification and that it has been add to the list
         classification.addSubclassification(childClass);
+        assertEquals(childClass.getParentClassification(), classification);
         assertTrue(classification.getSubclassifications().contains(childClass));
     }
 
