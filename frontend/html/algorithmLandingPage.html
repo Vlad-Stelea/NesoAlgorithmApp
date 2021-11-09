@@ -22,7 +22,7 @@
         );
     }
     function initialize() {
-        $("#AlgoNameDisplay").text(vm.selectedAlgoName)
+        $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
        processListResponse()
         renderBanner(vm.user);
@@ -30,11 +30,15 @@
 
     }
 
+    $(document).ready(function(){
+        initialize();
+    });
+
     </script>
 
 <body onload="initialize()">
 <div style="background-color: cadetblue; padding: 20px;">
-    <button style="display:inline; background-color: aqua; padding: 30px 60px;">Home</button>
+    <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToRegisteredUsersPage()">Home</button>
     <h1 style="display:inline;">User 1 </h1>
     <!--TODO:Figure out how to get algorithm name to display-->
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
