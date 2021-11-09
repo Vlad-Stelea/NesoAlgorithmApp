@@ -1,6 +1,7 @@
 <html><head>
     <link rel="stylesheet" href="../css/algorithmPage.css">
 <!-- remember to add javascript-->
+    <script type='text/javascript' src='../js/api.js'></script>
     <script type='text/javascript' src='../js/handleLogOut.js'></script>
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAdd.js'></script>
@@ -56,7 +57,7 @@
 
         <div >
             <h2>Implementations</h2>
-            <button class="button" onclick="handleAddImpPrep()">Add Implementation</button>
+            <button class="button" onclick="handleAddImpPrep()" disabled ={("test" == '' ? true: false)}>Add Implementation</button>
             <div id='AddImpForm'></div>
             <button class="button">Add Problem Instance</button>
             <div id='Implementation'></div>
