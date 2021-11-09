@@ -11,6 +11,7 @@ class Navigation {
     }
 
     goToRegisteredUsersPage() {
+        vm.selectedAlgo = null;
         this.loadPage(this.pageMapping.registeredUsersPage)
     }
 
@@ -19,8 +20,8 @@ class Navigation {
     }
 
      goToAlgorithmPage(algoName) {
-            vm.selectedAlgo= algoName;
-            this.loadPage(this.pageMapping.algorithmPage);
+        vm.selectedAlgo = algoName;
+        this.loadPage(this.pageMapping.algorithmPage);
      }
 
     // Loads a page into the redirect
