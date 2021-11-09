@@ -23,7 +23,7 @@ public class ImplementationDAOTest {
 
     @Test
     public void testCreateImplementation() throws SQLException {
-        // create an Algorithm then check that we can find it in the database
+        // create an Implementation then check that we can find it in the database
         dao.removeImplementation("daoTest","daoTest");
         assertTrue(dao.createImplementation("daoTest","daoTest","daoTest","daoTest"));
         Implementation expectedImplementation= new Implementation("daoTest","daoTest","daoTest",new Algorithm("daoTest"));
