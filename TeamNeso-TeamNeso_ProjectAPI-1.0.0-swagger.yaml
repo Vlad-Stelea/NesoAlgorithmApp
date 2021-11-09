@@ -8,7 +8,7 @@ info:
 schemes:
   - https
 
-tags:
+tags: 
   - name: Classification
   - name: Algorithm
   - name: ProblemInstance
@@ -21,12 +21,12 @@ tags:
 paths:
   /Classification/{classificationName}:
     get:
-      tags:
+      tags: 
         - Classification
         - RegisteredUser
         - AnonymousUser
       summary: Get a classification by id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -39,13 +39,66 @@ paths:
       responses:
         200:
           description: Classification retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Classification"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Classification not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: classificationName
+          type: string
+          required: true
+          description: the classification the user would like to get
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Classification:
     post:
       tags:
@@ -67,11 +120,58 @@ paths:
           description: Classification created successfully
           schema:
             $ref: "#/definitions/Classification"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         409:
           description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Classification/Remove/{classificationName}:
     post:
       tags:
@@ -88,14 +188,67 @@ paths:
           name: classificationName
           required: true
           type: string
-          description: the id of the classification object to delete
+          description: the id of the classification object to delete 
       responses:
-        200:
+        200: 
           description: classification object deleted successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Classification"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
-          description: Error deleting the classification object
+          description: Error deleting the classification object 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: classificationName
+          type: string
+          required: true
+          description: the classification the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Classification/Merge:
     post:
@@ -103,7 +256,7 @@ paths:
         - Classification
         - RegisteredUser
       summary: merge two Classifications so they share children
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -117,14 +270,61 @@ paths:
       responses:
         200:
           description: Classifications merged successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Classification"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Classification/Hierachy:
     get:
-      tags:
+      tags: 
         - Classification
         - RegisteredUser
         - AnonymousUser
@@ -136,19 +336,66 @@ paths:
       responses:
         200:
           description: Classifications succesfully retrieved
-          schema:
+          schema: 
             $ref: "#/definitions/ClassificationHierachyResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Error retrieving classifications
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Algorithm/{algorithm_id}:
     get:
-      tags:
+      tags: 
         - Algorithm
         - RegisteredUser
         - AnonymousUser
       summary: Get an Algorithm by id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -161,13 +408,32 @@ paths:
       responses:
         200:
           description: Algorithm retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Algorithm"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Algorithm not found
-
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+  
   /Algorithm:
     post:
       tags:
@@ -189,10 +455,57 @@ paths:
           description: Algorithm created successfully
           schema:
             $ref: "#/definitions/Algorithm"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         409:
           description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Algorithm/Reclassify:
     post:
@@ -200,7 +513,7 @@ paths:
         - Algorithm
         - RegisteredUser
       summary: reclassify an algorithm to a different Classification
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -214,13 +527,60 @@ paths:
       responses:
         200:
           description: Algorithm reclassified successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Algorithm"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Algorithm/Classification not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Algorithm/Remove/{algorithm_id}:
     post:
       tags:
@@ -228,7 +588,7 @@ paths:
         - Admin
         - RegisteredUser
       summary: remove an Algorithm based on its id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -241,28 +601,128 @@ paths:
       responses:
         200:
           description: Algorithm removed successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Algorithm"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Algorithm not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: algorithm_id
+          type: string
+          required: true
+          description: the algorithm the user would like to get
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Algorithm/GetAllAlgorithms:
     get:
       tags:
         - Algorithm
         - RegisteredUser
         - AnonymousUser
-      summary: list all Algorithms
+      summary: list all Algorithms 
       description: request to list all Algorithms in the hierarchy
       produces:
-        - application/json
+      - application/json
       responses:
         200:
           description: obtained algorithms successfully
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Algorithm/GetProblemInstanceForAlgorithm/{algorithm_id}:
     get:
@@ -271,7 +731,7 @@ paths:
         - RegisteredUser
         - AnonymousUser
       summary: get a problem instance for a specific algorithm
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -284,21 +744,74 @@ paths:
       responses:
         200:
           description: ProblemInstance removed successfully
-          schema:
+          schema: 
             $ref: "#/definitions/ProblemInstance"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: ProblemInstance not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: algorithm_id
+          type: string
+          required: true
+          description: the algorithm the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /ProblemInstance/{problemInstance_id}:
     get:
-      tags:
+      tags: 
         - ProblemInstance
         - RegisteredUser
         - AnonymousUser
       summary: Get a ProblemInstance by id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -311,13 +824,67 @@ paths:
       responses:
         200:
           description: ProblemInstance retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/ProblemInstanceArrayResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: ProblemInstance not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: problemInstance_id
+          type: string
+          required: true
+          description: the problem instance  the user would like to get
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /ProblemInstance:
     post:
       tags:
@@ -339,10 +906,57 @@ paths:
           description: ProblemInstance created successfully
           schema:
             $ref: "#/definitions/ProblemInstance"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         409:
           description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /ProblemInstance/Remove/{problem_instance_id}:
     post:
@@ -351,7 +965,7 @@ paths:
         - Admin
         - RegisteredUser
       summary: Remove a specific problem instance based on id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -364,21 +978,74 @@ paths:
       responses:
         200:
           description: ProblemInstance removed successfully
-          schema:
+          schema: 
             $ref: "#/definitions/ProblemInstance"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: ProblemInstance not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: problem_instance_id
+          type: string
+          required: true
+          description: the problem instance the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+    
   /Implementation/{implementation_id}:
     get:
-      tags:
+      tags: 
         - Implementation
         - RegisteredUser
         - AnonymousUser
       summary: Get an Implementation by id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -391,13 +1058,66 @@ paths:
       responses:
         200:
           description: Implementation retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Implementation"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Implementation not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: implementation_id
+          type: string
+          required: true
+          description: the implementation the user would like to get
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Implementation:
     post:
       tags:
@@ -419,10 +1139,57 @@ paths:
           description: Implementation created successfully
           schema:
             $ref: "#/definitions/Implementation"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         409:
           description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Implementation/Remove/{implementation_id}:
     post:
@@ -431,7 +1198,7 @@ paths:
         - Admin
         - RegisteredUser
       summary: Remove an implementation based on its id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -444,17 +1211,70 @@ paths:
       responses:
         200:
           description: Implementation removed successfully
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: implementation_id
+          type: string
+          required: true
+          description: the implementation the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Benchmark/{benchmark_id}:
     get:
-      tags:
+      tags: 
         - Benchmark
         - AnonymousUser
         - RegisteredUser
       summary: Get a Benchmark by id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -467,13 +1287,66 @@ paths:
       responses:
         200:
           description: Benchmark retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Benchmark"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Benchmark not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: benchmark_id
+          type: string
+          required: true
+          description: the benchmark the user would like to select
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+    
   /Benchmark:
     post:
       tags:
@@ -496,18 +1369,65 @@ paths:
           description: Benchmark created successfully
           schema:
             $ref: "#/definitions/Benchmark"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         409:
           description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
 
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  
   /Benchmark/Remove/{benchmark_id}:
     post:
       tags:
         - Benchmark
         - Admin
       summary: remove a benchmark based on its id
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -520,10 +1440,63 @@ paths:
       responses:
         200:
           description: Benchmark removed successfully
-          schema:
+          schema: 
             $ref: "#/definitions/Benchmark"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: benchmark_id
+          type: string
+          required: true
+          description: the benchmark the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /User/Register:
     post:
@@ -546,8 +1519,55 @@ paths:
           description: User registered successfully
           schema:
             $ref: "#/definitions/User"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
 
   /Admin/Users:
@@ -564,15 +1584,62 @@ paths:
           description: Users fetched succesfully
           schema:
             $ref: "#/definitions/GetUsersResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Error fetching users
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Admin/Activity/{username}:
     get:
-      tags:
+      tags: 
         - Admin
       summary: Get the activity of a specific user
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -585,19 +1652,72 @@ paths:
       responses:
         200:
           description: User activity retrieved successfully
-          schema:
+          schema: 
             $ref: "#/definitions/ActivityLogfileArrayResponse"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
         404:
           description: Username not found
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: GET
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          type: string
+          required: true
+          description: the Registered User the Admin wants to see the activity of
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
   /Admin/RemoveUser/{username}:
     post:
       tags:
         - Admin
       summary: remove a specific User
-      consumes:
+      consumes: 
         - application/json
       produces:
         - application/json
@@ -610,13 +1730,66 @@ paths:
       responses:
         200:
           description: User removed successfully
-          schema:
+          schema: 
             $ref: "#/definitions/User"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          type: string
+          required: true
+          description: the Registered User the Admin wants to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
 
 
-
+          
 definitions:
   # define classes first
   Classification:
@@ -642,8 +1815,8 @@ definitions:
         allOf:
           - $ref: "#/definitions/Classification"
       level:
-        type: string
-
+        type: string      
+        
   Algorithm:
     type: object
     required:
@@ -661,7 +1834,7 @@ definitions:
           $ref: "#/definitions/ProblemInstance"
       name:
         type: string
-
+  
   Implementation:
     type: object
     required:
@@ -678,12 +1851,12 @@ definitions:
         items:
           $ref: "#/definitions/Benchmark"
       name:
-        type: string
+        type: string  
       language:
-        type: string
+        type: string 
       id:
         type: string
-
+  
   ProblemInstance:
     type: object
     required:
@@ -694,10 +1867,10 @@ definitions:
       dataset:
         type: string
       name:
-        type: string
+        type: string   
       id:
         type: string
-
+  
   Benchmark:
     type: object
     required:
@@ -711,26 +1884,26 @@ definitions:
       timeToRun:
         type: string
       name:
-        type: string
+        type: string   
       id:
         type: string
       machineConfiguration:
         allOf:
           - $ref: "#/definitions/MachineConfiguration"
       problemInstance:
-        allOf:
+        allOf: 
           - $ref: "#/definitions/ProblemInstance"
       dayRun:
         type: string
-
+  
   LoginInfo:
     type: object
     required:
-      - username
+     - username
     properties:
       username:
         type: string
-
+  
   User:
     type: object
     required:
@@ -738,25 +1911,25 @@ definitions:
     properties:
       username:
         type: string
-
+  
   AdminUser:
     type: object
     required:
-      - username
+     - username
     properties:
       username:
         type: string
-
-
+  
+  
   MachineConfiguration:
     type: object
     required:
-      - name
-      - cpu
-      - id
-      - L1cache
-      - L2cache
-      - numCores
+     - name
+     - cpu
+     - id 
+     - L1cache
+     - L2cache
+     - numCores
     properties:
       name:
         type: string
@@ -772,13 +1945,13 @@ definitions:
         type: string
       id:
         type: string
-
+  
   ActivityLogfile:
     type: object
     required:
-      - action
-      - username
-      - time
+     - action
+     - username
+     - time 
     properties:
       username:
         type: string
@@ -795,7 +1968,7 @@ definitions:
     properties:
       classification:
         type: string
-
+  
   AddClassificationRequest:
     type: object
     required:
@@ -806,7 +1979,7 @@ definitions:
         type: string
       parentClassification:
         type: string
-
+    
   RemoveClassificationRequest:
     type: object
     required:
@@ -814,7 +1987,7 @@ definitions:
     properties:
       classification:
         type: string
-
+  
   MergeClassificationsRequest:
     type: object
     required:
@@ -841,7 +2014,7 @@ definitions:
     properties:
       algorithm:
         type: string
-
+      
   AddAlgorithmRequest:
     type: object
     required:
@@ -852,7 +2025,7 @@ definitions:
         type: string
       classification:
         type: string
-
+  
   ReclassifyAlgorithmRequest:
     type: object
     required:
@@ -871,7 +2044,7 @@ definitions:
     properties:
       algorithm:
         type: string
-
+  
   GetAllAlgorithmsRequest:
     type: object
 
@@ -888,7 +2061,7 @@ definitions:
         type: string
       problemInstanceName:
         type: string
-
+  
   RemoveProblemInstanceRequest:
     type: object
     required:
@@ -904,7 +2077,7 @@ definitions:
     properties:
       algorithm:
         type: string
-
+  
   UploadImplementationRequest:
     type: object
     required:
@@ -950,7 +2123,7 @@ definitions:
     properties:
       username:
         type: string
-
+  
   GetRegisteredUsersRequest:
     type: object
 
@@ -969,7 +2142,7 @@ definitions:
     properties:
       username:
         type: string
-
+  
 
   UploadBenchmarkRequest:
     type: object
@@ -1012,8 +2185,8 @@ definitions:
         type: string
       problemInstanceID:
         type: string
-
-
+    
+      
   RegisterAccountRequest:
     type: object
     required:
@@ -1029,9 +2202,9 @@ definitions:
     properties:
       classifications:
         type: array
-        items:
+        items: 
           $ref: "#/definitions/Classification"
-
+  
   ProblemInstanceArrayResponse:
     type: object
     required:
@@ -1039,7 +2212,7 @@ definitions:
     properties:
       problemInstances:
         type: array
-        items:
+        items: 
           $ref: "#/definitions/ProblemInstance"
 
   ActivityLogfileArrayResponse:
@@ -1049,7 +2222,7 @@ definitions:
     properties:
       activityLogfiles:
         type: array
-        items:
+        items: 
           $ref: "#/definitions/ActivityLogfile"
 
   GetUsersResponse:
@@ -1059,7 +2232,7 @@ definitions:
     properties:
       users:
         type: array
-        items:
+        items: 
           $ref: "#/definitions/User"
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
