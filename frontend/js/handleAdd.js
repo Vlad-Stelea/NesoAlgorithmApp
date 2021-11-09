@@ -13,17 +13,14 @@ function handleAdd(ele){
         '<li>'+
         ' <br><label for="Algorithm Name">Algorithm name:</label>' +
         '<input type="text" id="fname" name="fname">'+
-        '<input type="submit" value="Submit" onclick="handleAddClassificationSubmit(\''+ ele.parentElement.children[1].textContent +'\', this)"><br><br>' +
+        '<input type="submit" value="Submit" onclick="handleAddAlgorithmSubmit(\''+ ele.parentElement.children[1].textContent +'\', this)"><br><br>' +
         '</li>' +
         '</ul>' + hierarchyHTML.substr(hierarchyHTML.indexOf(li) + li.length + ender.length)
     document.getElementById('Hierarchy').innerHTML = newHierarchyHTML
 }
 
-function handleAddClassificationSubmit(className, ele){
-    console.log("addAlgorithm")
-    console.log(ele.parentElement.children[2].value)
-    console.log("to")
-    console.log(className)
+function handleAddAlgorithmSubmit(className, ele){
+    console.log("addAlgorithm", ele.parentElement.children[2].value, " to ", className)
 
     //remove form
     ele.parentElement.parentElement.innerHTML = ''
@@ -47,13 +44,14 @@ function handleAddClassificationSubmit(className, ele){
 
 
 
-        console.log(xhr);
+        console.log("addAlgorithm xhr: ", xhr);
         console.log(xhr.request);
         if (xhr.readyState == XMLHttpRequest.DONE) {
             //I know this leads to extra lambda function calls, we can fix it later
+            //add the new algorithm to the hierarchy GUI
             initialize()
         } else {
-            initialize()
+            //failed so the hierarchy GUI doesn't need to be updated
         }
     };
 
