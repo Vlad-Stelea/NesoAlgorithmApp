@@ -13,7 +13,7 @@
    // Can grab any DIV or SPAN HTML element and can then manipulate its contents dynamically via javascript
    var js = JSON.parse(result);
     */
-   data = '{"Algorithm": [{"Name": "Implementation 1", "Language": "C","codeURL": "www.google.com" ,"ProblemInstances" : [{"Name": "Problem 1","datasetURL":"ww.test.data","BenchMark":[]}]},{"Name": "Implementation 1", "Language": "C","codeURL": "www.google.com" ,"ProblemInstances" : [{"Name": "Problem 1","datasetURL":"ww.test.data","BenchMark": [{"Name": "TheoTest","timeToRun": 1000, "dataRun": "10/20/20"},{"Name": "VladTest","timeToRun": 1000, "dataRun": "10/21/20"}]}]}]}';
+   data = '{"Algorithm": [{"Name": "Implementation 1", "Language": "C","codeURL": "skdjasldaksdjkasjdklasjdnjnjnbkjkjbkjbkjbnkjnbkjjnkjbjbnjnjkbjkbkjnkjbkjbnkbkjbkjbkjbnkjnkjbjkbkjbblkasjdlkasjdlkasjdlkjsadlkjaslkdjaslkdjlaskjdlkasjdlkasjdlkasjdlkasjdlkasjdlkasdjlkasjdlkasjdksjdlksajdksajdlkjaslkdjlskajdlkasjdklajsldkjaskdjalskdjlaksjdlkasjdlkasjdlkasjdlksajdklajsldk"},{"Name": "Implementation 1", "Language": "C","codeURL": "www.google.com"}]}';
     var js = JSON.parse(data);
 
     var output = '<ol style="list-style: none;">';
@@ -38,7 +38,7 @@
                             '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add Benchmark</h3>'+
                               '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleImplementationDelete(this)">Del</h3>'+
                               '<h3 style="margin-left: 20px;" class="button"> Language: ' + item.Language + '</h3>'+
-                              '<h>code: ' +item.codeURL + '</h3>' +
+                              '<h style="display:inline;word-wrap:break-word">code: ' +item.codeURL + '</h>' +
                              '<div class="content">'+
                             '<h3 style="; margin-left: 20px;" "> Language: '+item.Language + '</h3>'+
                             '<h3 style="display:inline; margin-left: 20px;" ">Url: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
@@ -46,11 +46,11 @@
                       '</li>'+
                         '<li style="list-style-type:none">'+
                         '<ul style="list-style: none;">'
-
-        for (var j = 0; j < item.ProblemInstances.length; j++) {
-            output = output + displayProblemInstances(item.ProblemInstances[j])
+        if(item.ProblemInstances){
+            for (var j = 0; j < item.ProblemInstances.length; j++) {
+                output = output + displayProblemInstances(item.ProblemInstances[j])
+            }
         }
-
         output = output + '</ul></li>'
 
 

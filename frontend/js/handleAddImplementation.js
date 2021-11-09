@@ -12,6 +12,12 @@ function handleAddImpPrep(){
 
 }
 
+function processCreateImplementationResponse(result) {
+    console.log("create implementation response: " + result);
+
+    updateHierarchy();
+}
+
 
 function handleAddTopLevelSubmit(ele){
     console.log("addTopSubmit")
@@ -23,12 +29,14 @@ function handleAddTopLevelSubmit(ele){
    let iData = {}
    let implementationName = ele.parentElement.children[2].value
    let code = ele.parentElement.children[4].value
-
+   let algoImplAdd = "algoImplAdd"
    let Language = ele.parentElement.children[6].value
    iData["implName"] = implementationName
    //should have a url instead
    iData["codeUrl"] = code
    iData["language"] = Language
+   iData["algoName"] = algoImplAdd
+
    //TODO:Add the algorithm name here
    if(implementationName === "") {
         alert("Please enter an Implementation name")
@@ -37,20 +45,20 @@ function handleAddTopLevelSubmit(ele){
             console.log("Create Implementation JSON: " + js);
             let xhr = new XMLHttpRequest();
 
-            /**xhr.open("POST", createClassification_url, true);
+            xhr.open("POST", createImplementation_url, true);
             xhr.send(js);
-            console.log("sent create classification request");
+            console.log("sent create implementation request");
 
 
 
             // after we get a response
             xhr.onloadend = function() {
-                console.log("create classification response: " + xhr);
+                console.log("create implementation response: " + xhr);
 
                 if(xhr.readyState === XMLHttpRequest.DONE) {
                     if(xhr.status === 200) {
                         console.log("XHR: " + xhr.responseText);
-                        processCreateClassificationResponse(xhr.responseText);
+                        processCreateImplementationResponse(xhr.responseText);
                     }
                     else {
                         console.log("Status != 200. Actual create response: " + xhr.responseText);
@@ -60,9 +68,9 @@ function handleAddTopLevelSubmit(ele){
                     }
                 }
                 else {
-                    processCreateClassificationResponse("N/A");
+                    processCreateImplementationResponse("N/A");
                 }
-            };*/
+            };
 
 
    }
