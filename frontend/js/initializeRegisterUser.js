@@ -13,7 +13,7 @@
     }
     output = output + '</ol>'
   
-   let hierarchy = document.getElementById("Hierarchy");
+   let hierarchy = document.getElementById('Hierarchy');
    // Update hierarchy result
    hierarchy.innerHTML = output;
  }
