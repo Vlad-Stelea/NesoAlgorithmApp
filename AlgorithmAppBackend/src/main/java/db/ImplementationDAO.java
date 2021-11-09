@@ -1,14 +1,16 @@
-package java.db;
+package db;
 
-import java.entities.Implemenation;
+import entities.Algorithm;
+import entities.Implementation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class Implementation {
+public class ImplementationDAO {
     private Connection conn;
-
+    private AlgorithmDAO algoConn = new AlgorithmDAO();
     public ImplementationDAO() {
         try {
             conn = DatabaseUtil.connect();
@@ -17,57 +19,83 @@ public class Implementation {
             PreparedStatement ps = conn.prepareStatement("SET SQL_SAFE_UPDATES = 0");
             ps.execute();
         }
-
         catch (Exception e) {
             conn = null;
             System.out.println("Connection has failed!");
         }
     }
 
-    public boolean createImplementation(String impName,String codeURL, String langauge,String algoName){
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO implementation (implName, codeURL, language, algoName) VALUES (?, ?, ?, ?);");
-        ps.setString(1, impName);
-        ps.setString(2, codeURL);
-        ps.setString(3, langauge);
-        ps.setString(4, algoName);
-        ps.execute();
+    public boolean createImplementation(String impName,String codeURL, String language,String algoName) throws SQLException{
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO implementation (implName, codeURL, language, algoName) VALUES (?, ?, ?, ?);");
+            ps.setString(1, impName);
+            ps.setString(2, codeURL);
+            ps.setString(3, language);
+            ps.setString(4, algoName);
+            ps.execute();
         return true;
     }
 
 
 
-    public Implementation getImplementation(String implName) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ?;");
-        ps.setString(1, ImplName);
+    public Implementation getImplementation(String implName, String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ? AND algoName = ?;");
+        ps.setString(1, implName);
+        ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
 
         return generateImplementation(rs);
     }
 
-    // could be useful for merging; will have to test, as we might get foreign key errors when deleting a className
-    public boolean removeImplementation(String impName) throws SQLException {
-        // make sure the Classification exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ?;");
-        ps.setString(1, ImplName);
+    public ArrayList<Implementation> getAllImplementation() throws SQLException{
+        ArrayList imps = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation;");
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),algoConn.getAlgorithm(rs.getString("algoName"))));
+        }
+
+        return imps;
+
+    }
+
+
+    public boolean removeImplementation(String impName, String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ? AND algoName = ?;");
+        ps.setString(1, impName);
+        ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
         //delete all benchmarks
-        if(rs.next()) {
+        /**if(rs.next()) {
             PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ?;");
             psDelete.setString(1, rs.getString(benchmarkName);
             psDelete.execute();
 
             return true;
-        }
+        }*/
 
         return false;
     }
 
-    private Implementation generateImplementationn(ResultSet rs) throws SQLException {
+    public ArrayList<Implementation> getImplementationForAlgo(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ArrayList imps = new ArrayList<>();
+
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),algoConn.getAlgorithm(algoName)));
+        }
+
+        return imps;
+    }
+
+    private Implementation generateImplementation(ResultSet rs) throws SQLException {
         String impName = rs.getString("impName");
         String codeURL = rs.getString("codeURL");
-        String language = rs.getString("langauge");
+        String language = rs.getString("language");
+        Algorithm algo = algoConn.getAlgorithm(rs.getString("algoName"));
 
         //TODO: see if its acceptable to return all new implementation with no children
-        return new Implementation(impName, codeURL,langauge);
+        return new Implementation(impName, codeURL,language,algo);
     }
 }

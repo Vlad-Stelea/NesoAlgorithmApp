@@ -19,7 +19,7 @@ public class AlgorithmTest {
         assertEquals(a.getAlgoName(), "test");
         assertEquals(a.getParentClassification(), null);
         assertEquals(a.getImplementations(), empty);
-        Implementation I = new Implementation("testImpl");
+        Implementation I = new Implementation("testImpl","www.google.com","C", null);
         a.addImplementation(I);
         assertEquals(a.getImplementations().get(0), I);
 
@@ -29,7 +29,7 @@ public class AlgorithmTest {
     public void testRemoveImpl() {
         Algorithm a = new Algorithm("test");
         ArrayList<Implementation> empty = new ArrayList<>();
-        Implementation I = new Implementation("testImpl");
+        Implementation I = new Implementation("testImpl","www.google.com","C",null);
         a.addImplementation(I);
         Classification parent = new Classification("parent");
         a.setAlgoName("test2");
