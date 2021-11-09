@@ -8,6 +8,9 @@ public class CreateImplementationRequest {
     public String codeUrl;
     public String language;
 
+    public CreateImplementationRequest(){
+
+    }
 
     public CreateImplementationRequest(String implName, String codeUrl, String language, String algoName){
         this.implName = implName;
