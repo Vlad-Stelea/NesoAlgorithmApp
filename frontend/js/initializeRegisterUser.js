@@ -9,13 +9,11 @@
 
     let output = '<ol style="list-style: none;">';
     for (let i = 0; i < js.Hierarchy.length; i++) {
-        console.log("here")
         output = output + addListItem(js.Hierarchy[i])
     }
     output = output + '</ol>'
   
    let hierarchy = document.getElementById("Hierarchy");
-    console.log(document)
    // Update hierarchy result
    hierarchy.innerHTML = output;
  }
@@ -51,7 +49,7 @@ function createClassificationView(classificationName, isUserRegistered) {
         output = createAlgorithmView(item.Algorithm);
     }else{
         //classification
-        output = createClassificationView(item.Name, true)
+        output = createClassificationView(item.Name, vm.user.token !== '')
 
         for (let j = 0; j < item.Children.length; j++) {
             output = output + addListItem(item.Children[j])
