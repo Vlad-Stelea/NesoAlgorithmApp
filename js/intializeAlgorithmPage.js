@@ -32,13 +32,13 @@
  function displayImplementations(item){
      output = ""
     //Implementation
-
+        //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
             output = '<li class="listItem">' +
                             '<button type="button" class="collapsible"> +  Implementation: ' + item.Name +'</button>'+
                             '<h3 style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add Benchmark</h3>'+
                               '<h3 style=" background-color: red; margin-left: 10px;" class="button" onclick="handleImplementationDelete(this)">Del</h3>'+
                               '<h3 style="margin-left: 20px;" class="button"> Language: ' + item.Language + '</h3>'+
-                               '<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
+                              '<h>code: ' +item.codeURL + '</h3>' +
                              '<div class="content">'+
                             '<h3 style="; margin-left: 20px;" "> Language: '+item.Language + '</h3>'+
                             '<h3 style="display:inline; margin-left: 20px;" ">Url: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
