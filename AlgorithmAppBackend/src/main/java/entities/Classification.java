@@ -73,7 +73,6 @@ public class Classification {
     }
 
     public boolean addSubclassification(Classification c) {
-        c.setParentClassification(this);
         return subclassifications.add(c);
     }
 
