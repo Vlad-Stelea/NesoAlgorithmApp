@@ -5,33 +5,33 @@ import java.util.List;
 
 public class Implementation {
 
-    private String name;
+    private String implName;
     private String codeURL;
     private String language;
     private Algorithm algorithmName;
-    private List<Benchmarks> benchmark;
+    private ArrayList<Benchmark> benchmark;
 
 
-    public Implementation(String name, String codeURL,String language,Algorithm algorithmName) {
-        this.name = name;
+    public Implementation(String implName, String codeURL,String language,Algorithm algorithmName) {
+        this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
         this.benchmark = new ArrayList<>();
     }
-    public Implementation(String name, String codeURL,String language,Algorithm algorithmName,ArrayList<Benchmarks> benchmark) {
-        this.name = name;
+    public Implementation(String implName, String codeURL,String language,Algorithm algorithmName,ArrayList<Benchmark> benchmark) {
+        this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
         this.benchmark = benchmark;
     }
     //Getter and setter methods
 
-    public String getName() {
-        return name;
+    public String getImplName() {
+        return implName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setImplName(String implName) {
+        this.implName = implName;
     }
 
     public String getCodeURL() {
@@ -51,18 +51,18 @@ public class Implementation {
     }
 
     public Algorithm getAlgorithmName() {
-        return algorithmName.getName();
+        return algorithmName;
     }
 
     public void setAlgorithmName(Algorithm algorithmName) {
         this.algorithmName = algorithmName;
     }
 
-    public ArrayList<Benchmarks> getBenchmark() {
+    public ArrayList<Benchmark> getBenchmark() {
         return benchmark;
     }
 
-    public void setBenchmark(ArrayList<Benchmarks> benchmark) {
+    public void setBenchmark(ArrayList<Benchmark> benchmark) {
         this.benchmark = benchmark;
     }
 
@@ -71,7 +71,7 @@ public class Implementation {
         return benchmark.add(b);
     }
     public boolean removeBenchmark(String benName){
-        return benchmark.removeIf(b -> b.getBenchmarkName().equals(benName));
+        return benchmark.removeIf(b -> b.getBenchName().equals(benName));
     }
 
 
