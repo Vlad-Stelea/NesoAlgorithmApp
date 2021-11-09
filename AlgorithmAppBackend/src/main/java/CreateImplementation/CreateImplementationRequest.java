@@ -1,6 +1,7 @@
+
 package CreateImplementation;
 
-public class CreateImplemenationRequest {
+public class CreateImplementationRequest {
 
     public String implName;
     public String algoName;
@@ -8,11 +9,11 @@ public class CreateImplemenationRequest {
     public String language;
 
 
-    public CreateImplemenationRequest(String implName, String algoName, String codeUrl, String language){
+    public CreateImplementationRequest(String implName, String codeUrl, String language, String algoName){
         this.implName = implName;
         this.algoName = algoName;
         this.codeUrl = codeUrl;
-        this.language - language;
+        this.language = language;
     }
 
 

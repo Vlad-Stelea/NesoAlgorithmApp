@@ -2,7 +2,7 @@ package CreateImplementation;
 import com.google.gson.Gson;
 
 
-public class CreateImplemenationResponse {
+public class CreateImplementationResponse {
 
         public final String response;
         public final int httpCode;
@@ -16,7 +16,7 @@ public class CreateImplemenationResponse {
         }
 
         // 200 means success
-        public CreateImplemenationResponse (String s, int code, String error) {
+        public CreateImplementationResponse (String s, int code, String error) {
             this.response = s;
             this.httpCode = code;
             this.error = error;

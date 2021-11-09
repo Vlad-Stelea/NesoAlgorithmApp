@@ -2,7 +2,7 @@ package CreateImplementation;
 
 
 import db.ImplementationDAO;
-import entities.Implementation;
+
 
 public class CreateImplementationHandler{
 
@@ -13,14 +13,14 @@ public class CreateImplementationHandler{
     }
 
 
-    public CreateImplementationResponse handle(CreateImplementationRequest req)  {
+    public CreateImplementationResponse handle(CreateImplementationRequest request)  {
 
 
         CreateImplementationResponse response;
 
         try {
-            if(dao.createImplementation(request.getImplName(), request.getAlgoName())) {
-                response = new CreateImplementationResponse(request.getImplName() + "," + request.getAlgoName() + "," + request.getCodeUrl() + "," + request.getLanguage(), 200);
+            if(dao.createImplementation(request.getImplName(),request.getCodeUrl(), request.getLanguage() ,request.getAlgoName())) {
+                response = new CreateImplementationResponse(request.getImplName() + "," + request.getCodeUrl() + "," + request.getLanguage() + "," + request.getAlgoName(), 200);
             } else {
                 response = new CreateImplementationResponse(request.getImplName(), 409, "Classification already exists.");
             }

@@ -21,7 +21,7 @@ public class CreateImplementation implements RequestHandler<CreateImplementation
         logger.log("Loading Java Lambda handler to create Implementation...");
         logger.log("Create Implementation request: " + req.toString());
 
-        handler = new CreateImplementationHandler(new ImplementationnDAO());
+        handler = new CreateImplementationHandler(new ImplementationDAO());
 
         return handler.handle(req);
 
