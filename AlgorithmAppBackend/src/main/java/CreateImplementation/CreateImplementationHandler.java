@@ -22,7 +22,7 @@ public class CreateImplementationHandler{
             if(dao.createImplementation(request.getImplName(),request.getCodeUrl(), request.getLanguage() ,request.getAlgoName())) {
                 response = new CreateImplementationResponse(request.getImplName() + "," + request.getCodeUrl() + "," + request.getLanguage() + "," + request.getAlgoName(), 200);
             } else {
-                response = new CreateImplementationResponse(request.getImplName(), 409, "Classification already exists.");
+                response = new CreateImplementationResponse(request.getImplName(), 409, "Implementation already exists.");
             }
         } catch (Exception e) {
             e.printStackTrace();
