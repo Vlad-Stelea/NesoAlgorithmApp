@@ -1,4 +1,5 @@
 package entities;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,23 +9,24 @@ public class Implementation {
     private String codeURL;
     private String language;
     private Algorithm algorithmName;
-    private ArrayList<Benchmark> benchmark;
+    private List<Benchmark> benchmarks;
 
-
-    public Implementation(String implName, String codeURL,String language,Algorithm algorithmName) {
+    public Implementation(String implName, String codeURL, String language, Algorithm algorithmName) {
         this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
-        this.benchmark = new ArrayList<>();
+        this.algorithmName = algorithmName;
+        this.benchmarks = new ArrayList<>();
     }
-    public Implementation(String implName, String codeURL,String language,Algorithm algorithmName,ArrayList<Benchmark> benchmark) {
+    public Implementation(String implName, String codeURL, String language, Algorithm algorithmName, List<Benchmark> benchmarks) {
         this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
-        this.benchmark = benchmark;
+        this.algorithmName = algorithmName;
+        this.benchmarks = benchmarks;
     }
+
     //Getter and setter methods
-
     public String getImplName() {
         return implName;
     }
@@ -57,23 +59,19 @@ public class Implementation {
         this.algorithmName = algorithmName;
     }
 
-    public ArrayList<Benchmark> getBenchmark() {
-        return benchmark;
+    public List<Benchmark> getBenchmark() {
+        return benchmarks;
     }
 
-    public void setBenchmark(ArrayList<Benchmark> benchmark) {
-        this.benchmark = benchmark;
+    public void setBenchmark(List<Benchmark> benchmarks) {
+        this.benchmarks = benchmarks;
     }
 
     //Other methods
     public boolean addBenchmark(Benchmark b){
-        return benchmark.add(b);
+        return benchmarks.add(b);
     }
     public boolean removeBenchmark(String benName){
-        return benchmark.removeIf(b -> b.getBenchName().equals(benName));
+        return benchmarks.removeIf(b -> b.getBenchName().equals(benName));
     }
-
-
-
-
 }

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassificationDAO {
     private Connection conn;
@@ -49,6 +51,13 @@ public class ClassificationDAO {
         return generateClassification(rs);
     }
 
+    public List<Classification> getAllClassifications() throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification;");
+        ResultSet rs = ps.executeQuery();
+
+        return generateClassifications(rs);
+    }
+
     // could be useful for merging; will have to test, as we might get foreign key errors when deleting a className
     public boolean removeClassification(String className) throws SQLException {
         // make sure the Classification exists first
@@ -80,6 +89,19 @@ public class ClassificationDAO {
         }
 
         return null;
+    }
+
+    private List<Classification> generateClassifications(ResultSet rs) throws SQLException {
+        List<Classification> result = new ArrayList<>();
+
+        while(rs.next()) {
+            String className = rs.getString("className");
+            String parentClassName = rs.getString("parentClassName");
+
+            result.add(new Classification(className, new Classification(parentClassName)));
+        }
+
+        return result;
     }
 
 }
