@@ -29,7 +29,7 @@ function handleAddTopLevelSubmit(ele){
    let iData = {}
    let implementationName = ele.parentElement.children[2].value
    let code = ele.parentElement.children[4].value
-   let algoImplAdd = "algoImplAdd"
+   let algoImplAdd = vm.selectedAlgo
    let Language = ele.parentElement.children[6].value
    iData["implName"] = implementationName
    //should have a url instead

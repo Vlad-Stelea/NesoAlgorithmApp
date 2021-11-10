@@ -21,13 +21,17 @@
         $("#loginButton").text(
             user.token ? "Logout" : "Login"
         );
+        if(user.token){
+            document.getElementById("loggedIn").style.display = "block";
+        } else{
+            document.getElementById("loggedIn").style.display = "none";
+        }
     }
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
        processListResponse()
         renderBanner(vm.user);
-
 
     }
 
@@ -57,9 +61,11 @@
 
         <div >
             <h2>Implementations</h2>
-            <button class="button" onclick="handleAddImpPrep()" disabled ={("test" == '' ? true: false)}>Add Implementation</button>
+            <div id="loggedIn">
+            <button class="button" onclick="handleAddImpPrep()" >Add Implementation</button>
             <div id='AddImpForm'></div>
             <button class="button">Add Problem Instance</button>
+            </div>
             <div id='Implementation'></div>
 
         </div>
