@@ -30,7 +30,7 @@
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-       processListResponse()
+        updateHierarchyImplementation()
         renderBanner(vm.user);
 
     }
@@ -60,12 +60,13 @@
 
 
         <div >
-            <h2>Implementations</h2>
+
             <div id="loggedIn">
             <button class="button" onclick="handleAddImpPrep()" >Add Implementation</button>
             <div id='AddImpForm'></div>
             <button class="button">Add Problem Instance</button>
             </div>
+            <h2>Implementations</h2>
             <div id='Implementation'></div>
 
         </div>

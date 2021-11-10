@@ -15,7 +15,7 @@ function handleAddImpPrep(){
 function processCreateImplementationResponse(result) {
     console.log("create implementation response: " + result);
 
-    updateHierarchy();
+    updateHierarchyImplementation();
 }
 
 
