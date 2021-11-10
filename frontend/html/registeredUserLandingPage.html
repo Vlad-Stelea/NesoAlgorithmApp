@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="../css/registeredUser.css">
     <!-- relative path-name to access js -->
     <script type='text/javascript' src='../js/api.js'></script>
+    <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAdd.js'></script>
     <script type='text/javascript' src='../js/handleAddTopLevel.js'></script>
     <script type='text/javascript' src='../js/handleAlgorithmDelete.js'></script>
@@ -19,10 +20,16 @@
             $("#loginButton").text(
                 user.token ? "Logout" : "Login"
             );
+            if(user.token){
+                document.getElementById("loggedIn").style.display = "block";
+            } else{
+                document.getElementById("loggedIn").style.display = "none";
+            }
+
         }
 
         function initialize() {
-           processListResponse();
+           updateHierarchy();
            renderBanner(vm.user);
         }
 
@@ -49,7 +56,7 @@
         </button>
     </div>
     <br>
-    <button style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px; outline: 2px solid black; outline-offset: -1px;"
+    <button id="loggedIn" style="display:inline; background-color: green; margin-left: 10px; padding: 5px 5px; outline: 2px solid black; outline-offset: -1px;"
     onclick="handleAddTopLevelPrep()">
         Add Top Level Classification
     </button>

@@ -21,7 +21,8 @@
 function createAlgorithmView(algoName, isUserRegistered) {
      let output = '<li class="listItem">'+
          '<h3 style="display:inline;">+</h3>' +
-         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>'
+         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>' +
+         '<button style="background-color: blue; margin-left: 50px;" class="button" onclick="navigation.goToAlgorithmPage(\'' + algoName  + '\')">Algo Page</button>'
     if(isUserRegistered) {
         output += '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'
     }

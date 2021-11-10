@@ -5,17 +5,24 @@ class Navigation {
         this.cognitoRedirectUri = cognitoRedirectUri;
         this.pageMapping = {
             registeredUsersPage : "registeredUserLandingPage.html",
-            cognitoAuth : "https://nesoalgorithm.auth.us-east-2.amazoncognito.com//login?response_type=token&client_id=62lcdgq2137nmak9t45kse25q9&redirect_uri={0}"
+            cognitoAuth : "https://nesoalgorithm.auth.us-east-2.amazoncognito.com//login?response_type=token&client_id=62lcdgq2137nmak9t45kse25q9&redirect_uri={0}",
+            algorithmPage : "algorithmLandingPage.html"
         }
     }
 
     goToRegisteredUsersPage() {
+        vm.selectedAlgo = null;
         this.loadPage(this.pageMapping.registeredUsersPage)
     }
 
     goToLogin() {
         this.redirect(this.pageMapping.cognitoAuth);
     }
+
+     goToAlgorithmPage(algoName) {
+        vm.selectedAlgo = algoName;
+        this.loadPage(this.pageMapping.algorithmPage);
+     }
 
     // Loads a page into the redirect
     loadPage(url) {

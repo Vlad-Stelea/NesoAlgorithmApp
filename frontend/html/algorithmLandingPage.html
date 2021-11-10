@@ -1,6 +1,7 @@
 <html><head>
     <link rel="stylesheet" href="../css/algorithmPage.css">
 <!-- remember to add javascript-->
+    <script type='text/javascript' src='../js/api.js'></script>
     <script type='text/javascript' src='../js/handleLogOut.js'></script>
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAdd.js'></script>
@@ -8,32 +9,64 @@
     <script type='text/javascript' src='../js/handleBenchmarkDelete.js'></script>
     <script type='text/javascript' src='../js/handleMachineConfigDelete.js'></script>
     <script type='text/javascript' src='../js/handleProblemInstanceDelete.js'></script>
-    <script type='text/javascript' src='../js/handleLogOut.js'></script>
+    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
+    <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
+
 </head>
 
 <script type="text/javascript">
+    function renderBanner(user) {
+        // Render the login/ logout button
+        $("#loginButton").text(
+            user.token ? "Logout" : "Login"
+        );
+        if(user.token){
+            document.getElementById("loggedIn").style.display = "block";
+        } else{
+            document.getElementById("loggedIn").style.display = "none";
+        }
+    }
     function initialize() {
-
+        $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-       processListResponse()
+        updateHierarchyImplementation()
+        renderBanner(vm.user);
 
     }
+
+    $(document).ready(function(){
+        initialize();
+    });
+
     </script>
 
 <body onload="initialize()">
 <div style="background-color: cadetblue; padding: 20px;">
-    <button style="display:inline; background-color: aqua; padding: 30px 60px;">Home</button>
+    <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToRegisteredUsersPage()">Home</button>
     <h1 style="display:inline;">User 1 </h1>
-    <h1 style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
-    <button style="display:inline; margin-left: 10%; background-color: aqua; padding: 30px 60px;" onclick="handleLogOut()">Log out </button>
+    <!--TODO:Figure out how to get algorithm name to display-->
+    <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
+    <button
+        id="loginButton";
+        style="display:inline;
+                 margin-left: 80%;
+                 background-color: aqua;
+                 padding: 10px 10px;"
+        onclick="vm.user.token ? handleLogOut() : handleLogin()">
+    Login
+</button>
 </div>
 
 
         <div >
-            <h2>Implementations</h2>
-            <button class="button">Add Implementation</button>
+
+            <div id="loggedIn">
+            <button class="button" onclick="handleAddImpPrep()" >Add Implementation</button>
+            <div id='AddImpForm'></div>
             <button class="button">Add Problem Instance</button>
+            </div>
+            <h2>Implementations</h2>
             <div id='Implementation'></div>
 
         </div>
