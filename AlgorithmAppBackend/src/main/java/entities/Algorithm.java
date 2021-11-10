@@ -3,12 +3,13 @@ package entities;
 import entities.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Algorithm {
 
     private String algoName;
     private Classification parentClassification;
-    private ArrayList<Implementation> implementations;
+    private List<Implementation> implementations;
 
     public Algorithm(String algoName) {
         this.algoName = algoName;
@@ -37,7 +38,7 @@ public class Algorithm {
         return parentClassification;
     }
 
-    public ArrayList<Implementation> getImplementations() {
+    public List<Implementation> getImplementations() {
         return implementations;
     }
 
@@ -45,7 +46,7 @@ public class Algorithm {
         this.algoName = algoName;
     }
 
-    public void setImplementations(ArrayList<Implementation> implementations) {
+    public void setImplementations(List<Implementation> implementations) {
         this.implementations = implementations;
     }
 
