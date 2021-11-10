@@ -68,13 +68,14 @@ public class GetHierarchyHandler {
         //add implementations to the algos
         for(int i = 0; i < allImpsL.size(); i++){
             Implementation child = allImpsL.get(i);
-            if(child.getAlgorithmName().getAlgoName() == null){
-                //test impl
-            }else{
+            if(child.getAlgorithmName().getAlgoName() != null){
                 //Valid impl
                 Algorithm parent = allAlgosHM.get(child.getAlgorithmName().getAlgoName());
                 parent.addImplementation(child);
                 child.setAlgorithmName(null);
+
+            }else{
+                //test impl
             }
         }
 
@@ -84,13 +85,14 @@ public class GetHierarchyHandler {
         //add algorithms to the tree
         for(int i = 0; i < allALgosL.size(); i++){
             Algorithm child = allALgosL.get(i);
-            if(child.getParentClassification() == null){
-                //test algo
-            }else{
+            if(child.getParentClassification() != null){
                 //Valid Algo
                 Classification parent = allClassesHM.get(child.getParentClassification().getClassName());
                 parent.addAlgorithm(child);
                 child.setParentClassification(null);
+
+            }else{
+                //test algo
             }
         }
 
@@ -115,8 +117,7 @@ public class GetHierarchyHandler {
     private HashMap<String, Classification> generateClassHashMap(List<Classification> allClassL) {
         HashMap<String, Classification> allClassesHM = new HashMap<>();
         //add them to hash map
-        for(int i = 0; i < allClassL.size(); i++){
-            Classification c = allClassL.get(i);
+        for(Classification c: allClassL){
             allClassesHM.put(c.getClassName(), c);
         }
         return allClassesHM;
@@ -125,9 +126,8 @@ public class GetHierarchyHandler {
     private HashMap<String, Algorithm> generateAlgoHashMap(List<Algorithm> allAlgosL) {
         HashMap<String, Algorithm> allAlgosHM = new HashMap<>();
         //add them to hash map
-        for(int i = 0; i < allAlgosL.size(); i++){
-            Algorithm c = allAlgosL.get(i);
-            allAlgosHM.put(c.getAlgoName(), c);
+        for(Algorithm a: allAlgosL){
+            allAlgosHM.put(a.getAlgoName(), a);
         }
         return allAlgosHM;
     }
