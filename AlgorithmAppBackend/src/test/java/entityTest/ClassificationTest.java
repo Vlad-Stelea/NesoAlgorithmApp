@@ -7,9 +7,6 @@ import entities.Classification;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ClassificationTest {
 
     private Classification classification;
@@ -24,7 +21,7 @@ public class ClassificationTest {
         Classification childClass = new Classification("childClass", null);
         // add a subclassification and check that its parent is this classification and that it has been add to the list
         classification.addSubclassification(childClass);
-        assertEquals(childClass.getParentClassification(), classification);
+        assertEquals(childClass.getParentClassificationName(), "entityTest");
         assertTrue(classification.getSubclassifications().contains(childClass));
     }
 
@@ -38,7 +35,7 @@ public class ClassificationTest {
         // now, remove the classification and check if the list still contains it (and that its parent is no longer this classification)
         classification.removeSubclassification("childClass");
         assertFalse(classification.getSubclassifications().contains(childClass));
-        assertNull(childClass.getParentClassification());
+        assertNull(childClass.getParentClassificationName());
 
         // shouldn't be able to remove a classification that doesn't exist
         assertFalse(classification.removeSubclassification("childClass"));
@@ -50,6 +47,7 @@ public class ClassificationTest {
         // add an algorithm and check that it exists
         classification.addAlgorithm(algorithm);
         assertTrue(classification.getAlgorithms().contains(algorithm));
+        assertEquals(algorithm.getParentClassificationName(), "entityTest");
     }
 
     @Test
@@ -62,6 +60,7 @@ public class ClassificationTest {
         // remove the algorithm and check that it's removed
         assertTrue(classification.removeAlgorithm("algo"));
         assertFalse(classification.getAlgorithms().contains(algorithm));
+        assertNull(algorithm.getParentClassificationName());
         // make sure we can't remove an algo that doesn't exist
         assertFalse(classification.removeAlgorithm("algo"));
     }
@@ -72,7 +71,7 @@ public class ClassificationTest {
         assertTrue(classification.isTopLevel());
 
         // create a classification with a parent and check that it's not considered top level
-        Classification childClass = new Classification("childClass", classification);
+        Classification childClass = new Classification("childClass", "entityTest");
         assertFalse(childClass.isTopLevel());
     }
 
