@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Classification {
@@ -96,6 +95,55 @@ public class Classification {
         if(obj == this) return true;
         if(!(obj instanceof Classification)) return false;
         Classification c = (Classification) obj;
-        return c.getClassName().equals(this.className);
+        return this.classNamesMatch(c) && this.subClassificationsMatch(c) && this.algorithmsMatch(c) && this.parentClassificationsMatch(c);
+    }
+
+    private boolean parentClassificationsMatch(Classification c) {
+        //todo when we set parent to be a string implement this, if we implement now it will cause an infinite loop
+        return true;
+    }
+
+    private boolean algorithmsMatch(Classification c) {
+        if(this.algorithms != null){
+            if(c.algorithms != null && this.algorithms.size() == c.algorithms.size()){
+                for(int i = 0; i < c.algorithms.size(); i++){
+                    if(!this.algorithms.contains(c.algorithms.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                //either c has null algorithms or the sizes don't match
+                return false;
+            }
+        }else{
+            return c.algorithms == null;
+        }
+    }
+
+    private boolean subClassificationsMatch(Classification c) {
+        if(this.subclassifications != null){
+            if(c.subclassifications != null && this.subclassifications.size() == c.subclassifications.size()){
+                for(int i = 0; i < c.subclassifications.size(); i++){
+                    if(!this.subclassifications.contains(c.subclassifications.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                //either c has null subClassifications or the sizes don't match
+                return false;
+            }
+        }else{
+            return c.subclassifications == null;
+        }
+    }
+
+    private boolean classNamesMatch(Classification c) {
+        if(this.className != null){
+            return this.className.equals(c.className);
+        }else{
+            return c.className == null;
+        }
     }
 }

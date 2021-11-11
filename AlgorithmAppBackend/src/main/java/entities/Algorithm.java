@@ -69,10 +69,39 @@ public class Algorithm {
         if(obj == this) return true;
         if(!(obj instanceof Algorithm)) return false;
         Algorithm a = (Algorithm) obj;
-        if(a.getParentClassification() == null){
-            return a.getAlgoName().equals(this.algoName) && this.parentClassification == null;
+        return this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a);
+    }
+
+    private boolean implementationsMatch(Algorithm a) {
+        if(this.implementations != null){
+            if(a.implementations != null && this.implementations.size() == a.implementations.size()){
+                for(int i = 0; i < a.implementations.size(); i++){
+                    if(!this.implementations.contains(a.implementations.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                //either c has null implentations or the sizes don't match
+                return false;
+            }
+        }else{
+            return a.implementations == null;
         }
-        return a.getAlgoName().equals(this.algoName) && a.getParentClassification().equals(this.parentClassification);
+    }
+
+    private boolean parentClassificationsMatch(Algorithm a) {
+        //todo when we set parent to be a string implement this, if we implement now it will cause an infinite loop
+
+        return true;
+    }
+
+    private boolean algoNamesMatch(Algorithm a) {
+        if(this.algoName != null){
+            return this.algoName.equals(a.algoName);
+        }else{
+            return a.algoName == null;
+        }
     }
 
 }
