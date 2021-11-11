@@ -51,7 +51,7 @@ public class ImplementationDAO {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
-            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),new Algorithm(rs.getString("algoName"))));
+            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),rs.getString("algoName")));
         }
 
         return imps;
@@ -64,8 +64,16 @@ public class ImplementationDAO {
         ps.setString(1, implName);
         ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM implementation WHERE implName = ? AND algoName = ?;");
+            psDelete.setString(1, implName);
+            psDelete.setString(2, algoName);
+            psDelete.execute();
+
+            return true;
+        }
         //delete all benchmarks
-        /**if(rs.next()) {
+        /*if(rs.next()) {
             PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ?;");
             psDelete.setString(1, rs.getString(benchmarkName);
             psDelete.execute();
@@ -83,17 +91,18 @@ public class ImplementationDAO {
 
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
-            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"),new Algorithm(algoName)));
+            imps.add(new Implementation(rs.getString("implName"),rs.getString("codeURL"),rs.getString("language"), algoName));
         }
 
         return imps;
     }
 
     private Implementation generateImplementation(ResultSet rs) throws SQLException {
+        rs.next();
         String implName = rs.getString("implName");
         String codeURL = rs.getString("codeURL");
         String language = rs.getString("language");
-        Algorithm algo = new Algorithm(rs.getString("algoName"));
+        String algo = rs.getString("algoName");
 
         //TODO: see if its acceptable to return all new implementation with no children
         return new Implementation(implName, codeURL,language,algo);

@@ -95,10 +95,7 @@ public class AlgorithmDAO {
         String algoName = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
-        if(parentClassName != null) {
-            return new Algorithm(algoName, new Classification(parentClassName));
-        }
-        return new Algorithm(algoName);
+        return new Algorithm(algoName, parentClassName);
     }
 
     private ArrayList<Algorithm> generateBasicAlgorithms(ResultSet rs) throws SQLException {
@@ -107,11 +104,8 @@ public class AlgorithmDAO {
             String algoName = rs.getString("algoName");
             String parentClassName = rs.getString("className");
 
-            if (parentClassName != null) {
-                ret.add(new Algorithm(algoName, new Classification(parentClassName)));
-            }else{
-                ret.add(new Algorithm(algoName));
-            }
+            ret.add(new Algorithm(algoName, parentClassName));
+
         }
         return ret;
     }
@@ -123,12 +117,8 @@ public class AlgorithmDAO {
         String algoName = rs.getString("algoName");
         String parentClassName = rs.getString("className");
 
-        //TODO? add method to get the children impls, benchmarks, and PIs, we also might do this in the handler idk
-        if(parentClassName != null) {
-            return new Algorithm(algoName, new Classification(parentClassName));
-        }else {
-            return new Algorithm(algoName);
-        }
+        return new Algorithm(algoName, parentClassName);
+
     }
 
 }

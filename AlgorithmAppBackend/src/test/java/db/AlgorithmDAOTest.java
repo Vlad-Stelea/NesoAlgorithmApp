@@ -23,68 +23,65 @@ public class AlgorithmDAOTest {
     @Test
     public void testCreateAlgorithm() throws SQLException {
         // create an Algorithm then check that we can find it in the database
-        dao.removeAlgorithm("daoTest");
-        assertTrue(dao.createAlgorithm("daoTest", null));
-        Algorithm expectedAlgorithm = new Algorithm("daoTest");
-        assertEquals(expectedAlgorithm, dao.getAlgorithm("daoTest"));
-
+        dao.removeAlgorithm("efsDaoTest");
+        assertTrue(dao.createAlgorithm("efsDaoTest", null));
+        Algorithm returned = dao.getAlgorithm("efsDaoTest");
         // clean up
-        assertTrue(dao.removeAlgorithm("daoTest"));
+        assertTrue(dao.removeAlgorithm("efsDaoTest"));
+        Algorithm expectedAlgorithm = new Algorithm("efsDaoTest");
+        assertEquals(expectedAlgorithm, returned);
+
     }
 
     @Test
     public void testRemoveAlgorithm() throws SQLException {
-        dao.removeAlgorithm("daoTest2");
+        dao.removeAlgorithm("efsdaoTest2");
         // create an Algorithm then check that we can find it in the database
-        assertTrue(dao.createAlgorithm("daoTest2", null));
-        Algorithm expectedAlgorithm = new Algorithm("daoTest2");
-        assertEquals(expectedAlgorithm, dao.getAlgorithm("daoTest2"));
-
+        assertTrue(dao.createAlgorithm("efsdaoTest2", null));
         // check that we can remove the Algorithm, then check it doesn't exist
-        assertTrue(dao.removeAlgorithm("daoTest2"));
-        assertEquals(null, dao.getAlgorithm("daoTest2"));
+        assertTrue(dao.removeAlgorithm("efsdaoTest2"));
+        assertEquals(null, dao.getAlgorithm("efsdaoTest2"));
     }
 
     @Test
     public void testGetAlgorithm() throws SQLException {
-        dao.removeAlgorithm("daoTest3");
+        dao.removeAlgorithm("efsdaoTest3");
         // shouldn't be able to get a non-existent Algorithm
-        assertNull(dao.getAlgorithm("daoTest3"));
+        assertNull(dao.getAlgorithm("efsdaoTest3"));
 
         // create an Algorithm then get it from the database
-        assertTrue(dao.createAlgorithm("daoTest3", null));
-        Algorithm actualAlgorithm = dao.getAlgorithm("daoTest3");
-        assertTrue(dao.removeAlgorithm("daoTest3"));
-        Algorithm expectedAlgorithm = new Algorithm("daoTest3");
+        assertTrue(dao.createAlgorithm("efsdaoTest3", null));
+        Algorithm actualAlgorithm = dao.getAlgorithm("efsdaoTest3");
+        assertTrue(dao.removeAlgorithm("efsdaoTest3"));
+        Algorithm expectedAlgorithm = new Algorithm("efsdaoTest3");
         assertEquals(expectedAlgorithm, actualAlgorithm);
 
-        // clean up
 
     }
 
     @Test
     public void testGetAllAlgorithms() throws SQLException {
         // create an Algorithm then get it from the database
-        dao.createAlgorithm("daoTest4", null);
-        dao.createAlgorithm("daoTest5", null);
-        dao.createAlgorithm("daoTest6", null);
-        dao.createAlgorithm("daoTest7", null);
+        dao.createAlgorithm("efsdaoTest4", null);
+        dao.createAlgorithm("efsdaoTest5", null);
+        dao.createAlgorithm("efsdaoTest6", null);
+        dao.createAlgorithm("efsdaoTest7", null);
         ArrayList<Algorithm> rets = dao.getAllAlgorithms();
-        dao.removeAlgorithm("daoTest4");
-        dao.removeAlgorithm("daoTest5");
-        dao.removeAlgorithm("daoTest6");
-        dao.removeAlgorithm("daoTest7");
+        dao.removeAlgorithm("efsdaoTest4");
+        dao.removeAlgorithm("efsdaoTest5");
+        dao.removeAlgorithm("efsdaoTest6");
+        dao.removeAlgorithm("efsdaoTest7");
         ArrayList<Algorithm> retEmpty = dao.getAllAlgorithms();
 
-        assertTrue(rets.contains(new Algorithm("daoTest4")));
-        assertTrue(rets.contains(new Algorithm("daoTest5")));
-        assertTrue(rets.contains(new Algorithm("daoTest6")));
-        assertTrue(rets.contains(new Algorithm("daoTest7")));
+        assertTrue(rets.contains(new Algorithm("efsdaoTest4")));
+        assertTrue(rets.contains(new Algorithm("efsdaoTest5")));
+        assertTrue(rets.contains(new Algorithm("efsdaoTest6")));
+        assertTrue(rets.contains(new Algorithm("efsdaoTest7")));
 
-        assertFalse(retEmpty.contains(new Algorithm("daoTest4")));
-        assertFalse(retEmpty.contains(new Algorithm("daoTest5")));
-        assertFalse(retEmpty.contains(new Algorithm("daoTest6")));
-        assertFalse(retEmpty.contains(new Algorithm("daoTest7")));
+        assertFalse(retEmpty.contains(new Algorithm("efsdaoTest4")));
+        assertFalse(retEmpty.contains(new Algorithm("efsdaoTest5")));
+        assertFalse(retEmpty.contains(new Algorithm("efsdaoTest6")));
+        assertFalse(retEmpty.contains(new Algorithm("efsdaoTest7")));
 
        }
 

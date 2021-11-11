@@ -1,31 +1,29 @@
 package entities;
 
-import entities.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Algorithm {
 
     private String algoName;
-    private Classification parentClassification;
+    private String parentClassificationName;
     private List<Implementation> implementations;
 
     public Algorithm(String algoName) {
         this.algoName = algoName;
-        parentClassification = null;
+        parentClassificationName = null;
         implementations = new ArrayList<>();
     }
 
-    public Algorithm(String algoName, Classification parentClassification) {
+    public Algorithm(String algoName, String parentClassificationName) {
         this.algoName = algoName;
-        this.parentClassification = parentClassification;
+        this.parentClassificationName = parentClassificationName;
         implementations = new ArrayList<>();
     }
 
-    public Algorithm(String algoName, Classification parentClassification, ArrayList<Implementation> implementations) {
+    public Algorithm(String algoName, String parentClassificationName, ArrayList<Implementation> implementations) {
         this.algoName = algoName;
-        this.parentClassification = parentClassification;
+        this.parentClassificationName = parentClassificationName;
         this.implementations = implementations;
     }
 
@@ -34,8 +32,8 @@ public class Algorithm {
         return algoName;
     }
 
-    public Classification getParentClassification() {
-        return parentClassification;
+    public String getParentClassificationName() {
+        return parentClassificationName;
     }
 
     public List<Implementation> getImplementations() {
@@ -50,18 +48,31 @@ public class Algorithm {
         this.implementations = implementations;
     }
 
-    public void setParentClassification(Classification parentClassification) {
-        this.parentClassification = parentClassification;
+    public void setParentClassificationName(String parentClassificationName) {
+        this.parentClassificationName = parentClassificationName;
     }
 
     //other
 
     public boolean addImplementation(Implementation i) {
+        i.setAlgorithmName(this.algoName);
         return implementations.add(i);
     }
 
     public boolean removeImplementation(String implName) {
-        return implementations.removeIf(a -> a.getImplName().equals(implName));
+        if(implementations.removeIf(i -> checkImplName(i, implName))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private static boolean checkImplName(Implementation i, String name){
+        if(i.getImplName().equals(name)){
+            i.setAlgorithmName(null);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -91,9 +102,11 @@ public class Algorithm {
     }
 
     private boolean parentClassificationsMatch(Algorithm a) {
-        //todo when we set parent to be a string implement this, if we implement now it will cause an infinite loop
-
-        return true;
+        if(this.parentClassificationName != null){
+            return this.parentClassificationName.equals(a.parentClassificationName);
+        }else{
+            return a.parentClassificationName == null;
+        }
     }
 
     private boolean algoNamesMatch(Algorithm a) {

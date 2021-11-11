@@ -8,17 +8,17 @@ public class Implementation {
     private String implName;
     private String codeURL;
     private String language;
-    private Algorithm algorithmName;
+    private String algorithmName;
     private List<Benchmark> benchmarks;
 
-    public Implementation(String implName, String codeURL, String language, Algorithm algorithmName) {
+    public Implementation(String implName, String codeURL, String language, String algorithmName) {
         this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
         this.algorithmName = algorithmName;
         this.benchmarks = new ArrayList<>();
     }
-    public Implementation(String implName, String codeURL, String language, Algorithm algorithmName, List<Benchmark> benchmarks) {
+    public Implementation(String implName, String codeURL, String language, String algorithmName, List<Benchmark> benchmarks) {
         this.implName = implName;
         this.codeURL = codeURL;
         this.language = language;
@@ -51,11 +51,11 @@ public class Implementation {
         this.language = language;
     }
 
-    public Algorithm getAlgorithmName() {
+    public String getAlgorithmName() {
         return algorithmName;
     }
 
-    public void setAlgorithmName(Algorithm algorithmName) {
+    public void setAlgorithmName(String algorithmName) {
         this.algorithmName = algorithmName;
     }
 
@@ -103,8 +103,11 @@ public class Implementation {
     }
 
     private boolean parentAlgorithmsMatch(Implementation i) {
-        //todo when we set parent to be a string implement this, if we implement now it will cause an infinite loop
-        return true;
+        if(this.algorithmName != null){
+            return this.algorithmName.equals(i.algorithmName);
+        }else{
+            return i.algorithmName == null;
+        }
     }
 
     private boolean languagesMatch(Implementation i) {

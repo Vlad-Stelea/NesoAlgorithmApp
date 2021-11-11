@@ -52,18 +52,10 @@ public class GetHierarchyTest extends LambdaTest {
 
     private ArrayList<Implementation> makeImpls() {
         ArrayList<Implementation> ret = new ArrayList<>();
-
-        Algorithm aA = new Algorithm("aA", null);
-        Algorithm aB = new Algorithm("aB", null);
-        Algorithm aA2 = new Algorithm("aA2", null);
-        Algorithm aA1a = new Algorithm("aA1a", null);
-        Algorithm aA1ab = new Algorithm("aA1ab", null);
-
-
-        Implementation IaA = new Implementation("IaA", "sjdf", "ksjdh", aA);
-        Implementation IaA2 = new Implementation("IaA2", "sjdf", "ksjdh", aA2);
-        Implementation IaA1a = new Implementation("IaA1a", "sjdf", "ksjdh", aA1a);
-        Implementation IaA1ab = new Implementation("IaA1ab", "sjdf", "ksjdh", aA1a);
+        Implementation IaA = new Implementation("IaA", "sjdf", "ksjdh", "aA");
+        Implementation IaA2 = new Implementation("IaA2", "sjdf", "ksjdh", "aA2");
+        Implementation IaA1a = new Implementation("IaA1a", "sjdf", "ksjdh", "aA1a");
+        Implementation IaA1ab = new Implementation("IaA1ab", "sjdf", "ksjdh", "aA1a");
         ret.add(IaA);
         ret.add(IaA2);
         ret.add(IaA1a);
@@ -73,14 +65,14 @@ public class GetHierarchyTest extends LambdaTest {
 
     private ArrayList<Classification> makeClasses() {
         ArrayList<Classification> ret = new ArrayList<>();
-        Classification A = new Classification("A", new Classification(null));
-        Classification A1 = new Classification("A1", A);
-        Classification A1a = new Classification("A1a", A1);
-        Classification A1b = new Classification("A1b", A1);
-        Classification A2 = new Classification("A2", A);
-        Classification A3 = new Classification("A3", A);
-        Classification B = new Classification("B", new Classification(null));
-        Classification C = new Classification("C", new Classification(null));
+        Classification A = new Classification("A", null);
+        Classification A1 = new Classification("A1", "A");
+        Classification A1a = new Classification("A1a", "A1");
+        Classification A1b = new Classification("A1b", "A1");
+        Classification A2 = new Classification("A2", "A");
+        Classification A3 = new Classification("A3", "A");
+        Classification B = new Classification("B", null);
+        Classification C = new Classification("C", null);
 
 
         ret.add(A);
@@ -96,21 +88,12 @@ public class GetHierarchyTest extends LambdaTest {
 
     private ArrayList<Algorithm> makeAlgos() {
         ArrayList<Algorithm> ret = new ArrayList<>();
-        Classification A = new Classification("A", null);
-        Classification A1 = new Classification("A1", null);
-        Classification A1a = new Classification("A1a", null);
-        Classification A1b = new Classification("A1b", null);
-        Classification A2 = new Classification("A2", null);
-        Classification A3 = new Classification("A3", null);
-        Classification B = new Classification("B", null);
-        Classification C = new Classification("C", null);
 
-        Algorithm aA = new Algorithm("aA", A);
-        Algorithm aB = new Algorithm("aB", B);
-        Algorithm aA2 = new Algorithm("aA2", A2);
-        Algorithm aA1a = new Algorithm("aA1a", A1a);
-        Algorithm aA1ab = new Algorithm("aA1ab", A1a);
-
+        Algorithm aA = new Algorithm("aA", "A");
+        Algorithm aB = new Algorithm("aB", "B");
+        Algorithm aA2 = new Algorithm("aA2", "A2");
+        Algorithm aA1a = new Algorithm("aA1a", "A1a");
+        Algorithm aA1ab = new Algorithm("aA1ab", "A1a");
 
 
         ret.add(aA);
@@ -118,6 +101,7 @@ public class GetHierarchyTest extends LambdaTest {
         ret.add(aA2);
         ret.add(aA1a);
         ret.add(aA1ab);
+
         return ret;
     }
 
@@ -168,25 +152,27 @@ public class GetHierarchyTest extends LambdaTest {
         when(algoDao.getAllAlgorithms()).thenReturn(algos);
         when(classDao.getAllClassifications()).thenReturn(classes);
         when(implDao.getAllImplementation()).thenReturn(impls);
-        GetHierarchyResponse handleResponce = handler.handle();
-        assertTrue(handleResponce.topClassifications.contains(hierarchy.get(0)));
-        assertTrue(handleResponce.topClassifications.contains(hierarchy.get(1)));
-        assertTrue(handleResponce.topClassifications.contains(hierarchy.get(2)));
-        assertEquals(handleResponce.statusCode, 200);
+
+        GetHierarchyResponse handleResponse = handler.handle();
+
+        assertTrue(handleResponse.topClassifications.contains(hierarchy.get(0)));
+        assertTrue(handleResponse.topClassifications.contains(hierarchy.get(1)));
+        assertTrue(handleResponse.topClassifications.contains(hierarchy.get(2)));
+        assertEquals(handleResponse.statusCode, 200);
     }
 
     @Test
     public void testFailGetHierarchy() throws SQLException {
         // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
        assertTrue(true);
-        /*
-        when(dao.createAlgorithm("childTest", "TestClass")).thenReturn(false);
-        CreateAlgorithmResponse handleResult = caHandler.handle(reqWithParent);
-        assertEquals(handleResult.response, "childTest");
-        assertEquals(handleResult.httpCode, 409);
-        assertEquals(handleResult.error, "Algorithm Already Exists");
+        when(algoDao.getAllAlgorithms()).thenThrow(NullPointerException.class);
+        when(classDao.getAllClassifications()).thenReturn(classes);
+        when(implDao.getAllImplementation()).thenReturn(impls);
+        GetHierarchyResponse handleResponse = handler.handle();
+        assertEquals(handleResponse.statusCode, 400);
+        assertEquals(handleResponse.error, "Unable to get hierarchy");
 
-         */
+
     }
 
 
