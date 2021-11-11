@@ -80,9 +80,6 @@ public class Algorithm {
         if(obj == this) return true;
         if(!(obj instanceof Algorithm)) return false;
         Algorithm a = (Algorithm) obj;
-        if(!(this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a))){
-            System.out.println("algos" + this.algoNamesMatch(a) + this.parentClassificationsMatch(a) + this.implementationsMatch(a));
-        }
         return this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a);
     }
 

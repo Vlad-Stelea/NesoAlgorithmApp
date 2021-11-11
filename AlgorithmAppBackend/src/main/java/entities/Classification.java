@@ -109,10 +109,6 @@ public class Classification {
         if(obj == this) return true;
         if(!(obj instanceof Classification)) return false;
         Classification c = (Classification) obj;
-        //System.out.println("Classesequals");
-        if(!(this.classNamesMatch(c) && this.subClassificationsMatch(c) && this.algorithmsMatch(c) && this.parentClassificationsMatch(c))){
-            System.out.println("Classes");
-        }
         return this.classNamesMatch(c) && this.subClassificationsMatch(c) && this.algorithmsMatch(c) && this.parentClassificationsMatch(c);
     }
 

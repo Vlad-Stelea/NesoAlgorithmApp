@@ -80,10 +80,6 @@ public class Implementation {
         if(obj == this) return true;
         if(!(obj instanceof Implementation)) return false;
         Implementation i = (Implementation) obj;
-        if(!(this.implNamesMatch(i) && this.codeURLsMatch(i) && this.languagesMatch(i)
-                && this.parentAlgorithmsMatch(i) && this.benchmarksMatch(i))){
-            System.out.println("implementaitons");
-        }
         return this.implNamesMatch(i) && this.codeURLsMatch(i) && this.languagesMatch(i)
                 && this.parentAlgorithmsMatch(i) && this.benchmarksMatch(i);
     }
