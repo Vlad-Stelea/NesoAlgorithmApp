@@ -84,9 +84,15 @@ public class Implementation {
                 && this.parentAlgorithmsMatch(i) && this.benchmarksMatch(i);
     }
 
+    /*
+    * Checks if this implementation's benchmarks match imp's benchmarks exactly(order doesn't matter)
+     */
     private boolean benchmarksMatch(Implementation imp) {
+        //prevents null pointers
         if(this.benchmarks != null){
+            //      VVVVV prevents null pointers
             if(imp.benchmarks != null && this.benchmarks.size() == imp.benchmarks.size()){
+                //go through each benchmark in this and make sure imp has it also
                 for(int i = 0; i < imp.benchmarks.size(); i++){
                     if(!this.benchmarks.contains(imp.benchmarks.get(i))) {
                         return false;
@@ -94,15 +100,20 @@ public class Implementation {
                 }
                 return true;
             }else{
-                //either c has null benchmarks or the sizes don't match
+                //either imp has null benchmarks(and this does not) or the sizes don't match
                 return false;
             }
         }else{
+            //this.benchmarks is null so imp.benchmarks must be null
             return imp.benchmarks == null;
         }
     }
 
+    /*
+     *Check to make sure the parent names match
+     */
     private boolean parentAlgorithmsMatch(Implementation i) {
+        //the if statement prevents null pointers
         if(this.algorithmName != null){
             return this.algorithmName.equals(i.algorithmName);
         }else{
@@ -110,7 +121,11 @@ public class Implementation {
         }
     }
 
+    /*
+     *Check to make sure the languages match
+     */
     private boolean languagesMatch(Implementation i) {
+        //the if statement prevents null pointers
         if(this.language != null){
             return this.language.equals(i.language);
         }else{
@@ -118,7 +133,11 @@ public class Implementation {
         }
     }
 
+    /*
+     *Check to make sure the URLs match
+     */
     private boolean codeURLsMatch(Implementation i) {
+        //the if statement prevents null pointers
         if(this.codeURL != null){
             return this.codeURL.equals(i.codeURL);
         }else{
@@ -126,7 +145,11 @@ public class Implementation {
         }
     }
 
+    /*
+     *Check to make sure the implementation names match
+     */
     private boolean implNamesMatch(Implementation i) {
+        //the if statement prevents null pointers
         if(this.implName != null){
             return this.implName.equals(i.implName);
         }else{

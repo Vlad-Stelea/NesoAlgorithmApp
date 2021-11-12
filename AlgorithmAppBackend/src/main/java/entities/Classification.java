@@ -112,7 +112,11 @@ public class Classification {
         return this.classNamesMatch(c) && this.subClassificationsMatch(c) && this.algorithmsMatch(c) && this.parentClassificationsMatch(c);
     }
 
+    /*
+     *Check to make sure the parent names match
+     */
     private boolean parentClassificationsMatch(Classification c) {
+        //the if statement prevents null pointers
         if(this.parentClassificationName != null){
             return this.parentClassificationName.equals(c.parentClassificationName);
         }else{
@@ -120,9 +124,15 @@ public class Classification {
         }
     }
 
+    /*
+    * Check to make sure this classification has exactly the same algorithms as c(order doesn't matter)
+     */
     private boolean algorithmsMatch(Classification c) {
+        //avoids null pointers
         if(this.algorithms != null){
+            //      VVV prevents null pointers
             if(c.algorithms != null && this.algorithms.size() == c.algorithms.size()){
+                //go through each algorithm and make sure c has it as well
                 for(int i = 0; i < c.algorithms.size(); i++){
                     if(!this.algorithms.contains(c.algorithms.get(i))) {
                         return false;
@@ -130,17 +140,24 @@ public class Classification {
                 }
                 return true;
             }else{
-                //either c has null algorithms or the sizes don't match
+                //either c has null algorithms(and this.algos is not null) or the sizes don't match
                 return false;
             }
         }else{
+            //this.algorithms is null so c.algos must be null
             return c.algorithms == null;
         }
     }
 
+    /*
+     * Check to make sure this classification has exactly the same subClassifications as c(order doesn't matter)
+     */
     private boolean subClassificationsMatch(Classification c) {
+        //prevents null pointers
         if(this.subclassifications != null){
+            //     VVVV prevents null pointers
             if(c.subclassifications != null && this.subclassifications.size() == c.subclassifications.size()){
+                //go through each sub class and make sure c has it as well
                 for(int i = 0; i < c.subclassifications.size(); i++){
                     if(!this.subclassifications.contains(c.subclassifications.get(i))) {
                         return false;
@@ -148,15 +165,20 @@ public class Classification {
                 }
                 return true;
             }else{
-                //either c has null subClassifications or the sizes don't match
+                //either c has null subClassifications(and this.subClassification is not null) or the sizes don't match
                 return false;
             }
         }else{
+            //this.subClassifications is null so c.subClassifications must be null
             return c.subclassifications == null;
         }
     }
 
+    /*
+    * check to make sure the classification names match
+     */
     private boolean classNamesMatch(Classification c) {
+        //the if statement prevents null pointers
         if(this.className != null){
             return this.className.equals(c.className);
         }else{
