@@ -79,14 +79,15 @@ function processImplementationDisplay(response){
 }
 
 function createAlgorithmView(algoName, isUserRegistered) {
-    return '<li class="listItem" style="background-color: pink">'+
+    let output = '<li class="listItem" style="background-color: pink">'+
         '<h3 style="display:inline;">+</h3>' +
         '<h3 style="display:inline; margin-left: 20px;" onclick="handleAlgorithmView(this)">'+ algoName + '</h3>' +
-        '<button style="background-color: blue; margin-left: 50px;" class="button" onclick="navigation.goToAlgorithmPage(\'' + algoName  + '\')">Algo Page</button>'
+        '<button style="background-color: blue; margin-left: 50px;" class="button" onclick="navigation.goToAlgorithmPage(\'' + algoName  + '\')">Algo Page</button>';
     if(isUserRegistered) {
-        output += '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>'
+        output += '<button style="background-color: red; margin-left: 60px;" class="button" onclick="handleAlgorithmDelete(this)">Del</button>';
     }
-        output += '</li>'
+    output += '</li>';
+    return output;
 }
 
 function createClassificationView(classificationName, isUserRegistered) {
