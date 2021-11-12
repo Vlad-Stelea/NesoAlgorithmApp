@@ -83,9 +83,15 @@ public class Algorithm {
         return this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a);
     }
 
+    /*
+    * Checks if this algorithm's implementations match a's implementations exactly(order doesn't matter)
+     */
     private boolean implementationsMatch(Algorithm a) {
+        //check if implementations is null to prevent null pointers
         if(this.implementations != null){
+            //null pointer safty VV
             if(a.implementations != null && this.implementations.size() == a.implementations.size()){
+                //go through each implementation and make sure a has it as well
                 for(int i = 0; i < a.implementations.size(); i++){
                     if(!this.implementations.contains(a.implementations.get(i))) {
                         return false;
@@ -93,15 +99,20 @@ public class Algorithm {
                 }
                 return true;
             }else{
-                //either c has null implentations or the sizes don't match
+                //either a has null implentations(and this does not) or the sizes don't match
                 return false;
             }
         }else{
+            //this.implementations is null so a must have null impls
             return a.implementations == null;
         }
     }
 
+    /*
+    *Check to make sure the parent names match
+     */
     private boolean parentClassificationsMatch(Algorithm a) {
+        //the if statement prevents null pointers
         if(this.parentClassificationName != null){
             return this.parentClassificationName.equals(a.parentClassificationName);
         }else{
@@ -109,7 +120,11 @@ public class Algorithm {
         }
     }
 
+    /*
+     *Check to make sure the algo names match
+     */
     private boolean algoNamesMatch(Algorithm a) {
+        //the if statement prevents null pointers
         if(this.algoName != null){
             return this.algoName.equals(a.algoName);
         }else{
