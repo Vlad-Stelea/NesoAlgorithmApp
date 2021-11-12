@@ -68,11 +68,10 @@ public class GetHierarchyHandler {
         //add implementations to the algos
         for(int i = 0; i < allImpsL.size(); i++){
             Implementation child = allImpsL.get(i);
-            if(child.getAlgorithmName().getAlgoName() != null){
+            if(child.getAlgorithmName() != null){
                 //Valid impl
-                Algorithm parent = allAlgosHM.get(child.getAlgorithmName().getAlgoName());
+                Algorithm parent = allAlgosHM.get(child.getAlgorithmName());
                 parent.addImplementation(child);
-                child.setAlgorithmName(null);
 
             }else{
                 //test impl
@@ -85,11 +84,10 @@ public class GetHierarchyHandler {
         //add algorithms to the tree
         for(int i = 0; i < allALgosL.size(); i++){
             Algorithm child = allALgosL.get(i);
-            if(child.getParentClassification() != null){
+            if(child.getParentClassificationName() != null){
                 //Valid Algo
-                Classification parent = allClassesHM.get(child.getParentClassification().getClassName());
+                Classification parent = allClassesHM.get(child.getParentClassificationName());
                 parent.addAlgorithm(child);
-                child.setParentClassification(null);
 
             }else{
                 //test algo
@@ -102,14 +100,13 @@ public class GetHierarchyHandler {
         //build tree of classifications
         for(int i = 0; i < allClassL.size(); i++){
             Classification child = allClassL.get(i);
-            if(child.getParentClassification().getClassName() == null){
+            if(child.getParentClassificationName() == null){
                 //top level classification
                 topClasses.add(child);
             }else{
                 //subClass
-                Classification parent = allClassesHM.get(child.getParentClassification().getClassName());
+                Classification parent = allClassesHM.get(child.getParentClassificationName());
                 parent.addSubclassification(child);
-                child.setParentClassification(null);
             }
         }
     }

@@ -2,7 +2,7 @@ package lambda;
 
 import CreateAlgorithm.*;
 import db.AlgorithmDAO;
-import entities.Classification;
+import entities.Algorithm;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,60 +10,45 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
-//Doing unit tests later
-/*
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-*/
 
-public class CreateAlgorithmTest {
-/*
-    Classification classification;
-    ClassificationDAO dao;
-    CreateClassificationHandler ccHandler;
-    CreateClassificationRequest req;
-    CreateClassificationRequest reqWithParent;
+
+public class CreateAlgorithmTest extends LambdaTest {
+
+    AlgorithmDAO dao;
+    CreateAlgorithmHandler caHandler;
+    CreateAlgorithmRequest reqWithParent;
+
+
 
     @Before
     public void setup() {
-        dao = mock(ClassificationDAO.class);
-        classification = new Classification("createTest");
-        ccHandler = new CreateClassificationHandler(dao);
-        req = new CreateClassificationRequest("createTest", null);
-        reqWithParent = new CreateClassificationRequest("childTest", "createTest");
+        dao = mock(AlgorithmDAO.class);
+        caHandler = new CreateAlgorithmHandler(dao);
+        reqWithParent = new CreateAlgorithmRequest("childTest", "TestClass");
+
     }
 
     @Test
-    public void testCreateClassification() throws SQLException {
+    public void testCreateAlgorithm() throws SQLException {
         // add the "child" and make sure we get the correct response
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(reqWithParent, new CreateClassificationResponse("", 400));
-        when(dao.createClassification("childTest", "createTest")).thenReturn(true);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "childTest,createTest");
-        assertEquals(handleResult.getResponse().httpCode, 200);
+        when(dao.createAlgorithm("childTest", "TestClass")).thenReturn(true);
+        CreateAlgorithmResponse handleResponce = caHandler.handle(reqWithParent);
+        assertEquals(handleResponce.response, "childTest, TestClass");
+        assertEquals(handleResponce.httpCode, 200);
     }
 
     @Test
-    public void testCreateClassification_NullParent() throws SQLException {
-        // add the classification with a null parent and make sure we get the correct response
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(req, new CreateClassificationResponse("", 400));
-        when(dao.createClassification("createTest", null)).thenReturn(true);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "createTest,null");
-        assertEquals(handleResult.getResponse().httpCode, 200);
-    }
-
-    @Test
-    public void testFailCreateClassification() throws SQLException {
+    public void testFailCreateAlgorithm() throws SQLException {
         // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> ccEvent = new CreateClassificationEvent<>(req, new CreateClassificationResponse("", 400));
-        when(dao.createClassification("createTest", null)).thenReturn(false);
-        CreateClassificationEvent<CreateClassificationRequest, CreateClassificationResponse> handleResult = ccHandler.handle(ccEvent);
-        assertEquals(handleResult.getResponse().response, "createTest");
-        assertEquals(handleResult.getResponse().httpCode, 409);
-        assertEquals(handleResult.getResponse().error, "Classification already exists.");
+        when(dao.createAlgorithm("childTest", "TestClass")).thenReturn(false);
+        CreateAlgorithmResponse handleResponce = caHandler.handle(reqWithParent);
+        assertEquals(handleResponce.response, "childTest");
+        assertEquals(handleResponce.httpCode, 409);
+        assertEquals(handleResponce.error, "Algorithm Already Exists");
     }
 
-*/
+
 
 }
