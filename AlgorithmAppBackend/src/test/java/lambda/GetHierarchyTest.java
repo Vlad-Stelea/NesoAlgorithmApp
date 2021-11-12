@@ -164,7 +164,7 @@ public class GetHierarchyTest extends LambdaTest {
     @Test
     public void testFailGetHierarchy() throws SQLException {
         // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
-       assertTrue(true);
+       
         when(algoDao.getAllAlgorithms()).thenThrow(NullPointerException.class);
         when(classDao.getAllClassifications()).thenReturn(classes);
         when(implDao.getAllImplementation()).thenReturn(impls);
