@@ -1,16 +1,11 @@
 package lambda;
 
-import CreateAlgorithm.CreateAlgorithmHandler;
-import CreateAlgorithm.CreateAlgorithmRequest;
-import CreateAlgorithm.CreateAlgorithmResponse;
 import GetHierarchy.GetHierarchyHandler;
 import GetHierarchy.GetHierarchyResponse;
 import db.AlgorithmDAO;
 import db.ClassificationDAO;
-import db.ImplementationDAO;
 import entities.Algorithm;
 import entities.Classification;
-import entities.Implementation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,11 +22,9 @@ public class GetHierarchyTest extends LambdaTest {
 
     AlgorithmDAO algoDao;
     ClassificationDAO classDao;
-    ImplementationDAO implDao;
     GetHierarchyHandler handler;
     ArrayList<Algorithm> algos;
     ArrayList<Classification> classes;
-    ArrayList<Implementation> impls;
     ArrayList<Classification> hierarchy;
 
 
@@ -39,28 +32,13 @@ public class GetHierarchyTest extends LambdaTest {
     public void setup() {
         algoDao = mock(AlgorithmDAO.class);
         classDao = mock(ClassificationDAO.class);
-        implDao = mock(ImplementationDAO.class);
-        handler = new GetHierarchyHandler(classDao, algoDao, implDao);
+        handler = new GetHierarchyHandler(classDao, algoDao);
         algos = makeAlgos();
         classes = makeClasses();
-        impls = makeImpls();
         hierarchy = makeHierarchy();
 
 
 
-    }
-
-    private ArrayList<Implementation> makeImpls() {
-        ArrayList<Implementation> ret = new ArrayList<>();
-        Implementation IaA = new Implementation("IaA", "sjdf", "ksjdh", "aA");
-        Implementation IaA2 = new Implementation("IaA2", "sjdf", "ksjdh", "aA2");
-        Implementation IaA1a = new Implementation("IaA1a", "sjdf", "ksjdh", "aA1a");
-        Implementation IaA1ab = new Implementation("IaA1ab", "sjdf", "ksjdh", "aA1a");
-        ret.add(IaA);
-        ret.add(IaA2);
-        ret.add(IaA1a);
-        ret.add(IaA1ab);
-        return ret;
     }
 
     private ArrayList<Classification> makeClasses() {
@@ -132,14 +110,6 @@ public class GetHierarchyTest extends LambdaTest {
         Algorithm aA1ab = new Algorithm("aA1ab", null);
         A1a.addAlgorithm(aA1ab);
 
-        Implementation IaA = new Implementation("IaA", "sjdf", "ksjdh", null);
-        aA.addImplementation(IaA);
-        Implementation IaA2 = new Implementation("IaA2", "sjdf", "ksjdh", null);
-        aA2.addImplementation(IaA2);
-        Implementation IaA1a = new Implementation("IaA1a", "sjdf", "ksjdh", null);
-        aA1a.addImplementation(IaA1a);
-        Implementation IaA1ab = new Implementation("IaA1ab", "sjdf", "ksjdh", null);
-        aA1a.addImplementation(IaA1ab);
         ret.add(A);
         ret.add(B);
         ret.add(C);
@@ -151,7 +121,6 @@ public class GetHierarchyTest extends LambdaTest {
         // add the "child" and make sure we get the correct response
         when(algoDao.getAllAlgorithms()).thenReturn(algos);
         when(classDao.getAllClassifications()).thenReturn(classes);
-        when(implDao.getAllImplementation()).thenReturn(impls);
 
         GetHierarchyResponse handleResponse = handler.handle();
 
@@ -167,7 +136,6 @@ public class GetHierarchyTest extends LambdaTest {
        assertTrue(true);
         when(algoDao.getAllAlgorithms()).thenThrow(NullPointerException.class);
         when(classDao.getAllClassifications()).thenReturn(classes);
-        when(implDao.getAllImplementation()).thenReturn(impls);
         GetHierarchyResponse handleResponse = handler.handle();
         assertEquals(handleResponse.statusCode, 400);
         assertEquals(handleResponse.error, "Unable to get hierarchy");
