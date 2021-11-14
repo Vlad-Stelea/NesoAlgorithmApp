@@ -109,3 +109,7 @@ AlgorithmAppBackend/build
 
 # SAM Build artifacts
 AlgorithmAppBackend/src/main/.aws-sam
+
+# more gradle stuff
+/AlgorithmAppBackend/.gradle/5.1.1/fileHashes/fileHashes.lock
+/AlgorithmAppBackend/.gradle/buildOutputCleanup/buildOutputCleanup.lock
