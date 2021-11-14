@@ -8,3 +8,12 @@
 /httpRequests/
 /misc.xml
 /NesoAlgorithmApp.iml
+
+# more stuff to ignore
+/compiler.xml
+/modules.xml
+/modules/
+/codeStyles/
+/sbt.xml
+/vcs.xml
+/runConfigurations.xml
