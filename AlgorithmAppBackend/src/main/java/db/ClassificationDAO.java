@@ -85,7 +85,7 @@ public class ClassificationDAO {
             //      Would it be better to match database structure and set the Classification entity to have a parent name String?
             //      Or is having this flexibility easier for potential future applications? I'm inclined to keep it this way,
             //      it just seems a bit janky.
-            return new Classification(className, new Classification(parentClassName));
+            return new Classification(className, parentClassName);
         }
 
         return null;
@@ -98,7 +98,7 @@ public class ClassificationDAO {
             String className = rs.getString("className");
             String parentClassName = rs.getString("parentClassName");
 
-            result.add(new Classification(className, new Classification(parentClassName)));
+            result.add(new Classification(className, parentClassName));
         }
 
         return result;
