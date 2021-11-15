@@ -1,3 +1,20 @@
+class ClassificationRepo {
+    constructor(apiGatewayUrl) {
+        this.apiGatewayUrl = apiGatewayUrl;
+        this.getHierachyUrl = this.apiGatewayUrl + '/' + "Classification/Hierachy";
+    }
+
+    getClassificationHeiracy(onSuccess, onFail) {
+        console.log("Getting classification")
+        $.get(
+            this.getHierachyUrl,
+            onSuccess
+        ).fail(
+            onFail
+        )
+    }
+}
+
 class MockClassificationRepo {
     constructor() {
         console.log("Creating Mock Classification repo")
