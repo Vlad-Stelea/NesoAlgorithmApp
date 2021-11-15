@@ -20,3 +20,23 @@ class AlgorithmsRepo {
         )
     }
 }
+
+class MockAlgorithmRepo {
+    constructor() {
+        console.log("Creating mock algo repo")
+    }
+
+    addAlgorithm(algorithmName, className, onSuccess, onFail) {
+        console.log("Mock algo repo add algo")
+        let response = {
+            "algoName":algorithmName,
+            "className":className
+        }
+
+        onSuccess(
+            response,
+            200,
+            new MockXHR()
+        )
+    }
+}

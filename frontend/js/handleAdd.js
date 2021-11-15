@@ -29,7 +29,7 @@ function handleAdd(ele){
 
 }
 
-function addAlgorithm(algorithmRepo, className, ele) {
+function addAlgorithm(className, ele) {
     //remove form
     ele.parentElement.parentElement.innerHTML = ''
 
