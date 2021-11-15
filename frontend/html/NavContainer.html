@@ -3,6 +3,7 @@
 <head>
     <script src="../js/network/AlgorithmsRepo.js"></script>
     <script src="../js/network/mockxhr.js"></script>
+    <script src="../js/network/ClassificationRepo.js"></script>
     <script type='text/javascript' src='../js/api.js'></script>
     <!-- Import the jquery lib to make development more simple -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -23,6 +24,7 @@
         // Initialize the nav component
         const navigation = new Navigation("#viewContainer", config.LOGIN_URL_CALLBACK);
         const algorithmRepo = config.ALGORITHMS_REPO;
+        const classificationRepo = config.CLASSIFICATIONS_REPO;
         const vm = new ViewModel();
         function initContainer() {
             vm.user.token = extractAuthToken();

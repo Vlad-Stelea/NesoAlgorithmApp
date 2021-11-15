@@ -1,71 +1,53 @@
 function updateHierarchy() {
     console.log("updatingHierarchy")
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", getHierarchy_url, true);
-    xhr.send();
-    console.log("sent get hierarchy request");
-
-    xhr.onloadend = function() {
-        console.log(xhr.readyState)
-        if(xhr.readyState === XMLHttpRequest.DONE) {
-            processHierarchyResponse(xhr.responseText);
-
-        }
-        else {
-            processHierarchyResponse("N/A");
+    let onSuccessCallback = function (data, textStatus, xhr) {
+        if(xhr.status === 200) {
+            renderHierachy(data);
         }
     };
+
+    let onFailCallback = function (data, textStatus, xhr) {
+        // TODO handle when there is an issue Not implemented rn as out of scope
+    }
+    classificationRepo.getClassificationHeiracy(onSuccessCallback, onFailCallback)
 }
 
 function updateHierarchyImplementation() {
     console.log("updatingHierarchy")
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", getHierarchy_url, true);
-    xhr.send();
-    console.log("sent get hierarchy request");
-
-    xhr.onloadend = function() {
-        console.log(xhr.readyState)
-        if(xhr.readyState === XMLHttpRequest.DONE) {
-            processImplementationDisplay(xhr.responseText);
-
-        }
-        else {
-            processImplementationDisplay("N/A");
+    let onSuccessCallback = function (data, textStatus, xhr) {
+        if(xhr.status === 200) {
+            renderImplementationDisplay(data);
         }
     };
+
+    let onFailCallback = function (data, textStatus, xhr) {
+        // TODO handle when there is an issue Not implemented rn as out of scope
+    }
+
+    classificationRepo.getClassificationHeiracy(onSuccessCallback, onFailCallback)
+
 }
 
-
-function processHierarchyResponse(response) {
-    // TODO pack the hierarchy up, then pass it along to display
-    console.log("hierarchy response: " + response);
-    console.log(JSON.parse(response))
+function renderHierachy(hierachy) {
+    console.log("hierarchy response: " + hierachy);
 
     // TODO this structure can't be right can it?
-    let js = JSON.parse(response)
     let output = '<ol style="list-style: none;">';
 
-    for (let i = 0; i < js.topClassifications.length; i++) {
-        output = output + addClassificationListItem(js.topClassifications[i])
+    for (let i = 0; i < hierachy.topClassifications.length; i++) {
+        output = output + addClassificationListItem(hierachy.topClassifications[i])
 
     }
     output = output + '</ol>'
     let hierarchy = document.getElementById('Hierarchy');
     hierarchy.innerHTML = output;
-
-
-    // Update hierarchy result
-
-
 }
 
-function processImplementationDisplay(response){
-    let js = JSON.parse(response)
+function renderImplementationDisplay(heirachy){
     let output2 = '<ol style="list-style: none;">';
     //TODO:dig through subclassifications
-    for (let i = 0; i < js.topClassifications.length; i++) {
-       item = js.topClassifications[i]
+    for (let i = 0; i < heirachy.topClassifications.length; i++) {
+       item = heirachy.topClassifications[i]
         for (let j = 0; j < item.algorithms.length; j++) {
             if(vm.selectedAlgo === item.algorithms[j].algoName){
                 console.log(item.algorithms[j])
