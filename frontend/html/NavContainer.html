@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="../js/network/AlgorithmsRepo.js"></script>
+    <script src="../js/network/mockxhr.js"></script>
+    <script type='text/javascript' src='../js/api.js'></script>
     <!-- Import the jquery lib to make development more simple -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Load the navigation script -->
@@ -15,10 +18,11 @@
     <script src="../js/config/liveConfig.js"></script>
     <!-- Initialize everything -->
     <script type="text/javascript">
-        const DEV_MODE = false;
+        const DEV_MODE = true;
         const config = DEV_MODE ? DevConfig : LiveConfig;
         // Initialize the nav component
         const navigation = new Navigation("#viewContainer", config.LOGIN_URL_CALLBACK);
+        const algorithmRepo = config.ALGORITHMS_REPO;
         const vm = new ViewModel();
         function initContainer() {
             vm.user.token = extractAuthToken();
