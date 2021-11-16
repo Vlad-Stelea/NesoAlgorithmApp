@@ -33,17 +33,14 @@ function addAlgorithm(className, ele) {
     //remove form
     ele.parentElement.parentElement.innerHTML = ''
 
-    let onSuccessCallback = function (data, textStatus, xhr) {
-        if(xhr.status === 200) {
-            console.log("XHR: " + xhr.responseText);
+    let onSuccessCallback = function (data) {
+            console.log("XHR: " + data.responseText);
             console.log("added Algorithm", ele.parentElement.children[2].value, " to ", className)
-
             updateHierarchy()
-        }
     }
 
     // Note, this doesn't work since lambda function doesn't return anything other than 200
-    let onFailCallback = function (data, textStatus, xhr) {
+    let onFailCallback = function (data, status) {
         console.log("Status != 200. Actual create response: " + xhr.responseText);
         let newJS = JSON.parse(xhr.responseText);
         let err = newJS["response"];
