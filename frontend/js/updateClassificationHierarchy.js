@@ -1,30 +1,27 @@
 function updateHierarchy() {
     console.log("updatingHierarchy")
-    let onSuccessCallback = function (data, textStatus, xhr) {
-        if(xhr.status === 200) {
-            renderHierachy(data);
-        }
+    let onSuccessCallback = function (data) {
+        console.log("success")
+        renderHierachy(data);
     };
 
-    let onFailCallback = function (data, textStatus, xhr) {
+    let onFailCallback = function (data, status) {
         // TODO handle when there is an issue Not implemented rn as out of scope
     }
-    classificationRepo.getClassificationHeiracy(onSuccessCallback, onFailCallback)
+    classificationRepo.getClassificationHieracy(onSuccessCallback, onFailCallback)
 }
 
 function updateHierarchyImplementation() {
     console.log("updatingHierarchy")
-    let onSuccessCallback = function (data, textStatus, xhr) {
-        if(xhr.status === 200) {
-            renderImplementationDisplay(data);
-        }
+    let onSuccessCallback = function (data) {
+        renderImplementationDisplay(data);
     };
 
-    let onFailCallback = function (data, textStatus, xhr) {
+    let onFailCallback = function (data, status) {
         // TODO handle when there is an issue Not implemented rn as out of scope
     }
 
-    classificationRepo.getClassificationHeiracy(onSuccessCallback, onFailCallback)
+    classificationRepo.getClassificationHieracy(onSuccessCallback, onFailCallback)
 
 }
 
@@ -34,6 +31,7 @@ function renderHierachy(hierachy) {
     // TODO this structure can't be right can it?
     let output = '<ol style="list-style: none;">';
 
+    console.log(typeof(hierachy))
     for (let i = 0; i < hierachy.topClassifications.length; i++) {
         output = output + addClassificationListItem(hierachy.topClassifications[i])
 
@@ -43,11 +41,11 @@ function renderHierachy(hierachy) {
     hierarchy.innerHTML = output;
 }
 
-function renderImplementationDisplay(heirachy){
+function renderImplementationDisplay(hierachy){
     let output2 = '<ol style="list-style: none;">';
     //TODO:dig through subclassifications
-    for (let i = 0; i < heirachy.topClassifications.length; i++) {
-       item = heirachy.topClassifications[i]
+    for (let i = 0; i < hierachy.topClassifications.length; i++) {
+       let item = hierachy.topClassifications[i]
         for (let j = 0; j < item.algorithms.length; j++) {
             if(vm.selectedAlgo === item.algorithms[j].algoName){
                 console.log(item.algorithms[j])

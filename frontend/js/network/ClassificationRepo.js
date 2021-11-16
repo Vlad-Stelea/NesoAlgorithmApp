@@ -4,14 +4,22 @@ class ClassificationRepo {
         this.getHierachyUrl = this.apiGatewayUrl + '/' + "Classification/Hierachy";
     }
 
-    getClassificationHeiracy(onSuccess, onFail) {
+    getClassificationHieracy(onSuccess, onFail) {
         console.log("Getting classification")
-        $.get(
-            this.getHierachyUrl,
-            onSuccess
-        ).fail(
-            onFail
-        )
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("GET", this.getHierachyUrl, true);
+        xhr.send();
+        xhr.onloadend = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE) {
+                if(xhr.status === 200) {
+                    let response = xhr.response;
+                    onSuccess(response);
+                } else {
+                    onFail(xhr.response, xhr.status);
+                }
+            }
+        }
     }
 }
 
@@ -20,8 +28,8 @@ class MockClassificationRepo {
         console.log("Creating Mock Classification repo")
     }
 
-    getClassificationHeiracy (onSuccess, onFail) {
-        console.log("Mock Class repo getting heirachy")
+    getClassificationHieracy (onSuccess, onFail) {
+        console.log("Mock Class repo getting hierachy")
         let response = {
             "topClassifications":[
                 {
@@ -83,8 +91,7 @@ class MockClassificationRepo {
 
         onSuccess (
             response,
-            "200",
-            new MockXHR()
+            200
         );
     }
 }
