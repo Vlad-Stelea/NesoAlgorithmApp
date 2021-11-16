@@ -32,7 +32,7 @@ public class CreateImplementationTest extends LambdaTest {
 
     @Test
     public void testCreateImplementation() throws SQLException {
-        // add the "child" and make sure we get the correct response
+        // Creates a new implementation and tests that it is made
         when(dao.createImplementation("childTest", "TestCode","TestLang", "TestClass")).thenReturn(true);
         CreateImplementationResponse handleResponse = caHandler.handle(reqWithParent);
 
@@ -42,7 +42,7 @@ public class CreateImplementationTest extends LambdaTest {
 
     @Test
     public void testFailCreateImplementation() throws SQLException {
-        // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
+        // add the implementation with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
         when(dao.createImplementation("childTest", "TestCode","TestLang", "TestClass")).thenReturn(false);
         CreateImplementationResponse handleResponse = caHandler.handle(reqWithParent);
         assertEquals(handleResponse.response, "childTest");
