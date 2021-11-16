@@ -139,7 +139,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: https://www.google.com/
+        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:CreateClassification/invocations"
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: http
@@ -322,7 +322,7 @@ paths:
           application/json: '{"statusCode": 200}'
         type: mock
   
-  /Classification/Hierachy:
+  /Classification/Hierarchy:
     get:
       tags: 
         - Classification
@@ -337,7 +337,7 @@ paths:
         200:
           description: Classifications succesfully retrieved
           schema: 
-            $ref: "#/definitions/ClassificationHierachyResponse"
+            $ref: "#/definitions/ClassificationHierarchyResponse"
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -355,7 +355,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: https://www.google.com/
+        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:GetHierarchy/invocations"
         passthroughBehavior: when_no_match
         httpMethod: GET
         type: http
@@ -474,7 +474,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: https://www.google.com/
+        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:CreateAlgorithm/invocations"
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: http
@@ -2195,7 +2195,7 @@ definitions:
       username:
         type: string
 
-  ClassificationHierachyResponse:
+  ClassificationHierarchyResponse:
     type: object
     required:
       - classifications
