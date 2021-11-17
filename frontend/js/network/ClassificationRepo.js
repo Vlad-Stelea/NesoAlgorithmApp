@@ -1,7 +1,7 @@
 class ClassificationRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
-        this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierachy";
+        this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierarchy";
     }
 
     getClassificationHierarchy(onSuccess, onFail) {
