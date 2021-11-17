@@ -2,9 +2,9 @@ package GetAlgorithmPage;
 
 import db.AlgorithmDAO;
 import db.ImplementationDAO;
-import entities.Algorithm;
-import entities.Classification;
-import entities.Implementation;
+import db.MachineConfigurationDAO;
+import db.ProblemInstanceDAO;
+import entities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +14,16 @@ public class GetAlgorithmPageHandler {
 
     ImplementationDAO implementationDAO;
     AlgorithmDAO algorithmDAO;
+    ProblemInstanceDAO probDAO;
+    MachineConfigurationDAO machDAO;
 
 
     // TODO Ctrl+/ to uncomment ;)
-    public GetAlgorithmPageHandler(AlgorithmDAO algorithmDAO, ImplementationDAO implementationDAO) {
+    public GetAlgorithmPageHandler(AlgorithmDAO algorithmDAO, ImplementationDAO implementationDAO, ProblemInstanceDAO probDAO, MachineConfigurationDAO machDAO) {
         this.implementationDAO = implementationDAO;
         this.algorithmDAO = algorithmDAO;
+        this.probDAO = probDAO;
+        this.machDAO = machDAO;
     }
 
     public GetAlgorithmPageResponse handle(GetAlgorithmPageRequest req) {
@@ -28,13 +32,17 @@ public class GetAlgorithmPageHandler {
         try {
             Algorithm algo = algorithmDAO.getAlgorithm(req.getAlgoName());
             List<Implementation> allImps = implementationDAO.getImplementationForAlgo(req.getAlgoName());
-
+            List<ProblemInstance> allProbs = probDAO.getAllAlgosProblemInstances(req.getAlgoName());
+            List<MachineConfiguration> allMachs = machDAO.getAllMachineConfigurations();
             addImplementations(algo, allImps);
+            algo.setProblemInstances(allProbs);
             //TODO add benchmarks and problem instances
 
+            AlgorithmPage page = new AlgorithmPage();
+            page.setAlgorithm(algo);
+            page.setMachineConfigurations(allMachs);
 
-
-            response = new GetAlgorithmPageResponse(algo, 200);
+            response = new GetAlgorithmPageResponse(page, 200);
 
 
         }

@@ -5,8 +5,9 @@ import GetAlgorithmPage.GetAlgorithmPageRequest;
 import GetAlgorithmPage.GetAlgorithmPageResponse;
 import db.AlgorithmDAO;
 import db.ImplementationDAO;
-import entities.Algorithm;
-import entities.Implementation;
+import db.MachineConfigurationDAO;
+import db.ProblemInstanceDAO;
+import entities.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,26 +22,59 @@ import static org.mockito.Mockito.when;
 public class GetAlgorithmPageTest {
     AlgorithmDAO algoDao;
     ImplementationDAO impDao;
+    MachineConfigurationDAO machDAO;
+    ProblemInstanceDAO probDAO;
     GetAlgorithmPageHandler handler;
     Algorithm algo;
     ArrayList<Implementation> impls;
-    Algorithm expected;
+    ArrayList<ProblemInstance> probs;
+    ArrayList<MachineConfiguration> machs;
+    AlgorithmPage expected;
 
 
     @Before
     public void setup() {
         algoDao = mock(AlgorithmDAO.class);
         impDao = mock(ImplementationDAO.class);
-        handler = new GetAlgorithmPageHandler(algoDao, impDao);
+        machDAO = mock(MachineConfigurationDAO.class);
+        probDAO = mock(ProblemInstanceDAO.class);
+        handler = new GetAlgorithmPageHandler(algoDao, impDao, probDAO, machDAO);
         algo = new Algorithm("efsTest", "efsTopClass");
         impls = makeImps();
+        probs = makeProbs();
+        machs = makeMachs();
+
         expected = makeAlgoPage();
+
 
 
 
     }
 
-    private Algorithm makeAlgoPage() {
+    private ArrayList<MachineConfiguration> makeMachs() {
+        MachineConfiguration m1 = new MachineConfiguration("m1", "m1", 1, 2, "jfvh", 4);
+        MachineConfiguration m2 = new MachineConfiguration("m2", "m2", 10, 2, "jfvh", 4);
+        MachineConfiguration m3 = new MachineConfiguration("m3", "m3", 100, 2, "jfvh", 4);
+        ArrayList<MachineConfiguration> ms = new ArrayList<>();
+        ms.add(m1);
+        ms.add(m2);
+        ms.add(m3);
+        return ms;
+    }
+
+    private ArrayList<ProblemInstance> makeProbs() {
+        ProblemInstance p1 = new ProblemInstance("p1", "p1", "pdfgdfg", "efsTest");
+        ProblemInstance p2 = new ProblemInstance("p2", "p2", "pdfgdfg", "efsTest");
+        ProblemInstance p3 = new ProblemInstance("p3", "p3", "bbb", "efsTest");
+
+        ArrayList<ProblemInstance> ps = new ArrayList<>();
+        ps.add(p1);
+        ps.add(p2);
+        ps.add(p3);
+        return ps;
+    }
+
+    private AlgorithmPage makeAlgoPage() {
         Algorithm algo = new Algorithm("efsTest", "efsTopClass");
         Implementation i1 = new Implementation("i1","123","efs","");
         Implementation i2 = new Implementation("i2","skdjf","sdfsd","");
@@ -53,7 +87,30 @@ public class GetAlgorithmPageTest {
         algo.addImplementation(i3);
         algo.addImplementation(i4);
         algo.addImplementation(i5);
-        return algo;
+
+        ProblemInstance p1 = new ProblemInstance("p1", "p1", "pdfgdfg", "efsTest");
+        ProblemInstance p2 = new ProblemInstance("p2", "p2", "pdfgdfg", "");
+        ProblemInstance p3 = new ProblemInstance("p3", "p3", "bbb", "efsTest");
+
+        ArrayList<ProblemInstance> ps = new ArrayList<>();
+        ps.add(p1);
+        ps.add(p2);
+        ps.add(p3);
+        algo.setProblemInstances(ps);
+
+        MachineConfiguration m1 = new MachineConfiguration("m1", "m1", 1, 2, "jfvh", 4);
+        MachineConfiguration m2 = new MachineConfiguration("m2", "m2", 10, 2, "jfvh", 4);
+        MachineConfiguration m3 = new MachineConfiguration("m3", "m3", 100, 2, "jfvh", 4);
+        ArrayList<MachineConfiguration> ms = new ArrayList<>();
+        ms.add(m1);
+        ms.add(m2);
+        ms.add(m3);
+
+        AlgorithmPage page = new AlgorithmPage();
+        page.setMachineConfigurations(ms);
+        page.setAlgorithm(algo);
+
+        return page;
     }
 
     private ArrayList<Implementation> makeImps() {
@@ -78,10 +135,13 @@ public class GetAlgorithmPageTest {
         // add the "child" and make sure we get the correct response
         when(algoDao.getAlgorithm("efsTest")).thenReturn(algo);
         when(impDao.getImplementationForAlgo("efsTest")).thenReturn(impls);
+        when(probDAO.getAllAlgosProblemInstances("efsTest")).thenReturn(probs);
+        when(machDAO.getAllMachineConfigurations()).thenReturn(machs);
+
 
         GetAlgorithmPageResponse handleResponse = handler.handle(new GetAlgorithmPageRequest("efsTest"));
 
-        assertTrue(handleResponse.algorithm.equals(expected));
+        assertTrue(handleResponse.algorithmPage.equals(expected));
         assertEquals(handleResponse.statusCode, 200);
     }
 
