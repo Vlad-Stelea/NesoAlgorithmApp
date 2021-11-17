@@ -5,6 +5,7 @@ public class ReclassifyAlgorithmRequest {
     private String algoName;
     private String newClassName;
 
+    public ReclassifyAlgorithmRequest() {}
     public ReclassifyAlgorithmRequest(String algoName, String newClassName) {
         this.algoName = algoName;
         this.newClassName = newClassName;

@@ -10,6 +10,7 @@ public class ReclassifyAlgorithm implements RequestHandler<ReclassifyAlgorithmRe
     public LambdaLogger logger = null;
     ReclassifyAlgorithmHandler handler;
 
+    public ReclassifyAlgorithm() { handler = new ReclassifyAlgorithmHandler(new AlgorithmDAO()); }
     public ReclassifyAlgorithm(AlgorithmDAO dao) {
         handler = new ReclassifyAlgorithmHandler(dao);
     }
