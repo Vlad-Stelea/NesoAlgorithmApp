@@ -14,22 +14,31 @@ public class CreateImplementationHandler{
 
 
     public CreateImplementationResponse handle(CreateImplementationRequest request)  {
-
-
-        CreateImplementationResponse response;
-
         try {
-            if(dao.createImplementation(request.getImplName(),request.getCodeUrl(), request.getLanguage() ,request.getAlgoName())) {
-                response = new CreateImplementationResponse(request.getImplName() + "," + request.getCodeUrl() + "," + request.getLanguage() + "," + request.getAlgoName(), 200);
+            // Successful case of creating an implementation
+            if(dao.createImplementation(request.getImplName(),request.getCode(), request.getLanguage() ,request.getAlgoName())) {
+                return new CreateImplementationResponse(
+                        200,
+                        request.getImplName(),
+                        request.getAlgoName(),
+                        request.getCode(),
+                        request.getLanguage()
+                );
             } else {
-                response = new CreateImplementationResponse(request.getImplName(), 409, "Implementation already exists.");
+                // Case where an implementation already exists in the db
+                return new CreateImplementationResponse(
+                        409,
+                        "Implementation already exists"
+                );
             }
         } catch (Exception e) {
+            // Case where an unknown error occurs
             e.printStackTrace();
-            response = new CreateImplementationResponse("Unable to create Implementation: " + request.getImplName() + " with parent " + request.getAlgoName() + "\n(" + e.getMessage() + ")", 400);
+            return new CreateImplementationResponse(
+                    400,
+                    "Unknown Error"
+            );
         }
-
-        return  response;
     }
 
 }

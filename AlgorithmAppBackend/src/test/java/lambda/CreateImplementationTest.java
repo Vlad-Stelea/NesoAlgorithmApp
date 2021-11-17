@@ -36,8 +36,15 @@ public class CreateImplementationTest extends LambdaTest {
         when(dao.createImplementation("childTest", "TestCode","TestLang", "TestClass")).thenReturn(true);
         CreateImplementationResponse handleResponse = caHandler.handle(reqWithParent);
 
-        assertEquals(handleResponse.response, "childTest,TestCode,TestLang,TestClass");
-        assertEquals(handleResponse.httpCode, 200);
+        CreateImplementationResponse expectedResponse = new CreateImplementationResponse(
+                200,
+                "childTest",
+                "TestClass",
+                "TestCode",
+                "TestLang"
+        );
+
+        assertEquals(handleResponse, expectedResponse);
     }
 
     @Test
@@ -45,9 +52,12 @@ public class CreateImplementationTest extends LambdaTest {
         // add the implementation with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
         when(dao.createImplementation("childTest", "TestCode","TestLang", "TestClass")).thenReturn(false);
         CreateImplementationResponse handleResponse = caHandler.handle(reqWithParent);
-        assertEquals(handleResponse.response, "childTest");
-        assertEquals(handleResponse.httpCode, 409);
-        assertEquals(handleResponse.error, "Implementation already exists.");
+
+        CreateImplementationResponse expectedResponse = new CreateImplementationResponse(
+                409,
+                "Implementation already exists"
+        );
+        assertEquals(expectedResponse, handleResponse);
     }
 
 
