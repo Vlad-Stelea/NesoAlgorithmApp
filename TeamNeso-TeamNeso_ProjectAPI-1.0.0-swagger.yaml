@@ -139,7 +139,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:CreateClassification/invocations"
+        uri: https://www.google.com/
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: http
@@ -355,7 +355,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:GetHierarchy/invocations"
+        uri: https://www.google.com/
         passthroughBehavior: when_no_match
         httpMethod: GET
         type: http
@@ -474,7 +474,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
               method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:093039608003:function:CreateAlgorithm/invocations"
+        uri: https://www.google.com/
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: http
