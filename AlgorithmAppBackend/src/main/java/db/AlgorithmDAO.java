@@ -88,6 +88,24 @@ public class AlgorithmDAO {
         return false;
     }
 
+    public boolean reclassifyAlgorithm(String algoName, String newClassName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE className = ?;");
+        ps.setString(1, newClassName);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement updatePS = conn.prepareStatement("UPDATE algorithm SET className = ? WHERE algoName = ?;");
+            updatePS.setString(1, newClassName);
+            updatePS.setString(2, algoName);
+            updatePS.executeUpdate();
+
+            return true;
+        }
+
+        return false;
+
+    }
+
     private Algorithm generateBasicAlgorithm(ResultSet rs) throws SQLException {
         if(!rs.next()){
             return null;
@@ -120,5 +138,6 @@ public class AlgorithmDAO {
         return new Algorithm(algoName, parentClassName);
 
     }
+
 
 }
