@@ -2,6 +2,7 @@ class AlgorithmsRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
         this.createAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm"
+        this.getAlgorithmHierarchyUrlBegin = this.apiGatewayUrl + '/' + "Algorithm/"
     }
 
     addAlgorithm(algorithmName, className, onSuccess, onFail) {
@@ -26,6 +27,28 @@ class AlgorithmsRepo {
                 }
             }
         }
+    }
+
+    getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
+
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", this.createAlgorithmUrl + algorithmName, true);
+
+        xhr.send(stringedBody);
+
+        xhr.onloadend = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if(xhr.status === 200) {
+                    let response = xhr.response
+                    onSuccess(response);
+                } else {
+                    onFail(xhr.response, xhr.status)
+                }
+            }
+        }
+
+
     }
 }
 

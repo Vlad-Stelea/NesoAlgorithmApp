@@ -12,7 +12,7 @@ function updateHierarchy() {
 }
 
 function updateHierarchyImplementation() {
-    console.log("updatingHierarchy")
+    console.log("updatingHierarchyImpl")
     let onSuccessCallback = function (data) {
         renderImplementationDisplay(data);
     };
@@ -21,7 +21,7 @@ function updateHierarchyImplementation() {
         // TODO handle when there is an issue Not implemented rn as out of scope
     }
 
-    classificationRepo.getClassificationHierarchy(onSuccessCallback, onFailCallback)
+    algorithmRepo.getAlgorithmHierarchy(vm.selectedAlgo, onSuccessCallback, onFailCallback)
 
 }
 
@@ -40,18 +40,12 @@ function renderHierarchy(hierarchy) {
     h.innerHTML = output;
 }
 
-function renderImplementationDisplay(hierarchy){
+function renderImplementationDisplay(algorithmHierarchy){
     let output2 = '<ol style="list-style: none;">';
     //TODO:dig through subclassifications
-    for (let i = 0; i < hierarchy.topClassifications.length; i++) {
-       let item = hierarchy.topClassifications[i]
-        for (let j = 0; j < item.algorithms.length; j++) {
-            if(vm.selectedAlgo === item.algorithms[j].algoName){
-                console.log(item.algorithms[j])
-                output2 = output2 + addImplementationListItem(item.algorithms[j])
-            }
-        }
-    }
+
+    output2 = output2 + addImplementationListItem(algorithmHierarchy.algorithm)
+
 
     let implementation = document.getElementById('Implementation');
     implementation.innerHTML = output2;
