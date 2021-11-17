@@ -1,14 +1,14 @@
 class ClassificationRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
-        this.getHierachyUrl = this.apiGatewayUrl + '/' + "Classification/Hierachy";
+        this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierachy";
     }
 
-    getClassificationHieracy(onSuccess, onFail) {
+    getClassificationHierarchy(onSuccess, onFail) {
         console.log("Getting classification")
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json"
-        xhr.open("GET", this.getHierachyUrl, true);
+        xhr.open("GET", this.getHierarchyUrl, true);
         xhr.send();
         xhr.onloadend = function () {
             if(xhr.readyState === XMLHttpRequest.DONE) {
@@ -28,7 +28,7 @@ class MockClassificationRepo {
         console.log("Creating Mock Classification repo")
     }
 
-    getClassificationHieracy (onSuccess, onFail) {
+    getClassificationHierarchy (onSuccess, onFail) {
         console.log("Mock Class repo getting hierachy")
         let response = {
             "topClassifications":[

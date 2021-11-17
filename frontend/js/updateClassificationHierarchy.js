@@ -2,13 +2,13 @@ function updateHierarchy() {
     console.log("updatingHierarchy")
     let onSuccessCallback = function (data) {
         console.log("success")
-        renderHierachy(data);
+        renderHierarchy(data);
     };
 
     let onFailCallback = function (data, status) {
         // TODO handle when there is an issue Not implemented rn as out of scope
     }
-    classificationRepo.getClassificationHieracy(onSuccessCallback, onFailCallback)
+    classificationRepo.getClassificationHierarchy(onSuccessCallback, onFailCallback)
 }
 
 function updateHierarchyImplementation() {
@@ -21,31 +21,30 @@ function updateHierarchyImplementation() {
         // TODO handle when there is an issue Not implemented rn as out of scope
     }
 
-    classificationRepo.getClassificationHieracy(onSuccessCallback, onFailCallback)
+    classificationRepo.getClassificationHierarchy(onSuccessCallback, onFailCallback)
 
 }
 
-function renderHierachy(hierachy) {
-    console.log("hierarchy response: " + hierachy);
+function renderHierarchy(hierarchy) {
+    console.log("hierarchy response: " + hierarchy);
 
     // TODO this structure can't be right can it?
     let output = '<ol style="list-style: none;">';
 
-    console.log(typeof(hierachy))
-    for (let i = 0; i < hierachy.topClassifications.length; i++) {
-        output = output + addClassificationListItem(hierachy.topClassifications[i])
+    for (let i = 0; i < hierarchy.topClassifications.length; i++) {
+        output = output + addClassificationListItem(hierarchy.topClassifications[i])
 
     }
     output = output + '</ol>'
-    let hierarchy = document.getElementById('Hierarchy');
-    hierarchy.innerHTML = output;
+    let h = document.getElementById('Hierarchy');
+    h.innerHTML = output;
 }
 
-function renderImplementationDisplay(hierachy){
+function renderImplementationDisplay(hierarchy){
     let output2 = '<ol style="list-style: none;">';
     //TODO:dig through subclassifications
-    for (let i = 0; i < hierachy.topClassifications.length; i++) {
-       let item = hierachy.topClassifications[i]
+    for (let i = 0; i < hierarchy.topClassifications.length; i++) {
+       let item = hierarchy.topClassifications[i]
         for (let j = 0; j < item.algorithms.length; j++) {
             if(vm.selectedAlgo === item.algorithms[j].algoName){
                 console.log(item.algorithms[j])
@@ -54,8 +53,8 @@ function renderImplementationDisplay(hierachy){
         }
     }
 
-    let implemenation = document.getElementById('Implementation');
-    implemenation.innerHTML = output2;
+    let implementation = document.getElementById('Implementation');
+    implementation.innerHTML = output2;
 }
 
 function createAlgorithmView(algoName, isUserRegistered) {
