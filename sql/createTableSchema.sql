@@ -28,6 +28,7 @@ CREATE TABLE `algoApp`.`implementation` (
     FOREIGN KEY (`algoName`) REFERENCES algorithm(`algoName`)
 );
 CREATE TABLE `algoApp`.`machineConfiguration` (
+    `machineConfigName` VARCHAR(40),
 	`machineConfigUUID` CHAR(36),
     `L1Cache` INT,
     `L2Cache` INT,

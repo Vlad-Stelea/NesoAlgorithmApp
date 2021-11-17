@@ -10,7 +10,7 @@ function handleAdd(ele){
         '<li>'+
         ' <br><label for="Algorithm Name">Algorithm name:</label>' +
         '<input type="text" id="fname" name="fname">'+
-        '<input type="submit" value="Submit" onclick="handleAddAlgorithmSubmit(\''+ ele.parentElement.children[1].textContent +'\', this)"><br><br>' +
+        '<input type="submit" value="Submit" onclick="addAlgorithm(\''+ ele.parentElement.children[1].textContent +'\', this)"><br><br>' +
         '</li>' +
         '</ul>'
     let newHierarchyHTML = ""
@@ -29,52 +29,25 @@ function handleAdd(ele){
 
 }
 
-function handleAddAlgorithmSubmit(className, ele){
-    console.log("Attempt to add Algorithm", ele.parentElement.children[2].value, " to ", className)
-
+function addAlgorithm(className, ele) {
     //remove form
     ele.parentElement.parentElement.innerHTML = ''
 
-    var data = {};
-    data["algoName"] = ele.parentElement.children[2].value;
+    let onSuccessCallback = function (data) {
+            console.log("XHR: " + data.responseText);
+            console.log("added Algorithm", ele.parentElement.children[2].value, " to ", className)
+            updateHierarchy()
+    }
 
+    // Note, this doesn't work since lambda function doesn't return anything other than 200
+    let onFailCallback = function (data, status) {
+        console.log("Status != 200. Actual create response: " + xhr.responseText);
+        let newJS = JSON.parse(xhr.responseText);
+        let err = newJS["response"];
+        alert(err);
+    }
 
-    data["className"] = className;
-
-    var js = JSON.stringify(data);
-    console.log("JS:" + js);
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", createAlgorithm_url, true);
-
-    // send the collected data as JSON
-    xhr.send(js);
-
-    // This will process results and update HTML as appropriate.
-    xhr.onloadend = function () {
-
-
-
-        console.log("addAlgorithm xhr: ", xhr);
-        console.log(xhr.request);
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            if(xhr.status === 200) {
-                console.log("XHR: " + xhr.responseText);
-                console.log("added Algorithm", ele.parentElement.children[2].value, " to ", className)
-
-                updateHierarchy()
-            }
-            else {
-                console.log("Status != 200. Actual create response: " + xhr.responseText);
-                let newJS = JSON.parse(xhr.responseText);
-                let err = newJS["response"];
-                alert(err);
-            }
-            //I know this leads to extra lambda function calls, we can fix it later
-            //add the new algorithm to the hierarchy GUI
-
-        } else {
-            //failed so the hierarchy GUI doesn't need to be updated
-        }
-    };
-
+    // TODO there has to be a better way to do this
+    let algorithmName = ele.parentElement.children[2].value;
+    algorithmRepo.addAlgorithm(algorithmName, className, onSuccessCallback, onFailCallback)
 }

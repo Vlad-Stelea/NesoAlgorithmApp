@@ -322,7 +322,7 @@ paths:
           application/json: '{"statusCode": 200}'
         type: mock
   
-  /Classification/Hierachy:
+  /Classification/Hierarchy:
     get:
       tags: 
         - Classification
@@ -337,7 +337,7 @@ paths:
         200:
           description: Classifications succesfully retrieved
           schema: 
-            $ref: "#/definitions/ClassificationHierachyResponse"
+            $ref: "#/definitions/ClassificationHierarchyResponse"
           headers:
             Access-Control-Allow-Origin:
               type: string
@@ -2195,7 +2195,7 @@ definitions:
       username:
         type: string
 
-  ClassificationHierachyResponse:
+  ClassificationHierarchyResponse:
     type: object
     required:
       - classifications
