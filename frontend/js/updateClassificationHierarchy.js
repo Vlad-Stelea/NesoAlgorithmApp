@@ -1,71 +1,50 @@
 function updateHierarchy() {
     console.log("updatingHierarchy")
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", getHierarchy_url, true);
-    xhr.send();
-    console.log("sent get hierarchy request");
-
-    xhr.onloadend = function() {
-        console.log(xhr.readyState)
-        if(xhr.readyState === XMLHttpRequest.DONE) {
-            processHierarchyResponse(xhr.responseText);
-
-        }
-        else {
-            processHierarchyResponse("N/A");
-        }
+    let onSuccessCallback = function (data) {
+        console.log("success")
+        renderHierarchy(data);
     };
+
+    let onFailCallback = function (data, status) {
+        // TODO handle when there is an issue Not implemented rn as out of scope
+    }
+    classificationRepo.getClassificationHierarchy(onSuccessCallback, onFailCallback)
 }
 
 function updateHierarchyImplementation() {
     console.log("updatingHierarchy")
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", getHierarchy_url, true);
-    xhr.send();
-    console.log("sent get hierarchy request");
-
-    xhr.onloadend = function() {
-        console.log(xhr.readyState)
-        if(xhr.readyState === XMLHttpRequest.DONE) {
-            processImplementationDisplay(xhr.responseText);
-
-        }
-        else {
-            processImplementationDisplay("N/A");
-        }
+    let onSuccessCallback = function (data) {
+        renderImplementationDisplay(data);
     };
+
+    let onFailCallback = function (data, status) {
+        // TODO handle when there is an issue Not implemented rn as out of scope
+    }
+
+    classificationRepo.getClassificationHierarchy(onSuccessCallback, onFailCallback)
+
 }
 
-
-function processHierarchyResponse(response) {
-    // TODO pack the hierarchy up, then pass it along to display
-    console.log("hierarchy response: " + response);
-    console.log(JSON.parse(response))
+function renderHierarchy(hierarchy) {
+    console.log("hierarchy response: " + hierarchy);
 
     // TODO this structure can't be right can it?
-    let js = JSON.parse(response)
     let output = '<ol style="list-style: none;">';
 
-    for (let i = 0; i < js.topClassifications.length; i++) {
-        output = output + addClassificationListItem(js.topClassifications[i])
+    for (let i = 0; i < hierarchy.topClassifications.length; i++) {
+        output = output + addClassificationListItem(hierarchy.topClassifications[i])
 
     }
     output = output + '</ol>'
-    let hierarchy = document.getElementById('Hierarchy');
-    hierarchy.innerHTML = output;
-
-
-    // Update hierarchy result
-
-
+    let h = document.getElementById('Hierarchy');
+    h.innerHTML = output;
 }
 
-function processImplementationDisplay(response){
-    let js = JSON.parse(response)
+function renderImplementationDisplay(hierarchy){
     let output2 = '<ol style="list-style: none;">';
     //TODO:dig through subclassifications
-    for (let i = 0; i < js.topClassifications.length; i++) {
-       item = js.topClassifications[i]
+    for (let i = 0; i < hierarchy.topClassifications.length; i++) {
+       let item = hierarchy.topClassifications[i]
         for (let j = 0; j < item.algorithms.length; j++) {
             if(vm.selectedAlgo === item.algorithms[j].algoName){
                 console.log(item.algorithms[j])
@@ -74,8 +53,8 @@ function processImplementationDisplay(response){
         }
     }
 
-    let implemenation = document.getElementById('Implementation');
-    implemenation.innerHTML = output2;
+    let implementation = document.getElementById('Implementation');
+    implementation.innerHTML = output2;
 }
 
 function createAlgorithmView(algoName, isUserRegistered) {
