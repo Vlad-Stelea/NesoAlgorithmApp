@@ -1,7 +1,7 @@
 package CreateImplementation;
 import com.google.gson.Gson;
 
-import static EqualityUtils.EqualityUtils.equalOrBothNull;
+import static Utils.EqualityUtils.equalOrBothNull;
 
 
 public class CreateImplementationResponse {

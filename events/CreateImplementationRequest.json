@@ -1,6 +1,6 @@
 {
   "implName" : "fake impl",
   "algoName" : "fake_algo",
-  "code" : "code",
+  "code" : "VGVzdCBjb2Rl",
   "language": "java"
 }

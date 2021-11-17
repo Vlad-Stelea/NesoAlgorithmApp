@@ -1,4 +1,4 @@
-package EqualityUtils;
+package Utils;
 
 public class EqualityUtils {
     public static boolean equalOrBothNull(Object obj1, Object obj2) {
