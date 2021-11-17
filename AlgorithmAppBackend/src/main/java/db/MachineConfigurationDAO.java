@@ -49,9 +49,8 @@ public class MachineConfigurationDAO {
         return generateMachineConfiguration(rs);
     }
 
-    public List<MachineConfiguration> getAllMachineConfigurations(String machineConfigUUID) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigUUID = ?;");
-        ps.setString(1, machineConfigUUID);
+    public List<MachineConfiguration> getAllMachineConfigurations() throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration;");
         ResultSet rs = ps.executeQuery();
 
         return generateMachineConfigurations(rs);
