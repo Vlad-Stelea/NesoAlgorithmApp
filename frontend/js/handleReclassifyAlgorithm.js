@@ -14,12 +14,12 @@ function handleReclassifyAlgorithm(ele) {
         '</ul>';
 
     let newHierarchyHTML;
+    // remove the form if add was hit already
     if(hierarchyHTML.indexOf(reclassifyFormHTML) === hierarchyHTML.indexOf(algoLI) + algoLI.length + ender.length) {
-        console.log("instance 1");
         newHierarchyHTML = hierarchyHTML.substr(0, hierarchyHTML.indexOf(reclassifyFormHTML)) + hierarchyHTML.substr( hierarchyHTML.indexOf(reclassifyFormHTML)+reclassifyFormHTML.length);
     }
+    // otherwise, create the form in a couple steps
     else {
-        console.log("instance 2");
         newHierarchyHTML = hierarchyHTML.substr(0, hierarchyHTML.indexOf(algoLI) + algoLI.length + ender.length);
         newHierarchyHTML = newHierarchyHTML + reclassifyFormHTML + hierarchyHTML.substr(hierarchyHTML.indexOf(algoLI) + algoLI.length + ender.length);
     }
