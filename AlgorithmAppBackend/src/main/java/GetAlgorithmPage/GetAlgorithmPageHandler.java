@@ -36,7 +36,7 @@ public class GetAlgorithmPageHandler {
             List<MachineConfiguration> allMachs = machDAO.getAllMachineConfigurations();
             addImplementations(algo, allImps);
             algo.setProblemInstances(allProbs);
-            //TODO add benchmarks and problem instances
+            //TODO add benchmarks
 
             AlgorithmPage page = new AlgorithmPage();
             page.setAlgorithm(algo);

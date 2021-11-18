@@ -132,7 +132,6 @@ public class GetAlgorithmPageTest {
 
     @Test
     public void testGetHierarchy() throws SQLException {
-        // add the "child" and make sure we get the correct response
         when(algoDao.getAlgorithm("efsTest")).thenReturn(algo);
         when(impDao.getImplementationForAlgo("efsTest")).thenReturn(impls);
         when(probDAO.getAllAlgosProblemInstances("efsTest")).thenReturn(probs);
@@ -147,8 +146,6 @@ public class GetAlgorithmPageTest {
 
     @Test
     public void testFailGetHierarchy() throws SQLException {
-        // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
-
         when(algoDao.getAllAlgorithms()).thenThrow(NullPointerException.class);
         when(impDao.getImplementationForAlgo("efsTest")).thenReturn(impls);
 
