@@ -23,7 +23,7 @@ public class BenchmarkDAO {
             System.out.println("Connection has failed!");
         }
     }
-    public boolean createBenchmark(String benchID,String benchName, long timeToRun, Date dateRun, String algoName, String problemInstanceName, String machinceConfigName, String probInstanceName) throws SQLException {
+    public boolean createBenchmark(String benchID,String benchName, long timeToRun, Date dateRun, String algoName, String problemInstanceName, String machineConfigName, String probInstanceName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("INSERT INTO benchmark (benchmarkUUID,benchmarkName, timeToRun, dateRun, algoName, implName, machineConfigUUID,probInstanceUUID) VALUES (?, ?, ?, ?, ?, ?,);");
         ps.setString(1, benchID);
         ps.setString(2, benchName);
@@ -31,7 +31,7 @@ public class BenchmarkDAO {
         ps.setDate(4, dateRun);
         ps.setString(5, algoName);
         ps.setString(6, problemInstanceName);
-        ps.setString(7, machinceConfigName);
+        ps.setString(7, machineConfigName);
         ps.setString(8, probInstanceName);
         ps.execute();
 
@@ -53,9 +53,7 @@ public class BenchmarkDAO {
         ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"), algoName,rs.getString("implName"),rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
-        }
+        imps = generateArrayOfBenchmark(rs);
 
         return imps;
     }
@@ -65,9 +63,7 @@ public class BenchmarkDAO {
         ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,ImpName,rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
-        }
+        imps = generateArrayOfBenchmark(rs);
 
         return imps;
     }
@@ -77,9 +73,7 @@ public class BenchmarkDAO {
         ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("ImpName"),machineConfig,rs.getString("probInstanceUUID")));
-        }
+        imps = generateArrayOfBenchmark(rs);
 
         return imps;
     }
@@ -89,20 +83,30 @@ public class BenchmarkDAO {
         ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("ImpName"),rs.getString("machineConfigUUID"),problemInstance));
-        }
+        imps = generateArrayOfBenchmark(rs);
 
         return imps;
     }
 
+    public ArrayList<Benchmark> generateArrayOfBenchmark(ResultSet rs) throws SQLException{
+
+        ArrayList imps = new ArrayList<>();
+        while(rs.next()) {
+            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("ImplName"),rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
+        }
+        return imps;
+
+    }
+
     public Benchmark generateBenchmark(ResultSet rs) throws SQLException {
-        rs.next();
+        if(!rs.next()) {
+        return null;
+        }
         String benchID = rs.getString("benchmarkUUID");
         String benchName =rs.getString("benchmarkName");
         String algoName =rs.getString("algoName");
         String machinceConfigName =rs.getString("machineConfigUUID");
-        String implName = rs.getString("ImpName");
+        String implName = rs.getString("ImplName");
         String problemInstanceName =rs.getString("probInstanceUUID");
         Date dateRun =rs.getDate("dateRun");
        long timeToRun =rs.getLong("timeToRun");

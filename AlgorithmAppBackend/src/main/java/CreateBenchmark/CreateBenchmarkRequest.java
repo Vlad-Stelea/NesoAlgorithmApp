@@ -6,7 +6,7 @@ public class CreateBenchmarkRequest {
     public String benchID;
     public String benchName;
     public String algoName;
-    public String machinceConfigName;
+    public String machineConfigName;
     public String implName;
     public String problemInstanceName;
     public Date dateRun;
@@ -14,14 +14,14 @@ public class CreateBenchmarkRequest {
     public CreateBenchmarkRequest(){
 
     }
-    public CreateBenchmarkRequest(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machinceConfigName, String problemInstanceName){
+    public CreateBenchmarkRequest(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName){
         this.benchID = benchID;
         this.benchName = benchName;
         this.dateRun = dateRun;
         this.timeToRun =timeToRun;
         this.algoName = algoName;
         this.problemInstanceName =problemInstanceName;
-        this.machinceConfigName =machinceConfigName;
+        this.machineConfigName =machineConfigName;
         this.implName = implName;
     }
 
@@ -50,11 +50,11 @@ public class CreateBenchmarkRequest {
     }
 
     public String getMachinceConfigName() {
-        return machinceConfigName;
+        return machineConfigName;
     }
 
-    public void setMachinceConfigName(String machinceConfigName) {
-        this.machinceConfigName = machinceConfigName;
+    public void setMachineConfigName(String machineConfigName) {
+        this.machineConfigName = machineConfigName;
     }
 
     public String getImplName() {
@@ -91,7 +91,7 @@ public class CreateBenchmarkRequest {
 
     @Override
     public String toString() {
-        return "CreateImplemenation(" + benchID + ", " + benchName + ", " + timeToRun + ", " + dateRun + ", " + algoName + ", " + implName+ ", " + machinceConfigName +", " + problemInstanceName +")";
+        return "CreateBenchmark(" + benchID + ", " + benchName + ", " + timeToRun + ", " + dateRun + ", " + algoName + ", " + implName+ ", " + machineConfigName +", " + problemInstanceName +")";
     }
 
 

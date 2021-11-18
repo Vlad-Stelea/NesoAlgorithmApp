@@ -8,7 +8,7 @@ public class Benchmark {
     private String benchID;
     private String benchName;
     private String algoName;
-    private String machinceConfigName;
+    private String machineConfigName;
     private String implName;
     private String problemInstanceName;
     private Date dateRun;
@@ -16,14 +16,14 @@ public class Benchmark {
 
 
 
-    public Benchmark(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machinceConfigName, String problemInstanceName){
+    public Benchmark(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machincConfigName, String problemInstanceName){
         this.benchID = benchID;
         this.benchName = benchName;
         this.dateRun = dateRun;
         this.timeToRun =timeToRun;
         this.algoName = algoName;
         this.problemInstanceName =problemInstanceName;
-        this.machinceConfigName =machinceConfigName;
+        this.machineConfigName =machineConfigName;
         this.implName = implName;
     }
 
@@ -76,12 +76,12 @@ public class Benchmark {
         this.dateRun = dateRun;
     }
 
-    public String getMachinceConfigName() {
-        return machinceConfigName;
+    public String getMachineConfigName() {
+        return machineConfigName;
     }
 
-    public void setMachinceConfigName(String machinceConfigName) {
-        this.machinceConfigName = machinceConfigName;
+    public void setMachineConfigName(String machineConfigName) {
+        this.machineConfigName = machineConfigName;
     }
     public String getImplName() {
         return implName;
