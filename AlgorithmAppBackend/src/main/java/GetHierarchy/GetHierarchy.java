@@ -13,7 +13,7 @@ public class GetHierarchy implements RequestHandler<Object, GetHierarchyResponse
     GetHierarchyHandler handler;
 
     public GetHierarchy() {
-        handler = new GetHierarchyHandler(new ClassificationDAO(), new AlgorithmDAO(), new ImplementationDAO());
+        handler = new GetHierarchyHandler(new ClassificationDAO(), new AlgorithmDAO());
     }
 
     @Override

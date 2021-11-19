@@ -11,6 +11,7 @@
     <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
     <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
+    <script type='text/javascript' src='../js/updateAlgorithmPage.js'></script>
 
 </head>
 
@@ -29,7 +30,7 @@
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-        updateHierarchyImplementation()
+        updateAlgorithmPageHierarchy()
         renderBanner(vm.user);
 
     }
