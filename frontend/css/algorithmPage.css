@@ -10,6 +10,16 @@
   font-size: 17px;
 }
 
+.leftSide {
+  width: 35%;
+  margin-right: 5%;
+  float: left;
+}
+
+.rightSide {
+  width: 60%;
+  float: left;
+}
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .collapsible:hover, deleteButton:hover {
   background-color: #ccc;
@@ -23,7 +33,7 @@
   background-color: #f1f1f1;
 }
 
-.button {
+.language {
   display:inline;
   color: #444;
   cursor: pointer;
@@ -34,10 +44,23 @@
   font-size: 15px;
 }
 
+.button{
+  padding: 5px 5px;
+  display: inline;
+
+}
+
 .listItem{
     background-color:lightgray;
     /*width: 50%;*/
     padding: 10px 10px;
     outline: 2px solid black;
     outline-offset: -1px;
+}
+
+.section{
+}
+
+.registeredUserOnly{
+  margin-left: 20px;
 }
