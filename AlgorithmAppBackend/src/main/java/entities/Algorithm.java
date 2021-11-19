@@ -8,23 +8,27 @@ public class Algorithm {
     private String algoName;
     private String parentClassificationName;
     private List<Implementation> implementations;
+    private List<ProblemInstance> problemInstances;
 
     public Algorithm(String algoName) {
         this.algoName = algoName;
         parentClassificationName = null;
         implementations = new ArrayList<>();
+        problemInstances = new ArrayList<>();
     }
 
     public Algorithm(String algoName, String parentClassificationName) {
         this.algoName = algoName;
         this.parentClassificationName = parentClassificationName;
         implementations = new ArrayList<>();
+        problemInstances = new ArrayList<>();
     }
 
     public Algorithm(String algoName, String parentClassificationName, ArrayList<Implementation> implementations) {
         this.algoName = algoName;
         this.parentClassificationName = parentClassificationName;
         this.implementations = implementations;
+        problemInstances = new ArrayList<>();
     }
 
     //getters and setters
@@ -34,6 +38,17 @@ public class Algorithm {
 
     public String getParentClassificationName() {
         return parentClassificationName;
+    }
+
+    public List<ProblemInstance> getProblemInstances(){
+        return problemInstances;
+    }
+
+    public void setProblemInstances(List<ProblemInstance> pis){
+        this.problemInstances = pis;
+        for(ProblemInstance pi: pis){
+            pi.setAlgoName(this.algoName);
+        }
     }
 
     public List<Implementation> getImplementations() {
@@ -80,7 +95,7 @@ public class Algorithm {
         if(obj == this) return true;
         if(!(obj instanceof Algorithm)) return false;
         Algorithm a = (Algorithm) obj;
-        return this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a);
+        return this.algoNamesMatch(a) && this.parentClassificationsMatch(a) && this.implementationsMatch(a) && this.problemInstancesMatch(a);
     }
 
     /*
@@ -105,6 +120,31 @@ public class Algorithm {
         }else{
             //this.implementations is null so a must have null impls
             return a.implementations == null;
+        }
+    }
+
+    /*
+     * Checks if this algorithm's problemIsntatnces match a's problemIsntatnces exactly(order doesn't matter)
+     */
+    private boolean problemInstancesMatch(Algorithm a) {
+        //check if problemInstances is null to prevent null pointers
+        if(this.problemInstances != null){
+            //null pointer safty VV
+            if(a.problemInstances != null && this.problemInstances.size() == a.problemInstances.size()){
+                //go through each probInstance and make sure a has it as well
+                for(int i = 0; i < a.problemInstances.size(); i++){
+                    if(!this.problemInstances.contains(a.problemInstances.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                //either a has null problemInstances(and this does not) or the sizes don't match
+                return false;
+            }
+        }else{
+            //this.implementations is null so a must have null impls
+            return a.problemInstances == null;
         }
     }
 

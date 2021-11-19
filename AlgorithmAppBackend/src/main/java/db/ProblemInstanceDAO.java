@@ -53,6 +53,14 @@ public class ProblemInstanceDAO {
         return generateProblemInstances(rs);
     }
 
+    public ArrayList<ProblemInstance> getAllAlgosProblemInstances(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE algoName = ?");
+        ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        return generateProblemInstances(rs);
+    }
+
     public boolean removeProblemInstance(String probInstanceUUID) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE probInstanceUUID = ?;");
         ps.setString(1, probInstanceUUID);
