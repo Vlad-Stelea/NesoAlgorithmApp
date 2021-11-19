@@ -1,6 +1,6 @@
-<html><head>
+<html lang="en"><head>
     <link rel="stylesheet" href="../css/algorithmPage.css">
-<!-- remember to add javascript-->
+
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAdd.js'></script>
     <script type='text/javascript' src='../js/handleAddProblemInstance.js'></script>
@@ -12,6 +12,8 @@
     <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
     <script type='text/javascript' src='../js/updateAlgorithmPage.js'></script>
+
+    <title>Team Neso Algo App</title>
 
 </head>
 
@@ -47,7 +49,7 @@
     <h1 style="display:inline;">User 1 </h1>
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
     <button
-        id="loginButton";
+        id="loginButton"
         style="display:inline;
                  margin-left: 80%;
                  background-color: aqua;
@@ -68,13 +70,13 @@
 
         </div>
 <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    let coll = document.getElementsByClassName("collapsible");
+    let i;
 
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
         this.classList.toggle("active");
-        var content = this.nextElementSibling;
+        let content = this.nextElementSibling;
         if (content.style.display === "block") {
           content.style.display = "none";
         } else {

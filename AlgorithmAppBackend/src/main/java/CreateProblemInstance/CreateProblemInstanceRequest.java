@@ -4,15 +4,15 @@ public class CreateProblemInstanceRequest {
 
     public String probInstanceUUID;
     public String probInstanceName;
-    public String datasetURL;
+    public String encodedDatasetContents;
     public String algoName;
 
     public CreateProblemInstanceRequest() {}
 
-    public CreateProblemInstanceRequest(String probInstanceUUID, String probInstanceName, String datasetURL, String algoName) {
+    public CreateProblemInstanceRequest(String probInstanceUUID, String probInstanceName, String encodedDatasetContents, String algoName) {
         this.probInstanceUUID = probInstanceUUID;
         this.probInstanceName = probInstanceName;
-        this.datasetURL = datasetURL;
+        this.encodedDatasetContents = encodedDatasetContents;
         this.algoName = algoName;
     }
 
@@ -25,11 +25,11 @@ public class CreateProblemInstanceRequest {
     public String getProbInstanceName() { return probInstanceName; }
     public void setProbInstanceName(String probInstanceName) { this.probInstanceName = probInstanceName; }
 
-    public String getDatasetURL() { return datasetURL; }
-    public void setDatasetURL(String datasetURL) { this.datasetURL = datasetURL; }
+    public String getEncodedDatasetContents() { return encodedDatasetContents; }
+    public void setEncodedDatasetContents(String datasetURL) { this.encodedDatasetContents = datasetURL; }
 
     @Override
     public String toString() {
-        return "CreateProblemInstance(" + probInstanceUUID + "," + probInstanceName + "," + datasetURL +"," + algoName + ")";
+        return "CreateProblemInstance(" + probInstanceUUID + "," + probInstanceName + "," + encodedDatasetContents +"," + algoName + ")";
     }
 }

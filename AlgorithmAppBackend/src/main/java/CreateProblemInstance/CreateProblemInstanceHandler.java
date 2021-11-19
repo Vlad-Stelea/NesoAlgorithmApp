@@ -14,8 +14,8 @@ public class CreateProblemInstanceHandler {
         CreateProblemInstanceResponse response;
 
         try {
-            if(dao.createProblemInstance(request.getProbInstanceUUID(),request.getProbInstanceName(), request.getDatasetURL() ,request.getAlgoName())) {
-                response = new CreateProblemInstanceResponse(request.getProbInstanceUUID() + "," + request.getProbInstanceName() + "," + request.getDatasetURL() + "," + request.getAlgoName(), 200);
+            if(dao.createProblemInstance(request.getProbInstanceUUID(),request.getProbInstanceName(), request.getEncodedDatasetContents() ,request.getAlgoName())) {
+                response = new CreateProblemInstanceResponse(request.getProbInstanceUUID() + "," + request.getProbInstanceName() + "," + request.getEncodedDatasetContents() + "," + request.getAlgoName(), 200);
             } else {
                 response = new CreateProblemInstanceResponse(request.getProbInstanceUUID() + " (" + request.getProbInstanceName() + ")", 409, "Problem instance already exists.");
             }
