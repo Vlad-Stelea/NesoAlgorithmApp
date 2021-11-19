@@ -4,7 +4,7 @@ import CreateProblemInstance.CreateProblemInstanceHandler;
 import CreateProblemInstance.CreateProblemInstanceRequest;
 import CreateProblemInstance.CreateProblemInstanceResponse;
 import db.ProblemInstanceDAO;
-import entities.ProblemInstance;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 
 public class CreateProblemInstanceTest extends LambdaTest {
 
-    ProblemInstance probInstance;
     ProblemInstanceDAO dao;
     CreateProblemInstanceHandler cpiHandler;
     CreateProblemInstanceRequest req;
@@ -24,7 +23,6 @@ public class CreateProblemInstanceTest extends LambdaTest {
     @Before
     public void setup() {
         dao = mock(ProblemInstanceDAO.class);
-        probInstance = new ProblemInstance("cpi_test", "cpiAlgo_test");
         cpiHandler = new CreateProblemInstanceHandler(dao);
         req = new CreateProblemInstanceRequest("cpi_uuid_test", "cpi_test", "cpi_url_test", "cpiAlgo_test");
     }

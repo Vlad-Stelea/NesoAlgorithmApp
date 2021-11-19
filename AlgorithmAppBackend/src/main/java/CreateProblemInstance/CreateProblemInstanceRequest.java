@@ -7,6 +7,8 @@ public class CreateProblemInstanceRequest {
     public String datasetURL;
     public String algoName;
 
+    public CreateProblemInstanceRequest() {}
+
     public CreateProblemInstanceRequest(String probInstanceUUID, String probInstanceName, String datasetURL, String algoName) {
         this.probInstanceUUID = probInstanceUUID;
         this.probInstanceName = probInstanceName;

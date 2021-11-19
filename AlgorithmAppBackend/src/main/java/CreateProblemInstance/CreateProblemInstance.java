@@ -10,8 +10,8 @@ public class CreateProblemInstance implements RequestHandler<CreateProblemInstan
     public LambdaLogger logger = null;
     CreateProblemInstanceHandler handler;
 
-    public CreateProblemInstance(ProblemInstanceDAO dao) {
-        handler = new CreateProblemInstanceHandler(dao);
+    public CreateProblemInstance() {
+        handler = new CreateProblemInstanceHandler(new ProblemInstanceDAO());
     }
 
     @Override
