@@ -14,14 +14,14 @@ public class RemoveProblemInstanceHandler {
         RemoveProblemInstanceResponse response;
 
         try {
-            if(dao.removeProblemInstance(request.getProbInstanceUUID())) {
-                response = new RemoveProblemInstanceResponse(request.getProbInstanceUUID(), 200);
+            if(dao.removeProblemInstance(request.getProblemInstanceID())) {
+                response = new RemoveProblemInstanceResponse(request.getProblemInstanceID(), 200);
             } else {
-                response = new RemoveProblemInstanceResponse(request.getProbInstanceUUID(), 404, "Problem instance not found.");
+                response = new RemoveProblemInstanceResponse(request.getProblemInstanceID(), 404, "Problem instance not found.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response = new RemoveProblemInstanceResponse("Unable to remove Problem Instance: " + request.getProbInstanceUUID() + "\n(" + e.getMessage() + ")", 400);
+            response = new RemoveProblemInstanceResponse("Unable to remove Problem Instance: " + request.getProblemInstanceID() + "\n(" + e.getMessage() + ")", 400);
         }
 
         return response;

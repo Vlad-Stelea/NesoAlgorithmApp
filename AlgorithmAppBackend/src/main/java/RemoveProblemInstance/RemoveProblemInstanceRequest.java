@@ -2,20 +2,20 @@ package RemoveProblemInstance;
 
 public class RemoveProblemInstanceRequest {
 
-    String probInstanceUUID;
+    String problemInstanceID;
     
     public RemoveProblemInstanceRequest() {}
 
-    public RemoveProblemInstanceRequest(String probInstanceUUID) {
-        this.probInstanceUUID = probInstanceUUID;
+    public RemoveProblemInstanceRequest(String problemInstanceID) {
+        this.problemInstanceID = problemInstanceID;
     }
 
-    public String getProbInstanceUUID() { return probInstanceUUID; }
-    public void setProbInstanceUUID(String probInstanceUUID) { this.probInstanceUUID = probInstanceUUID; }
+    public String getProblemInstanceID() { return problemInstanceID; }
+    public void setProblemInstanceID(String problemInstanceID) { this.problemInstanceID = problemInstanceID; }
 
     @Override
     public String toString() {
-        return "CreateProblemInstance(" + probInstanceUUID + ")";
+        return "CreateProblemInstance(" + problemInstanceID + ")";
     }
     
 }
