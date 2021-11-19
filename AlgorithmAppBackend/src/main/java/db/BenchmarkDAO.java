@@ -92,7 +92,7 @@ public class BenchmarkDAO {
 
         ArrayList imps = new ArrayList<>();
         while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("ImplName"),rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
+            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("implName"),rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
         }
         return imps;
 
@@ -106,7 +106,7 @@ public class BenchmarkDAO {
         String benchName =rs.getString("benchmarkName");
         String algoName =rs.getString("algoName");
         String machinceConfigName =rs.getString("machineConfigUUID");
-        String implName = rs.getString("ImplName");
+        String implName = rs.getString("implName");
         String problemInstanceName =rs.getString("probInstanceUUID");
         Date dateRun =rs.getDate("dateRun");
        long timeToRun =rs.getLong("timeToRun");

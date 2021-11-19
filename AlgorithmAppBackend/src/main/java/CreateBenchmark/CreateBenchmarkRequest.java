@@ -49,7 +49,7 @@ public class CreateBenchmarkRequest {
         this.algoName = algoName;
     }
 
-    public String getMachinceConfigName() {
+    public String getMachineConfigName() {
         return machineConfigName;
     }
 
