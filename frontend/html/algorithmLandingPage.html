@@ -21,10 +21,11 @@
         $("#loginButton").text(
             user.token ? "Logout" : "Login"
         );
-        if(user.token){
-            document.getElementById("loggedIn").style.display = "block";
-        } else{
-            document.getElementById("loggedIn").style.display = "none";
+        if(!user.token){
+            var btns = document.getElementsByClassName('registeredUserOnly');
+            for(i = 0; i < btns.length; i++) {
+                btns[i].style.display = 'none';
+            }
         }
     }
     function initialize() {
@@ -44,30 +45,42 @@
 <body onload="initialize()">
 <div style="background-color: cadetblue; padding: 20px;">
     <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToRegisteredUsersPage()">Home</button>
-    <h1 style="display:inline;">User 1 </h1>
+    <h1 style="display:inline;" class="registeredUserOnly">User 1 </h1>
     <!--TODO:Figure out how to get algorithm name to display-->
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
     <button
         id="loginButton";
         style="display:inline;
-                 margin-left: 80%;
+                 margin-left: auto;
+                 float:right;
                  background-color: aqua;
-                 padding: 10px 10px;"
+                 padding: 30px 60px;"
         onclick="vm.user.token ? handleLogOut() : handleLogin()">
     Login
 </button>
 </div>
 
-
         <div >
-
-            <div id="loggedIn">
-            <button class="button" onclick="handleAddImpPrep()" >Add Implementation</button>
-            <div id='AddImpForm'></div>
-            <button class="button">Add Problem Instance</button>
+            <div class="leftSide">
+                <div class="section">
+                    <h2 style="display:inline;" >Problem Instances</h2>
+                    <button class="registeredUserOnly button">Add Problem Instance</button>
+                    <div id='ProblemInstances'></div>
+                </div>
+                <hr>
+                <div class="section">
+                    <h2 style="display:inline;" >Machine Configurations</h2>
+                    <button class="button" style="background-color: green">Add Machine Configuration</button>
+                    <div id='MachineConfigs'></div>
+                </div>
             </div>
-            <h2>Implementations</h2>
-            <div id='Implementation'></div>
+            <div class="rightSide section">
+                <h2 style="display:inline;">Implementations/Benchmarks</h2>
+                <button class="registeredUserOnly button" onclick="handleAddImpPrep()" >Add Implementation</button>
+                <div id='Implementation'></div>
+            </div>
+
+
 
         </div>
 <script>

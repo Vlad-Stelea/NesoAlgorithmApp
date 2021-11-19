@@ -1,7 +1,10 @@
 function updateAlgorithmPageHierarchy() {
     console.log("updatingHierarchyImpl")
     let onSuccessCallback = function (data) {
+        console.log(data);
         renderImplementationDisplay(data);
+        renderProblemInstanceList(data.algorithmPage.algorithm.problemInstances);
+        renderMachineConfigurationList(data.algorithmPage.machineConfigurations);
     };
 
     let onFailCallback = function (data, status) {
@@ -15,8 +18,7 @@ function updateAlgorithmPageHierarchy() {
 function renderImplementationDisplay(algorithmHierarchy){
     let output2 = '<ol style="list-style: none;">';
 
-    output2 = output2 + addImplementationListItem(algorithmHierarchy.algorithmPage.algorithm)
-
+    output2 = output2 + addImplementationList(algorithmHierarchy.algorithmPage.algorithm)
 
     let implementation = document.getElementById('Implementation');
     implementation.innerHTML = output2;
@@ -27,17 +29,13 @@ function createImplementationView(item, isUserRegistered){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
     output = '<li class="listItem" style="background-color: sandybrown">' +
-        '<h2> Implementation: ' + item.implName +'</h2>'
+        '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>' +
+        '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleAdd(this)">Add Benchmark</button>'
     if(isUserRegistered) {
-        output = output + '<h3 style="background-color: green; margin-left: 20px;display :flex;" class="button" onclick="handleAdd(this)">Add Benchmark</h3>'+
-            '<h3 style=" background-color: red; margin-left: 20px;display :flex;" class="button" onclick="handleImplementationDelete(this)">Del</h3>'
+        output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this)">Del</button>'
     }
-    output = output + '<h3 style="margin-left: 20px;" class="button"> Language: ' + item.language + '</h3>'+
-        '<h style="display:inline;word-wrap:break-word">code: ' +item.codeURL + '</h>' +
-        '<div class="content">'+
-        '<h3 style="; margin-left: 20px;" "> Language: '+item.language + '</h3>'+
-        '<h3 style="display:inline; margin-left: 20px;" ">Url: <a href=' + item.codeURL +'>'+item.codeURL + '</a></h3>'+
-        '</div>'+
+    output = output + '<h3 style="margin-left: 20px;" class="language"> Language: ' + item.language + '</h3>'+
+        '<h style="display:inline;word-wrap:break-word">Code Download Link: </h>' + '<a href="' + item.codeURL + '">Download</a>' +
         '</li>'+
         '<li style="list-style-type:none">'+
         '<ul style="list-style: none;">'
@@ -51,7 +49,7 @@ function createImplementationView(item, isUserRegistered){
 }
 
 
-function addImplementationListItem(item){
+function addImplementationList(item){
     let output = ""
     //Implementation
     console.log(item)
@@ -61,10 +59,66 @@ function addImplementationListItem(item){
 
     output = output + '</ul></li>'
 
+    return output
+}
 
+function renderMachineConfigurationList(machineConfigs){
+    let output = '<ol style="list-style: none;">';
+
+    for (let j = 0; j < machineConfigs.length; j++) {
+        output = output + createMachineConfigurationView(machineConfigs[j],vm.user.token !== '')
+    }
+
+    output = output + '</ul></li>'
+    let machineConfigurationList = document.getElementById('MachineConfigs');
+    machineConfigurationList.innerHTML = output;
+}
+
+function createMachineConfigurationView(machineConfig, isRegisteredUser){
+    output = ""
+    //Implementation
+    //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
+    output = '<li class="listItem" style="background-color: sandybrown">' +
+        '<h2 style="display:inline;">' + machineConfig.machineConfigName +'</h2>'
+    if(isRegisteredUser){
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
+    }
+    output = output + '<div style="margin-left: 15px;">'+
+        '<h style="display:inline;" > L1 Cache: ' + machineConfig.l1Cache + '</h>'
+        + '<h style="display:inline; margin-left: 15px;" > L2 Cache: ' + machineConfig.l2Cache + '</h>'
+        + '<h style="display:inline; margin-left: 15px;" > Threads: ' + machineConfig.threads + '</h>'
+        + '<h style="display:inline; margin-left: 15px;" > Chip: ' + machineConfig.chip + '</h>' + '</div>' +
+        '</li>'
 
     return output
+}
 
+function renderProblemInstanceList(problemInstance){
+    let output = '<ol style="list-style: none;">';
 
+    for (let j = 0; j < problemInstance.length; j++) {
+        output = output + createProblemInstanceView(problemInstance[j],vm.user.token !== '')
+    }
 
+    output = output + '</ul></li>'
+    let problemInstanceList = document.getElementById('ProblemInstances');
+    problemInstanceList.innerHTML = output;
+}
+
+function createProblemInstanceView(problemInstance, isRegisteredUser){
+    console.log(problemInstance);
+    output = ""
+    //Implementation
+    //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
+    output = '<li class="listItem" style="background-color: sandybrown">' +
+        '<h2 style="display:inline;">' + problemInstance.probInstanceName +'</h2>'
+    if(isRegisteredUser) {
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
+//onclick="handleImplementationDelete(this)"
+    }
+    output = output + '<div>'+
+        '<h style="display:inline;"> Download Link: </h>' + '<a href="' + problemInstance.datasetURL + '">Download</a>'
+        '</li>'
+
+    return output
 }

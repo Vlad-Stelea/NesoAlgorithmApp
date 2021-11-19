@@ -41,15 +41,16 @@
     <body>
     
 
-    <div style="background-color: cadetblue; padding: 20px;">
+    <div style="background-color: cadetblue; padding: 20px; overflow: hidden;">
         <!-- Comment out for now because not sure how to get the user name yet-->
 <!--        <h1 style="display:inline;">User 1 </h1>-->
         <button
                 id="loginButton";
                 style="display:inline;
-                 margin-left: 80%;
+                 margin-left: auto;
+                 float:right;
                  background-color: aqua;
-                 padding: 10px 10px;"
+                 padding: 30px 60px;"
                 onclick="vm.user.token ? handleLogOut() : handleLogin()">
             Login
         </button>
