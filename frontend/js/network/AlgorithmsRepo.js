@@ -76,7 +76,7 @@ class MockAlgorithmRepo {
 
         console.log("mock getting algo hierarchy")
 
-       let responce = {
+       let response = {
             "algorithmPage":{
                 "algorithm":{
                     "algoName":"efsTest",
