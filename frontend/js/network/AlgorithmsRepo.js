@@ -1,7 +1,8 @@
 class AlgorithmsRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
-        this.createAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm"
+        this.createAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm";
+        this.reclassifyAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm/Reclassify";
         this.getAlgorithmHierarchyUrlBegin = this.apiGatewayUrl + '/' + "Algorithm/"
     }
 
@@ -29,8 +30,31 @@ class AlgorithmsRepo {
         }
     }
 
-    getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
+    reclassifyAlgorithm(algoName, newClassName, onSuccess, onFail) {
+        let body = {
+            "algoName": algoName,
+            "newClassName": newClassName
+        };
 
+        let stringedBody = JSON.stringify(body);
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", this.reclassifyAlgorithmUrl, true);
+
+        xhr.send(stringedBody);
+      
+        xhr.onloadend = function() {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if(xhr.status === 200) {
+                      let response = xhr.response;
+                      onSuccess(response);
+                  } else {
+                      onFail(xhr.response, xhr.status);
+                  }
+              }
+          }
+    }
+
+    getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
         console.log("getting algo hierarchy")
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json"
@@ -41,15 +65,13 @@ class AlgorithmsRepo {
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if(xhr.status === 200) {
-                    let response = xhr.response
+                    let response = xhr.response;
                     onSuccess(response);
                 } else {
-                    onFail(xhr.response, xhr.status)
+                    onFail(xhr.response, xhr.status);
                 }
             }
         }
-
-
     }
 }
 
@@ -69,14 +91,27 @@ class MockAlgorithmRepo {
             response,
             200,
             new MockXHR()
-        )
+        );
+    }
+
+    reclassifyAlgorithm(algoName, newClassName, onSuccess, onFail) {
+        console.log("Mock algo repo reclassify algo")
+        let response = {
+            "algoName": algoName,
+            "newClassName": newClassName
+        }
+        
+        onSuccess(
+            response,
+            200,
+            new MockXHR()
+        );
     }
 
     getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
-
         console.log("mock getting algo hierarchy")
 
-       let responce = {
+       let response = {
             "algorithmPage":{
                 "algorithm":{
                     "algoName":"efsTest",
@@ -136,7 +171,6 @@ class MockAlgorithmRepo {
             response,
             200,
             new MockXHR()
-        )
+        );
     }
-
 }
