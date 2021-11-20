@@ -6,7 +6,7 @@
 
 .listItem{
     background-color:lightgray; 
-    width: 25%; 
+    width: 50%;
     padding: 10px 10px; 
     outline: 2px solid black; 
     outline-offset: -1px;

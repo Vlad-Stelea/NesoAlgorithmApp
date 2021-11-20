@@ -2,6 +2,7 @@ class ClassificationRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
         this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierarchy";
+        this.createClassification_url = this.apiGatewayUrl + "/Classification";
     }
 
     getClassificationHierarchy(onSuccess, onFail) {
@@ -17,6 +18,38 @@ class ClassificationRepo {
                     onSuccess(response);
                 } else {
                     onFail(xhr.response, xhr.status);
+                }
+            }
+        }
+    }
+
+    addClassification(className, parentClassName, onSuccess, onFail){
+        console.log("adding classification");
+        let cData = {};
+        cData["className"] = className;
+
+        cData["parentClassName"] = parentClassName;
+
+
+        if(cData["className"] === "") {
+            alert("Please enter a non-empty Classification name");
+        }else {
+            let js = JSON.stringify(cData);
+            console.log("Create Classification JSON: " + js);
+
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = "json";
+            xhr.open("POST", this.createClassification_url, true);
+            xhr.send(js);
+
+            xhr.onloadend = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let response = xhr.response;
+                        onSuccess(response);
+                    } else {
+                        onFail(xhr.response, xhr.status);
+                    }
                 }
             }
         }
@@ -85,6 +118,20 @@ class MockClassificationRepo {
                     "topLevel":false
                 }
             ],
+            "statusCode":200,
+            "error":""
+        };
+
+        onSuccess (
+            response,
+            200
+        );
+    }
+
+    addClassification(className, parentClassName, onSuccess, onFail){
+        console.log("Mock Class repo adding hierachy")
+        let response = {
+            "response":"worked",
             "statusCode":200,
             "error":""
         };

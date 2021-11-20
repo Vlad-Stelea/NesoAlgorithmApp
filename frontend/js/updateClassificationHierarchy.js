@@ -46,7 +46,8 @@ function createClassificationView(classificationName, isUserRegistered) {
     if(isUserRegistered) {
         output +=
             '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'+
-            '<button style="background-color: green; margin-left: 10px;" class="button" onclick="handleAdd(this)">Add Algorithm</button>'+
+            '<button style="background-color: green; margin-left: 10px;" class="button" onclick="handleAddSubClassificationPrep(this)">Add Classification</button>' +
+            '<button style="background-color: limegreen; margin-left: 10px;" class="button" onclick="handleAddAlgorithm(this)">Add Algorithm</button>'+
             '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</button>'
     }
     output += '</li>' +
