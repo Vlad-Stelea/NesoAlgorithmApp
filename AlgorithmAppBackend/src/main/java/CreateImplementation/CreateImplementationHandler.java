@@ -7,29 +7,34 @@ import db.ImplementationDAO;
 public class CreateImplementationHandler{
 
     ImplementationDAO dao;
+    IImplementationStorage storage;
 
-    public CreateImplementationHandler(ImplementationDAO dao) {
+    public CreateImplementationHandler(ImplementationDAO dao, IImplementationStorage storage) {
         this.dao = dao;
+        this.storage = storage;
     }
 
 
     public CreateImplementationResponse handle(CreateImplementationRequest request)  {
         try {
             // Successful case of creating an implementation
-            if(dao.createImplementation(request.getImplName(),request.getCode(), request.getLanguage() ,request.getAlgoName())) {
-                return new CreateImplementationResponse(
-                        200,
-                        request.getImplName(),
-                        request.getAlgoName(),
-                        request.getCode(),
-                        request.getLanguage()
-                );
+            if(!dao.hasImplementation(request.getImplName(), request.getAlgoName())) {
+                String url = storage.storeImplementation(request.getImplName(), request.getCode());
+                // Try to create an implementation
+                if(dao.createImplementation(request.getImplName(),url, request.getLanguage() ,request.getAlgoName())) {
+                    return new CreateImplementationResponse(
+                            200,
+                            request.getImplName(),
+                            request.getAlgoName(),
+                            url,
+                            request.getLanguage()
+                    );
+                } else {
+                    return createImplementationAlreadyExistsError();
+                }
             } else {
                 // Case where an implementation already exists in the db
-                return new CreateImplementationResponse(
-                        409,
-                        "Implementation already exists"
-                );
+                return createImplementationAlreadyExistsError();
             }
         } catch (Exception e) {
             // Case where an unknown error occurs
@@ -41,4 +46,10 @@ public class CreateImplementationHandler{
         }
     }
 
+    private CreateImplementationResponse createImplementationAlreadyExistsError() {
+        return new CreateImplementationResponse(
+                409,
+                "Implementation already exists"
+        );
+    }
 }
