@@ -1,12 +1,12 @@
 package db;
 
-import entities.Algorithm;
 import entities.Implementation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ImplementationDAO {
     private Connection conn;
@@ -35,9 +35,12 @@ public class ImplementationDAO {
         return true;
     }
 
+    public boolean hasImplementation(String implName, String algoName) throws SQLException{
+        Optional<Implementation> impl = getImplementation(implName, algoName);
+        return impl.isPresent();
+    }
 
-
-    public Implementation getImplementation(String implName, String algoName) throws SQLException {
+    public Optional<Implementation> getImplementation(String implName, String algoName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE implName = ? AND algoName = ?;");
         ps.setString(1, implName);
         ps.setString(2, algoName);
@@ -47,7 +50,7 @@ public class ImplementationDAO {
     }
 
     public ArrayList<Implementation> getAllImplementation() throws SQLException{
-        ArrayList imps = new ArrayList<>();
+        ArrayList<Implementation> imps = new ArrayList<>();
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
@@ -87,7 +90,7 @@ public class ImplementationDAO {
     public ArrayList<Implementation> getImplementationForAlgo(String algoName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE algoName = ?;");
         ps.setString(1, algoName);
-        ArrayList imps = new ArrayList<>();
+        ArrayList<Implementation> imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
@@ -97,14 +100,18 @@ public class ImplementationDAO {
         return imps;
     }
 
-    private Implementation generateImplementation(ResultSet rs) throws SQLException {
-        rs.next();
+    private Optional<Implementation> generateImplementation(ResultSet rs) throws SQLException {
+        // Check if the ResultSet is filled already
+        // Note, ResultSet must have not had any operations done on it before being passed into here
+        if (!rs.isBeforeFirst()) return Optional.empty();
+        if(!rs.next()) return Optional.empty();
+
         String implName = rs.getString("implName");
         String codeURL = rs.getString("codeURL");
         String language = rs.getString("language");
         String algo = rs.getString("algoName");
 
         //TODO: see if its acceptable to return all new implementation with no children
-        return new Implementation(implName, codeURL,language,algo);
+        return Optional.of(new Implementation(implName, codeURL,language,algo));
     }
 }

@@ -9,9 +9,10 @@ public class CreateImplementation implements RequestHandler<CreateImplementation
 
     public LambdaLogger logger = null;
     CreateImplementationHandler handler;
+    S3ImplementationStorage storage;
 
     public CreateImplementation() {
-        handler = new CreateImplementationHandler(new ImplementationDAO());
+        handler = new CreateImplementationHandler(new ImplementationDAO(), new S3ImplementationStorage());
     }
 
     @Override
@@ -22,7 +23,6 @@ public class CreateImplementation implements RequestHandler<CreateImplementation
         logger.log("Create Implementation request: " + req.toString());
 
         return handler.handle(req);
-
     }
 
 
