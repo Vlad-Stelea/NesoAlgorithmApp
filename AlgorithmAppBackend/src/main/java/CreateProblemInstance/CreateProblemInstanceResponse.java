@@ -4,21 +4,48 @@ import com.google.gson.Gson;
 
 public class CreateProblemInstanceResponse {
 
-    public final String response;
-    public final int httpCode;
-    public final String error;
+    String instanceId;
+    String instanceName;
+    String datasetUrl;
+    String algorithmName;
+    int httpCode;
+    String error;
 
-    public CreateProblemInstanceResponse(String s, int code) {
-        this.response = s;
-        this.httpCode = code;
-        this.error = "";
+    public CreateProblemInstanceResponse(String instanceId, String instanceName, String datasetUrl, String algorithmName, int httpCode) {
+        this.instanceId = instanceId;
+        this.instanceName = instanceName;
+        this.datasetUrl = datasetUrl;
+        this.algorithmName = algorithmName;
+        this.httpCode = httpCode;
     }
 
-    // 200 means success
-    public CreateProblemInstanceResponse(String s, int code, String error) {
-        this.response = s;
-        this.httpCode = code;
+    public CreateProblemInstanceResponse(int httpCode, String error) {
+        this.httpCode = httpCode;
         this.error = error;
+    }
+
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
+    }
+
+    public String getDatasetUrl() {
+        return datasetUrl;
+    }
+
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
+
+    public int getHttpCode() {
+        return httpCode;
+    }
+
+    public String getError() {
+        return error;
     }
 
     public String toString() {
