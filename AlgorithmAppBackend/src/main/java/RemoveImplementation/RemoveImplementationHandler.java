@@ -17,6 +17,7 @@ public class RemoveImplementationHandler {
         String algoName = request.getAlgoName();
 
         try {
+            // TODO: delete benchmarks that belong to these impls as well
             if(dao.removeImplementation(implName, algoName)) {
                 response = new RemoveImplementationResponse(request.getImplementationID(), 200);
             } else {
