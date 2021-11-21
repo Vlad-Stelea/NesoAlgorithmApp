@@ -152,7 +152,7 @@ public class GetAlgorithmPageTest {
         GetAlgorithmPageResponse handleResponse = handler.handle(new GetAlgorithmPageRequest("efsTest"));
 
         assertEquals(handleResponse.statusCode, 400);
-        assertEquals(handleResponse.error, "Unable to get Algorithm Page");
+        assertEquals(handleResponse.error, "Unable to get Algorithm Page: efsTest");
 
 
     }

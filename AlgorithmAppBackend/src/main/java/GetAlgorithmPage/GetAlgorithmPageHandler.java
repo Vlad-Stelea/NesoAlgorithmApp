@@ -6,6 +6,7 @@ import db.MachineConfigurationDAO;
 import db.ProblemInstanceDAO;
 import entities.*;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,8 @@ public class GetAlgorithmPageHandler {
 
     public GetAlgorithmPageResponse handle(GetAlgorithmPageRequest req) {
         GetAlgorithmPageResponse response;
-
+        String decodedName = URLDecoder.decode(req.getAlgoName());
+        req.setAlgoName(decodedName);
         try {
             Algorithm algo = algorithmDAO.getAlgorithm(req.getAlgoName());
             List<Implementation> allImps = implementationDAO.getImplementationForAlgo(req.getAlgoName());
@@ -48,7 +50,7 @@ public class GetAlgorithmPageHandler {
         }
         catch (Exception e) {
             e.printStackTrace();
-            response = new GetAlgorithmPageResponse(400, "Unable to get Algorithm Page");
+            response = new GetAlgorithmPageResponse(400, "Unable to get Algorithm Page: " + req.getAlgoName());
         }
 
         return response;
