@@ -32,7 +32,7 @@ function createImplementationView(item, isUserRegistered){
         '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>' +
         '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleAdd(this)">Add Benchmark</button>'
     if(isUserRegistered) {
-        output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this)">Del</button>'
+        output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this, \'' + item.implName + '\', \'' + item.algorithmName + '\')">Del</button>'
     }
     output = output + '<h3 style="margin-left: 20px;" class="language"> Language: ' + item.language + '</h3>'+
         '<h style="display:inline;word-wrap:break-word">Code Download Link: </h>' + '<a href="' + item.codeURL + '">Download</a>' +
