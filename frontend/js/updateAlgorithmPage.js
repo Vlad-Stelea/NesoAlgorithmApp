@@ -25,10 +25,9 @@ function renderImplementationDisplay(algorithmHierarchy){
 }
 
 function createImplementationView(item, isUserRegistered){
-    output = ""
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: sandybrown">' +
         '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>' +
         '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleAdd(this)">Add Benchmark</button>'
     if(isUserRegistered) {
@@ -75,10 +74,9 @@ function renderMachineConfigurationList(machineConfigs){
 }
 
 function createMachineConfigurationView(machineConfig, isRegisteredUser){
-    output = ""
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: sandybrown">' +
         '<h2 style="display:inline;">' + machineConfig.machineConfigName +'</h2>'
     if(isRegisteredUser){
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
@@ -106,19 +104,17 @@ function renderProblemInstanceList(problemInstance){
 }
 
 function createProblemInstanceView(problemInstance, isRegisteredUser){
-    console.log(problemInstance);
-    output = ""
+    // console.log(problemInstance);
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: sandybrown">' +
         '<h2 style="display:inline;">' + problemInstance.probInstanceName +'</h2>'
     if(isRegisteredUser) {
-        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
-//onclick="handleImplementationDelete(this)"
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, ' + problemInstance.probInstanceUUID + ')">Del</button>';
     }
-    output = output + '<div>'+
-        '<h style="display:inline;"> Download Link: </h>' + '<a href="' + problemInstance.datasetURL + '">Download</a>'
-        '</li>'
+    output = output + '<div>' +
+        '<h style="display:inline;"> Download Link: </h>' + '<a href="' + problemInstance.datasetURL + '">Download</a>' +
+        '</li>';
 
     return output
 }
