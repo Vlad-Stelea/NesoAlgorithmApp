@@ -21,6 +21,18 @@ public class RemoveImplementationResponse {
         this.error = error;
     }
 
+    public String getImplementationID() {
+        return implementationID;
+    }
+
+    public int getHttpCode() {
+        return httpCode;
+    }
+
+    public String getError() {
+        return error;
+    }
+
     @Override
     public String toString() {
         Gson gson = new Gson();
