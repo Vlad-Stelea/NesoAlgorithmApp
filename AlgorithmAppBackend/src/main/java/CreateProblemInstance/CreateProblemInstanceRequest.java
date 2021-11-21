@@ -1,5 +1,7 @@
 package CreateProblemInstance;
 
+import com.google.gson.Gson;
+
 public class CreateProblemInstanceRequest {
 
     public String probInstanceUUID;
@@ -30,6 +32,7 @@ public class CreateProblemInstanceRequest {
 
     @Override
     public String toString() {
-        return "CreateProblemInstance(" + probInstanceUUID + "," + probInstanceName + "," + encodedDatasetContents +"," + algoName + ")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
