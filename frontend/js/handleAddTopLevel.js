@@ -1,68 +1,41 @@
 function handleAddTopLevelPrep(){
     console.log("addTopPrep")
     let addTopClassForm = document.getElementById('AddTopForm');
-   // Update Hierarchy result
-   addTopClassForm.innerHTML = ' <br><label for="classificationName">Classification name:</label>' +
-                            '<input type="text" id="fname" name="fname">'+
-                            '<input type="submit" value="Submit" onclick="handleAddTopLevelSubmit(this)"><br><br>'
+   //check to see if the form is allready displayed, ad if it is remove it
+    if(addTopClassForm.innerHTML === ''){
+        addTopClassForm.innerHTML = ' <br><label for="classificationName">Classification name:</label>' +
+            '<input type="text" id="fname" name="fname">'+
+            '<input type="submit" value="Submit" onclick="handleAddTopLevelSubmit(this)"><br><br>'
+    }else{
+        addTopClassForm.innerHTML = ''
 
-}
+    }
 
-function processCreateClassificationResponse(result) {
-    console.log("create classification response: " + result);
-
-    updateHierarchy();
 }
 
 function handleAddTopLevelSubmit(ele){
-    console.log("addTopSubmit")
-    console.log(ele.parentElement.children[2].value)
+    console.log("addTopSubmit");
+    //used to remove the form once we submit
     let addTopClassForm = document.getElementById('AddTopForm');
 
-    let className = ele.parentElement.children[2].value
-    let cData = {}
-    cData["className"] = className
-
-
-    // TODO need to update this when we get the above addTopClassForm to accept non-top level classifications
-
-
-    cData["parentClassName"] = null
-
-
-    if(cData["className"] === "") {
-        alert("Please enter a non-empty Classification name")
+    let onSuccessCallback = function (data) {
+        console.log("XHR: " + data.responseText);
+        console.log("added top classification", ele.parentElement.children[2].value);
+        addTopClassForm.innerHTML = '';
+        updateHierarchy();
     }
-    else {
-        let js = JSON.stringify(cData);
-        console.log("Create Classification JSON: " + js);
-        let xhr = new XMLHttpRequest();
 
-        xhr.open("POST", createClassification_url, true);
-        xhr.send(js);
-        console.log("sent create classification request");
-
-        // after we get a response
-        xhr.onloadend = function() {
-            console.log("create classification response: " + xhr);
-
-            if(xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    console.log("XHR: " + xhr.responseText);
-                    processCreateClassificationResponse(xhr.responseText);
-                }
-                else {
-                    console.log("Status != 200. Actual create response: " + xhr.responseText);
-                    let newJS = JSON.parse(xhr.responseText);
-                    let err = newJS["response"];
-                    alert(err);
-                }
-            }
-            else {
-                processCreateClassificationResponse("N/A");
-            }
-        };
+    // Note, this doesn't work since lambda function doesn't return anything other than 200
+    let onFailCallback = function (data, status) {
+        console.log("Status != 200. Actual create response: " + xhr.responseText);
+        let newJS = JSON.parse(xhr.responseText);
+        let err = newJS["response"];
+        alert(err);
     }
+
+    let className = ele.parentElement.children[2].value;
+    classificationRepo.addClassification(className, null, onSuccessCallback, onFailCallback);
+
 
 }
 

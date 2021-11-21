@@ -7,29 +7,49 @@ import db.ImplementationDAO;
 public class CreateImplementationHandler{
 
     ImplementationDAO dao;
+    IImplementationStorage storage;
 
-    public CreateImplementationHandler(ImplementationDAO dao) {
+    public CreateImplementationHandler(ImplementationDAO dao, IImplementationStorage storage) {
         this.dao = dao;
+        this.storage = storage;
     }
 
 
     public CreateImplementationResponse handle(CreateImplementationRequest request)  {
-
-
-        CreateImplementationResponse response;
-
         try {
-            if(dao.createImplementation(request.getImplName(),request.getCodeUrl(), request.getLanguage() ,request.getAlgoName())) {
-                response = new CreateImplementationResponse(request.getImplName() + "," + request.getCodeUrl() + "," + request.getLanguage() + "," + request.getAlgoName(), 200);
+            // Successful case of creating an implementation
+            if(!dao.hasImplementation(request.getImplName(), request.getAlgoName())) {
+                String url = storage.storeImplementation(request.getImplName(), request.getCode());
+                // Try to create an implementation
+                if(dao.createImplementation(request.getImplName(),url, request.getLanguage() ,request.getAlgoName())) {
+                    return new CreateImplementationResponse(
+                            200,
+                            request.getImplName(),
+                            request.getAlgoName(),
+                            url,
+                            request.getLanguage()
+                    );
+                } else {
+                    return createImplementationAlreadyExistsError();
+                }
             } else {
-                response = new CreateImplementationResponse(request.getImplName(), 409, "Implementation already exists.");
+                // Case where an implementation already exists in the db
+                return createImplementationAlreadyExistsError();
             }
         } catch (Exception e) {
+            // Case where an unknown error occurs
             e.printStackTrace();
-            response = new CreateImplementationResponse("Unable to create Implementation: " + request.getImplName() + " with parent " + request.getAlgoName() + "\n(" + e.getMessage() + ")", 400);
+            return new CreateImplementationResponse(
+                    400,
+                    "Unknown Error"
+            );
         }
-
-        return  response;
     }
 
+    private CreateImplementationResponse createImplementationAlreadyExistsError() {
+        return new CreateImplementationResponse(
+                409,
+                "Implementation already exists"
+        );
+    }
 }

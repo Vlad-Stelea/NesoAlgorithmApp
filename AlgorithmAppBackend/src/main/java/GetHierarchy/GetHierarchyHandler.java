@@ -2,10 +2,8 @@ package GetHierarchy;
 
 import db.AlgorithmDAO;
 import db.ClassificationDAO;
-import db.ImplementationDAO;
 import entities.Algorithm;
 import entities.Classification;
-import entities.Implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,41 +13,26 @@ public class GetHierarchyHandler {
 
     ClassificationDAO classificationDAO;
     AlgorithmDAO algorithmDAO;
-    // TODO uncomment
-    ImplementationDAO implementationDAO;
 
-    //public GetHierarchyHandler(ClassificationDAO classificationDAO, AlgorithmDAO algorithmDAO) {
-    //    this.classificationDAO = classificationDAO;
-    //    this.algorithmDAO = algorithmDAO;
-    //}
 
     // TODO Ctrl+/ to uncomment ;)
-    public GetHierarchyHandler(ClassificationDAO classificationDAO, AlgorithmDAO algorithmDAO, ImplementationDAO implementationDAO) {
+    public GetHierarchyHandler(ClassificationDAO classificationDAO, AlgorithmDAO algorithmDAO) {
         this.classificationDAO = classificationDAO;
         this.algorithmDAO = algorithmDAO;
-        this.implementationDAO = implementationDAO;
     }
 
     public GetHierarchyResponse handle() {
         GetHierarchyResponse response;
 
         try {
-            // TODO Get implementations too
-           // response = new GetHierarchyResponse(classificationDAO.getAllClassifications(),
-           //         algorithmDAO.getAllAlgorithms(),
-           //         200);
             List<Classification> allClassL = classificationDAO.getAllClassifications();
             List<Algorithm> allAlgosL = algorithmDAO.getAllAlgorithms();
-            List<Implementation> allImpsL = implementationDAO.getAllImplementation();
             HashMap<String, Classification> allClassesHM = generateClassHashMap(allClassL);
-            HashMap<String, Algorithm> allAlgosHM = generateAlgoHashMap(allAlgosL);
 
             ArrayList<Classification> topClasses = new ArrayList<>();
 
             buildClassificationTree(topClasses, allClassL, allClassesHM);
             addAlgorithms(allAlgosL, allClassesHM);
-            addImplementations(allImpsL, allAlgosHM);
-
 
 
             response = new GetHierarchyResponse(topClasses, 200);
@@ -64,21 +47,7 @@ public class GetHierarchyHandler {
         return response;
     }
 
-    private void addImplementations(List<Implementation> allImpsL, HashMap<String, Algorithm> allAlgosHM) {
-        //add implementations to the algos
-        for(int i = 0; i < allImpsL.size(); i++){
-            Implementation child = allImpsL.get(i);
-            if(child.getAlgorithmName() != null){
-                //Valid impl
-                Algorithm parent = allAlgosHM.get(child.getAlgorithmName());
-                parent.addImplementation(child);
 
-            }else{
-                //test impl
-            }
-        }
-
-    }
 
     private void addAlgorithms(List<Algorithm> allALgosL, HashMap<String, Classification> allClassesHM) {
         //add algorithms to the tree
@@ -120,14 +89,7 @@ public class GetHierarchyHandler {
         return allClassesHM;
     }
 
-    private HashMap<String, Algorithm> generateAlgoHashMap(List<Algorithm> allAlgosL) {
-        HashMap<String, Algorithm> allAlgosHM = new HashMap<>();
-        //add them to hash map
-        for(Algorithm a: allAlgosL){
-            allAlgosHM.put(a.getAlgoName(), a);
-        }
-        return allAlgosHM;
-    }
+
 
 
 }

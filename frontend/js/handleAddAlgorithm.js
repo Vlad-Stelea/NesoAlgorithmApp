@@ -1,8 +1,8 @@
-function handleAdd(ele){
+function handleAddAlgorithm(ele){
     //we need to add the html for the form right after the element that was added too,
     // so find the index and insert it in
 
-    console.log("add")
+    console.log("add Algorithm")
     let ender = '</li>'
     let li = ele.parentElement.innerHTML
     let hierarchyHTML = document.getElementById('Hierarchy').innerHTML
@@ -13,9 +13,9 @@ function handleAdd(ele){
         '<input type="submit" value="Submit" onclick="addAlgorithm(\''+ ele.parentElement.children[1].textContent +'\', this)"><br><br>' +
         '</li>' +
         '</ul>'
-    let newHierarchyHTML = ""
+    let newHierarchyHTML;
     //check if add was allready clicked
-    if(hierarchyHTML.indexOf(formHTML) == hierarchyHTML.indexOf(li) + li.length + ender.length){
+    if(hierarchyHTML.indexOf(formHTML) === hierarchyHTML.indexOf(li) + li.length + ender.length){
         //remove the form
         newHierarchyHTML = hierarchyHTML.substr(0, hierarchyHTML.indexOf(formHTML)) + hierarchyHTML.substr( hierarchyHTML.indexOf(formHTML)+formHTML.length)
     }else {
