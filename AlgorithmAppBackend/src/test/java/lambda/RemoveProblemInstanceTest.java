@@ -32,7 +32,7 @@ public class RemoveProblemInstanceTest {
         // remove the problem instance and mock a true response
         when(dao.removeProblemInstance("rpi_uuid_test")).thenReturn(true);
         RemoveProblemInstanceResponse handleResult = rpiHandler.handle(req);
-        assertEquals(handleResult.response, "rpi_uuid_test");
+        assertEquals(handleResult.problemInstanceID, "rpi_uuid_test");
         assertEquals(handleResult.httpCode, 200);
     }
 
@@ -41,7 +41,7 @@ public class RemoveProblemInstanceTest {
         // mock that the problem instance couldn't be found and check our error response is correct
         when(dao.removeProblemInstance("rpi_uuid_test")).thenReturn(false);
         RemoveProblemInstanceResponse handleResult = rpiHandler.handle(req);
-        assertEquals(handleResult.response, "rpi_uuid_test");
+        assertEquals(handleResult.problemInstanceID, "rpi_uuid_test");
         assertEquals(handleResult.httpCode, 404);
         assertEquals(handleResult.error, "Problem instance not found.");
     }
