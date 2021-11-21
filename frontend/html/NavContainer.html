@@ -2,8 +2,9 @@
 <html>
 <head>
     <script src="../js/network/AlgorithmsRepo.js"></script>
-    <script src="../js/network/mockxhr.js"></script>
     <script src="../js/network/ClassificationRepo.js"></script>
+    <script src="../js/network/ProblemInstanceRepo.js"></script>
+    <script src="../js/network/mockxhr.js"></script>
     <script src="../js/network/ImplementationRepo.js"></script>
     <script type='text/javascript' src='../js/api.js'></script>
     <!-- Import the jquery lib to make development more simple -->
@@ -26,6 +27,7 @@
         const navigation = new Navigation("#viewContainer", config.LOGIN_URL_CALLBACK);
         const algorithmRepo = config.ALGORITHMS_REPO;
         const classificationRepo = config.CLASSIFICATIONS_REPO;
+        const problemInstanceRepo = config.PROBLEMINSTANCES_REPO;
         const implementationRepo = config.IMPLEMENTATIONS_REPO;
         const vm = new ViewModel();
         function initContainer() {
