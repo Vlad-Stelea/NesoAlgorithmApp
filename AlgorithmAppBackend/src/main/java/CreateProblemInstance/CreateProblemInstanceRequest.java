@@ -8,6 +8,10 @@ public class CreateProblemInstanceRequest {
     public String datasetPayload;
     public String algoName;
 
+    public CreateProblemInstanceRequest() {
+
+    }
+
     public CreateProblemInstanceRequest(String probInstanceName, String datasetPayload, String algoName) {
         this.probInstanceName = probInstanceName;
         this.datasetPayload = datasetPayload;

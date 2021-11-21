@@ -28,24 +28,48 @@ public class CreateProblemInstanceResponse {
         return instanceId;
     }
 
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
     public String getInstanceName() {
         return instanceName;
+    }
+
+    public void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
     }
 
     public String getDatasetUrl() {
         return datasetUrl;
     }
 
+    public void setDatasetUrl(String datasetUrl) {
+        this.datasetUrl = datasetUrl;
+    }
+
     public String getAlgorithmName() {
         return algorithmName;
+    }
+
+    public void setAlgorithmName(String algorithmName) {
+        this.algorithmName = algorithmName;
     }
 
     public int getHttpCode() {
         return httpCode;
     }
 
+    public void setHttpCode(int httpCode) {
+        this.httpCode = httpCode;
+    }
+
     public String getError() {
         return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String toString() {
