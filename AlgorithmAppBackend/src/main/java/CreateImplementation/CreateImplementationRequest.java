@@ -1,21 +1,23 @@
 
 package CreateImplementation;
 
+import com.google.gson.Gson;
+
 public class CreateImplementationRequest {
 
     public String implName;
     public String algoName;
-    public String codeUrl;
+    public String code;
     public String language;
 
     public CreateImplementationRequest(){
-
+        // DO NOTHING
     }
 
     public CreateImplementationRequest(String implName, String codeUrl, String language, String algoName){
         this.implName = implName;
         this.algoName = algoName;
-        this.codeUrl = codeUrl;
+        this.code = codeUrl;
         this.language = language;
     }
 
@@ -36,12 +38,12 @@ public class CreateImplementationRequest {
     public void setImplName(String implName) {
         this.implName = implName;
     }
-    public String getCodeUrl() {
-        return codeUrl;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodeUrl(String codeUrl) {
-        this.codeUrl = codeUrl;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getLanguage() {
@@ -54,7 +56,8 @@ public class CreateImplementationRequest {
 
     @Override
     public String toString() {
-        return "CreateImplemenation(" + implName + ", " + algoName + ", " + codeUrl +", " + language +")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
 }

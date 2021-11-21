@@ -131,7 +131,7 @@ class MockClassificationRepo {
     addClassification(className, parentClassName, onSuccess, onFail){
         console.log("Mock Class repo adding hierachy")
         let response = {
-            "responce":"worked",
+            "response":"worked",
             "statusCode":200,
             "error":""
         };
