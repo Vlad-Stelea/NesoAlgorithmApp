@@ -1,8 +1,8 @@
-function handleAdd(ele){
+function handleAddAlgorithm(ele){
     //we need to add the html for the form right after the element that was added too,
     // so find the index and insert it in
 
-    console.log("add")
+    console.log("add Algorithm")
     let ender = '</li>'
     let li = ele.parentElement.innerHTML
     let hierarchyHTML = document.getElementById('Hierarchy').innerHTML
