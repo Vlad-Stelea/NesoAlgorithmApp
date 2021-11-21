@@ -18,13 +18,13 @@ public class CreateBenchmarkHandler {
 
         try {
             if(dao.createBenchmark(request.getBenchID(),request.getBenchName(), request.getTimeToRun() ,request.getDateRun(), request.getAlgoName(), request.getImplName(), request.getMachineConfigName(), request.getProblemInstanceName())) {
-                response = new CreateBenchmarkResponse(request.getBenchID() + "," + request.getBenchName() + "," + request.getTimeToRun() + "," + request.getDateRun() + "," + request.getAlgoName()+ "," +  request.getImplName() + "," +  request.getMachineConfigName() + "," +request.getProblemInstanceName(), 200);
+                response = new CreateBenchmarkResponse(200,request.getBenchID(),request.getBenchName(), request.getTimeToRun() ,request.getDateRun(),request.getAlgoName(),request.getImplName(),request.getMachineConfigName() ,request.getProblemInstanceName());
             } else {
-                response = new CreateBenchmarkResponse(request.getBenchID(), 409, "Benchmark already exists.");
+                response = new CreateBenchmarkResponse( 409,"Benchmark already exists.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response = new CreateBenchmarkResponse("Unable to create Benchmark: " + request.getBenchName() + " with id " + request.getBenchID() + "\n(" + e.getMessage() + ")", 400);
+            response = new CreateBenchmarkResponse(400,"Unable to create Benchmark: " + request.getBenchName() + " with id " + request.getBenchID() + "\n(" + e.getMessage() + ")");
         }
 
         return  response;

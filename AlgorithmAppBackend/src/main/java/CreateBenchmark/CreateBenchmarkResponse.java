@@ -17,8 +17,8 @@ public class CreateBenchmarkResponse {
     String implName;
     String problemInstanceName;
     Date dateRun;
-
-    public CreateBenchmarkResponse (int code, String benchID, String benchName, String algoName, String machineConfigName, String implName, String problemInstanceName, Date dateRun) {
+    long timeToRun;
+    public CreateBenchmarkResponse (int code, String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName) {
         this.benchID = benchID;
         this.benchName = benchName;
         this.algoName = algoName;
@@ -27,6 +27,7 @@ public class CreateBenchmarkResponse {
         this.problemInstanceName = problemInstanceName;
         this.dateRun = dateRun;
         this.httpCode = code;
+        this.timeToRun = timeToRun;
         this.error = "";
     }
 
@@ -38,6 +39,14 @@ public class CreateBenchmarkResponse {
 
     public String getBenchID() {
         return benchID;
+    }
+
+    public long getTimeToRun() {
+        return timeToRun;
+    }
+
+    public void setTimeToRun(long timeToRun) {
+        this.timeToRun = timeToRun;
     }
 
     public void setBenchID(String benchID) {
@@ -101,12 +110,15 @@ public class CreateBenchmarkResponse {
         if (o == null) return false;
         if(o instanceof CreateBenchmarkResponse) {
             CreateBenchmarkResponse otherResponse = (CreateBenchmarkResponse) o;
-            return otherResponse.statusCode == this.statusCode &&
-                    equalOrBothNull(otherResponse.implName, this.implName) &&
+            return otherResponse.httpCode == this.httpCode &&
+                    equalOrBothNull(otherResponse.benchID, this.benchID) &&
+                    equalOrBothNull(otherResponse.benchName, this.benchName) &&
                     equalOrBothNull(otherResponse.algoName, this.algoName) &&
-                    equalOrBothNull(otherResponse.codeUrl, this.codeUrl) &&
-                    equalOrBothNull(otherResponse.language, this.language) &&
-                    equalOrBothNull(otherResponse.error, this.error);
+                    equalOrBothNull(otherResponse.timeToRun, this.timeToRun) &&
+                    equalOrBothNull(otherResponse.machineConfigName, this.machineConfigName) &&
+                    equalOrBothNull(otherResponse.implName, this.implName) &&
+                    equalOrBothNull(otherResponse.problemInstanceName, this.problemInstanceName) &&
+                    equalOrBothNull(otherResponse.dateRun, this.dateRun);
         } else {
             return false;
         }
