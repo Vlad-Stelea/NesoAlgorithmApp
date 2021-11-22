@@ -88,6 +88,23 @@ public class BenchmarkDAO {
         return imps;
     }
 
+    public boolean removeBenchmarksByImplName(String implName, String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE implName = ? AND algoName = ?;");
+        ps.setString(1, implName);
+        ps.setString(2, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ? AND algoName = ?;");
+            psDelete.setString(1, implName);
+            psDelete.setString(2, algoName);
+
+            psDelete.execute();
+        }
+
+        return true;
+    }
+
     public ArrayList<Benchmark> generateArrayOfBenchmark(ResultSet rs) throws SQLException{
 
         ArrayList imps = new ArrayList<>();
@@ -115,7 +132,5 @@ public class BenchmarkDAO {
         return new Benchmark(benchID, benchName,timeToRun,dateRun,algoName,implName,machinceConfigName,problemInstanceName);
 
     }
-
-
 
 }
