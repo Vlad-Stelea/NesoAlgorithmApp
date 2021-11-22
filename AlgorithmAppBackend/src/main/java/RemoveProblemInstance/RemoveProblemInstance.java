@@ -3,6 +3,7 @@ package RemoveProblemInstance;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import db.BenchmarkDAO;
 import db.ProblemInstanceDAO;
 
 public class RemoveProblemInstance implements RequestHandler<RemoveProblemInstanceRequest, RemoveProblemInstanceResponse> {
@@ -11,7 +12,7 @@ public class RemoveProblemInstance implements RequestHandler<RemoveProblemInstan
     RemoveProblemInstanceHandler handler;
 
     public RemoveProblemInstance() {
-        handler = new RemoveProblemInstanceHandler(new ProblemInstanceDAO());
+        handler = new RemoveProblemInstanceHandler(new ProblemInstanceDAO(), new BenchmarkDAO());
     }
 
     @Override
