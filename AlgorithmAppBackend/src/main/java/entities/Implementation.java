@@ -69,6 +69,7 @@ public class Implementation {
 
     //Other methods
     public boolean addBenchmark(Benchmark b){
+        b.setImplName(this.implName);
         return benchmarks.add(b);
     }
     public boolean removeBenchmark(String benName){

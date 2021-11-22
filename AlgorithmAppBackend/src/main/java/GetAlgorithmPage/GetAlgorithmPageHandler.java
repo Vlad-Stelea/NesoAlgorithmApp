@@ -1,9 +1,8 @@
 package GetAlgorithmPage;
 
-import db.AlgorithmDAO;
-import db.ImplementationDAO;
-import db.MachineConfigurationDAO;
-import db.ProblemInstanceDAO;
+import com.amazonaws.services.amplify.model.transform.BackendEnvironmentMarshaller;
+import com.fasterxml.jackson.databind.cfg.ContextAttributes;
+import db.*;
 import entities.*;
 
 import java.net.URLDecoder;
@@ -17,14 +16,16 @@ public class GetAlgorithmPageHandler {
     AlgorithmDAO algorithmDAO;
     ProblemInstanceDAO probDAO;
     MachineConfigurationDAO machDAO;
-
+    BenchmarkDAO bmDAO;
 
     // TODO Ctrl+/ to uncomment ;)
-    public GetAlgorithmPageHandler(AlgorithmDAO algorithmDAO, ImplementationDAO implementationDAO, ProblemInstanceDAO probDAO, MachineConfigurationDAO machDAO) {
+    public GetAlgorithmPageHandler(AlgorithmDAO algorithmDAO, ImplementationDAO implementationDAO, ProblemInstanceDAO probDAO, MachineConfigurationDAO machDAO, BenchmarkDAO bmDAO) {
         this.implementationDAO = implementationDAO;
         this.algorithmDAO = algorithmDAO;
         this.probDAO = probDAO;
         this.machDAO = machDAO;
+        this.bmDAO = bmDAO;
+
     }
 
     public GetAlgorithmPageResponse handle(GetAlgorithmPageRequest req) {
@@ -36,9 +37,11 @@ public class GetAlgorithmPageHandler {
             List<Implementation> allImps = implementationDAO.getImplementationForAlgo(req.getAlgoName());
             List<ProblemInstance> allProbs = probDAO.getAllAlgosProblemInstances(req.getAlgoName());
             List<MachineConfiguration> allMachs = machDAO.getAllMachineConfigurations();
+            List<Benchmark> allBms = bmDAO.getBenchmarkForAlgo(req.getAlgoName());
             addImplementations(algo, allImps);
             algo.setProblemInstances(allProbs);
-            //TODO add benchmarks
+            HashMap<String, Implementation> impHM = generateImplHM(allImps);
+            setBenchmarks(allBms, impHM);
 
             AlgorithmPage page = new AlgorithmPage();
             page.setAlgorithm(algo);
@@ -54,6 +57,21 @@ public class GetAlgorithmPageHandler {
         }
 
         return response;
+    }
+
+    private void setBenchmarks(List<Benchmark> allBms, HashMap<String, Implementation> impHM) {
+        for(Benchmark bm: allBms){
+            Implementation i = impHM.get(bm.getImplName());
+            i.addBenchmark(bm);
+        }
+    }
+
+    private HashMap<String, Implementation> generateImplHM(List<Implementation> allImps) {
+        HashMap<String, Implementation> impHM = new HashMap<>();
+        for(Implementation i: allImps){
+            impHM.put(i.getImplName(), i);
+        }
+        return impHM;
     }
 
     private void addImplementations(Algorithm algo, List<Implementation> allImps) {

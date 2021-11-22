@@ -3,16 +3,14 @@ package lambda;
 import GetAlgorithmPage.GetAlgorithmPageHandler;
 import GetAlgorithmPage.GetAlgorithmPageRequest;
 import GetAlgorithmPage.GetAlgorithmPageResponse;
-import db.AlgorithmDAO;
-import db.ImplementationDAO;
-import db.MachineConfigurationDAO;
-import db.ProblemInstanceDAO;
+import db.*;
 import entities.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,11 +22,16 @@ public class GetAlgorithmPageTest {
     ImplementationDAO impDao;
     MachineConfigurationDAO machDAO;
     ProblemInstanceDAO probDAO;
+    BenchmarkDAO bmDAO;
+
     GetAlgorithmPageHandler handler;
     Algorithm algo;
     ArrayList<Implementation> impls;
     ArrayList<ProblemInstance> probs;
     ArrayList<MachineConfiguration> machs;
+    ArrayList<Benchmark> bms;
+
+
     AlgorithmPage expected;
 
 
@@ -38,17 +41,34 @@ public class GetAlgorithmPageTest {
         impDao = mock(ImplementationDAO.class);
         machDAO = mock(MachineConfigurationDAO.class);
         probDAO = mock(ProblemInstanceDAO.class);
-        handler = new GetAlgorithmPageHandler(algoDao, impDao, probDAO, machDAO);
+        bmDAO = mock(BenchmarkDAO.class);
+        handler = new GetAlgorithmPageHandler(algoDao, impDao, probDAO, machDAO, bmDAO);
         algo = new Algorithm("efsTest", "efsTopClass");
         impls = makeImps();
         probs = makeProbs();
         machs = makeMachs();
+        bms = makeBms();
 
         expected = makeAlgoPage();
 
 
 
 
+    }
+
+    private ArrayList<Benchmark> makeBms() {
+        Benchmark b1 = new Benchmark("b1","b1",5,new Date(111, 11,11),"efsTest","i1","m1","p1");
+        Benchmark b2 = new Benchmark("b2","b2",5,new Date(111,11,11),"efsTest","i1","m2","p2");
+        Benchmark b3 = new Benchmark("b3","b3",5,new Date(111,11,11),"efsTest","i1","m3","p1");
+        Benchmark b4 = new Benchmark("b4","b4",5,new Date(111,11,11),"efsTest","i2","m1","p1");
+        Benchmark b5 = new Benchmark("b5","b5",5,new Date(111,11,11),"efsTest","i2","m2","p1");
+        ArrayList<Benchmark> bms = new ArrayList<>();
+        bms.add(b1);
+        bms.add(b2);
+        bms.add(b3);
+        bms.add(b4);
+        bms.add(b5);
+        return bms;
     }
 
     private ArrayList<MachineConfiguration> makeMachs() {
@@ -106,9 +126,22 @@ public class GetAlgorithmPageTest {
         ms.add(m2);
         ms.add(m3);
 
+        Benchmark b1 = new Benchmark("b1","b1",5,new Date(111, 11,11),"efsTest","i1","m1","p1");
+        Benchmark b2 = new Benchmark("b2","b2",5,new Date(111,11,11),"efsTest","i1","m2","p2");
+        Benchmark b3 = new Benchmark("b3","b3",5,new Date(111,11,11),"efsTest","i1","m3","p1");
+        Benchmark b4 = new Benchmark("b4","b4",5,new Date(111,11,11),"efsTest","i2","m1","p1");
+        Benchmark b5 = new Benchmark("b5","b5",5,new Date(111,11,11),"efsTest","i2","m2","p1");
+
+        i1.addBenchmark(b1);
+        i1.addBenchmark(b2);
+        i1.addBenchmark(b3);
+        i2.addBenchmark(b4);
+        i2.addBenchmark(b5);
+
         AlgorithmPage page = new AlgorithmPage();
         page.setMachineConfigurations(ms);
         page.setAlgorithm(algo);
+
 
         return page;
     }
@@ -136,6 +169,7 @@ public class GetAlgorithmPageTest {
         when(impDao.getImplementationForAlgo("efsTest")).thenReturn(impls);
         when(probDAO.getAllAlgosProblemInstances("efsTest")).thenReturn(probs);
         when(machDAO.getAllMachineConfigurations()).thenReturn(machs);
+        when(bmDAO.getBenchmarkForAlgo("efsTest")).thenReturn(bms);
 
 
         GetAlgorithmPageResponse handleResponse = handler.handle(new GetAlgorithmPageRequest("efsTest"));
