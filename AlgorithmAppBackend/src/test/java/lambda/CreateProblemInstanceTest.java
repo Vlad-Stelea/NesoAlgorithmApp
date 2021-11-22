@@ -49,7 +49,7 @@ public class CreateProblemInstanceTest extends LambdaTest {
     public void testCreateProblemInstance() throws SQLException {
         // add the problem instance and make sure we get the correct response
         when(dao.createProblemInstance("Fake-uuid", "cpi_test", "fake_url", "cpiAlgo_test")).thenReturn(true);
-        when(storage.storeProblemInstance(any(),any())).thenReturn("fake_url");
+        when(storage.storeProblemInstance(any())).thenReturn("fake_url");
         CreateProblemInstanceResponse handleResult = cpiHandler.handle(req);
         CreateProblemInstanceResponse expectedResponse = new CreateProblemInstanceResponse("Fake-uuid", "cpi_test", "fake_url", "cpiAlgo_test", 200);
         assertEquals(expectedResponse, handleResult);
@@ -59,7 +59,7 @@ public class CreateProblemInstanceTest extends LambdaTest {
     public void testFailCreateProblemInstance() throws SQLException {
         // add the problem instance, mock that the problem instance was added already, and ensure the handler responds appropriately
         when(dao.createProblemInstance("cpi_uuid_test", "cpi_test", "fake_url", "cpiAlgo_test")).thenReturn(false);
-        when(storage.storeProblemInstance(any(), any())).thenReturn("fake_url");
+        when(storage.storeProblemInstance(any())).thenReturn("fake_url");
         CreateProblemInstanceResponse handleResult = cpiHandler.handle(req);
         CreateProblemInstanceResponse expectedResponse = new CreateProblemInstanceResponse(409, "Problem Instance already exists");
         assertEquals(expectedResponse, handleResult);

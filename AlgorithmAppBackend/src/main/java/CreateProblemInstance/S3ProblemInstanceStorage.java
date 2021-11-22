@@ -23,7 +23,7 @@ public class S3ProblemInstanceStorage implements IProblemInstanceStorage{
     }
 
     @Override
-    public String storeProblemInstance(String name, String payload) {
+    public String storeProblemInstance(String payload) {
         return s3Util.storeFile(bucketLocation, generateProblemInstanceStorageLocation(), payload);
     }
 
