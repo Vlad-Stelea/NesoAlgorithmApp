@@ -76,5 +76,11 @@ public class CreateProblemInstanceResponse {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+    
+    @Override
+    public boolean equals(Object otherObject) {
+        if(otherObject == null) return false;
+        return this.toString().equals(otherObject.toString());
+    }
 
 }
