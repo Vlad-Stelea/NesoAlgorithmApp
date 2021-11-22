@@ -21,7 +21,7 @@ public class RemoveBenchmarkResponse {
         this.error = error;
     }
 
-    public String getImplementationID() {
+    public String getBenchmarkID() {
         return benchmarkID;
     }
 
