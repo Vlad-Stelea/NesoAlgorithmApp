@@ -2,30 +2,31 @@ package CreateProblemInstance;
 
 import db.ProblemInstanceDAO;
 
+import java.util.UUID;
+
 public class CreateProblemInstanceHandler {
 
     ProblemInstanceDAO dao;
+    IProblemInstanceStorage storage;
 
-    public CreateProblemInstanceHandler(ProblemInstanceDAO dao) {
+    public CreateProblemInstanceHandler(ProblemInstanceDAO dao, IProblemInstanceStorage storage) {
         this.dao = dao;
+        this.storage = storage;
     }
 
     public CreateProblemInstanceResponse handle(CreateProblemInstanceRequest request) {
-        CreateProblemInstanceResponse response;
-
         try {
-            if(dao.createProblemInstance(request.getProbInstanceUUID(),request.getProbInstanceName(), request.getDatasetURL() ,request.getAlgoName())) {
-                response = new CreateProblemInstanceResponse(request.getProbInstanceUUID() + "," + request.getProbInstanceName() + "," + request.getDatasetURL() + "," + request.getAlgoName(), 200);
+            String uuid = UUID.randomUUID().toString();
+            String url = this.storage.storeProblemInstance(request.probInstanceName, request.datasetPayload);
+            if(dao.createProblemInstance(uuid, request.getProbInstanceName(), url ,request.getAlgoName())) {
+                return new CreateProblemInstanceResponse(uuid, request.getProbInstanceName(), url, request.getAlgoName(), 200);
             } else {
-                response = new CreateProblemInstanceResponse(request.getProbInstanceUUID() + " (" + request.getProbInstanceName() + ")", 409, "Problem instance already exists.");
+                return new CreateProblemInstanceResponse(409, "Problem Instance already exists");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response = new CreateProblemInstanceResponse("Unable to create Problem Instance: " + request.getProbInstanceUUID() + " (" + request.getProbInstanceName() + ")\n(" + e.getMessage() + ")", 400);
+            return new CreateProblemInstanceResponse(400, "Unable to craete problem instance");
         }
-
-        return response;
-
     }
 
 }
