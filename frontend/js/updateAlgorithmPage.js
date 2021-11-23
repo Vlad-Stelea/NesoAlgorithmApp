@@ -4,7 +4,7 @@ function updateAlgorithmPageHierarchy() {
         console.log(data);
         let pis = renderProblemInstanceList(data.algorithmPage.algorithm.problemInstances);
         let mcs = renderMachineConfigurationList(data.algorithmPage.machineConfigurations);
-        console.log(pis)
+
         renderImplementationDisplay(data, pis, mcs);
     };
 
@@ -87,7 +87,7 @@ function renderMachineConfigurationList(machineConfigs){
 function createMachineConfigurationView(machineConfig, isRegisteredUser){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    let output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: pink">' +
         '<h2 style="display:inline;">' + machineConfig.machineConfigName +'</h2>'
     if(isRegisteredUser){
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
@@ -123,7 +123,7 @@ function createProblemInstanceView(problemInstance, isRegisteredUser){
     // console.log(problemInstance);
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    let output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: tomato">' +
         '<h2 style="display:inline;">' + problemInstance.probInstanceName +'</h2>'
     if(isRegisteredUser) {
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, ' + problemInstance.probInstanceUUID + ')">Del</button>';
@@ -139,7 +139,7 @@ function createProblemInstanceLabledView(problemInstance, isRegisteredUser){
     // console.log(problemInstance);
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    let output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: tomato">' +
         '<h2 style="display:inline;">Problem Instance: ' + problemInstance.probInstanceName +'</h2>'
     if(isRegisteredUser) {
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, ' + problemInstance.probInstanceUUID + ')">Del</button>';
@@ -154,7 +154,7 @@ function createProblemInstanceLabledView(problemInstance, isRegisteredUser){
 function createMachineConfigurationLabledView(machineConfig, isRegisteredUser){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    let output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: pink">' +
         '<h2 style="display:inline;">Machine Configuration: ' + machineConfig.machineConfigName +'</h2>'
     if(isRegisteredUser){
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
@@ -173,30 +173,60 @@ function createMachineConfigurationLabledView(machineConfig, isRegisteredUser){
 function renderBenchmarkList(benchmarks, pis, mcs){
     let output = '<ol style="list-style: none;">';
 
-    for (let j = 0; j < benchmarks.length; j++) {
-        output = output + createBenchmarkView(benchmarks[j],vm.user.token !== '') +
+    let piL = getProbInstanceList(benchmarks);
+
+    for (let j = 0; j < piL.length; j++){
+
+        output = output + createProblemInstanceLabledView(pis[piL[j].name],false) +
+            '<li style="list-style-type:none">'+
+            '<ul style="list-style: none;">'
+        for (let k = 0; k < piL[j].bms.length; k++) {
+            output = output + createBenchmarkView(piL[j].bms[k],vm.user.token !== '') +
                 '<li style="list-style-type:none">'+
                 '<ul style="list-style: none;">'
-        output = output + createProblemInstanceLabledView(pis[benchmarks[j].problemInstanceName], false) +
-            createMachineConfigurationLabledView(mcs[benchmarks[j].machineConfigName], false) +
-            '</ul></li>';
+            output = output + createMachineConfigurationLabledView(mcs[benchmarks[j].machineConfigName], false) +
+                '</ul></li>'
+        }
+        output = output + '</ul></li>'
     }
+
 
     output = output + '</ul></li>';
     return output;
+}
+
+function getProbInstanceList(benchmarks){
+    let piL = [];
+    let pis = {};
+    for(let j = 0; j < benchmarks.length; j++){
+        if(pis[benchmarks[j].problemInstanceName]==undefined){
+            //add a new PI
+            let newPI = {};
+            newPI["name"] = benchmarks[j].problemInstanceName;
+            let bms = [benchmarks[j]];
+            newPI["bms"] = bms;
+            piL.push(newPI);
+            pis[benchmarks[j].problemInstanceName] = newPI;
+        }else{
+            //there already exists this PI
+            pis[benchmarks[j].problemInstanceName]["bms"].push(benchmarks[j])
+        }
+    }
+    return piL;
+
 }
 
 function createBenchmarkView(benchmark, isRegisteredUser){
     // console.log(problemInstance);
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
-    let output = '<li class="listItem" style="background-color: sandybrown">' +
+    let output = '<li class="listItem" style="background-color: deeppink">' +
         '<h2 style="display:inline;">Benchmark: ' + benchmark.benchName +'</h2>'
     if(isRegisteredUser) {
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleBenchmarkDelete(this, ' + benchmark.benchamrkUUID + ')">Del</button>';
     }
     output = output + '<div>' +
-        '<h style="display:inline;"> Time to Run: ' + benchmark.timeToRun + '</h>' + '<h style="display:inline;"> Date Run: ' + benchmark.dateRun + '</h>' +
+        '<h style="display:inline;"> Time to Run: ' + benchmark.timeToRun + '</h>' + '<h style="display:inline; margin-left: 15px"> Date Run: ' + benchmark.dateRun + '</h>' +
         '</li>';
 
     return output
