@@ -3,10 +3,7 @@ package GetAlgorithmPage;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import db.AlgorithmDAO;
-import db.ImplementationDAO;
-import db.MachineConfigurationDAO;
-import db.ProblemInstanceDAO;
+import db.*;
 
 public class GetAlgorithmPage implements RequestHandler<GetAlgorithmPageRequest, GetAlgorithmPageResponse> {
 
@@ -14,7 +11,7 @@ public class GetAlgorithmPage implements RequestHandler<GetAlgorithmPageRequest,
     GetAlgorithmPageHandler handler;
 
     public GetAlgorithmPage() {
-        handler = new GetAlgorithmPageHandler(new AlgorithmDAO(), new ImplementationDAO(), new ProblemInstanceDAO(), new MachineConfigurationDAO());
+        handler = new GetAlgorithmPageHandler(new AlgorithmDAO(), new ImplementationDAO(), new ProblemInstanceDAO(), new MachineConfigurationDAO(), new BenchmarkDAO());
     }
 
     @Override

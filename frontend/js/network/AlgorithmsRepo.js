@@ -112,60 +112,111 @@ class MockAlgorithmRepo {
         console.log("mock getting algo hierarchy")
 
        let response = {
-            "algorithmPage":{
-                "algorithm":{
-                    "algoName":"efsTest",
-                    "parentClassificationName":"test",
-                    "implementations":[
-                        {
-                            "implName":"efsTest1",
-                            "codeURL":"dfsdf",
-                            "language":"sdfds",
-                            "algorithmName":"efsTest",
-                            "benchmark":[]
-                        },
-                        {"implName":"efsTest2",
-                            "codeURL":"kjhgf",
-                            "language":"dfbdfb",
-                            "algorithmName":"efsTest",
-                            "benchmark":[]
-                        }
-                        ],
-                    "problemInstances":[
-                        {
-                            "probInstanceUUID":"123",
-                            "probInstanceName":"pi1",
-                            "datasetURL":"3",
-                            "algoName":"efsTest"
-                        },
-                        {
-                            "probInstanceUUID":"234",
-                            "probInstanceName":"pi2",
-                            "datasetURL":"3",
-                            "algoName":"efsTest"
-                        }
-                        ]
-                },
-                "machineConfigurations":[
-                    {
-                        "machineConfigName":"m1",
-                        "machineConfigUUID":"1111111",
-                        "chip":"rer",
-                        "threads":5,
-                        "l1Cache":12,
-                        "l2Cache":12
-                    },
-                    {
-                        "machineConfigName":"m2",
-                        "machineConfigUUID":"222222",
-                        "chip":"sdf",
-                        "threads":7,
-                        "l1Cache":23,
-                        "l2Cache":23
-                    }
-                    ]
-            }
-        }
+           "algorithmPage": {
+               "algorithm": {
+                   "algoName": "add algo",
+                   "parentClassificationName": "newTopDog",
+                   "implementations": [
+                       {
+                           "implName": "fake impl",
+                           "codeURL": "fdasfdf",
+                           "language": "java",
+                           "algorithmName": "add algo",
+                           "benchmark": [
+                               {
+                                   "benchID": "111",
+                                   "benchName": "BM1",
+                                   "algoName": "add algo",
+                                   "machineConfigName": "33333",
+                                   "implName": "fake impl",
+                                   "problemInstanceName": "555",
+                                   "dateRun": "2000-10-10",
+                                   "timeToRun": 6
+                               },
+                               {
+                                   "benchID": "222",
+                                   "benchName": "BM2",
+                                   "algoName": "add algo",
+                                   "machineConfigName": "222222",
+                                   "implName": "fake impl",
+                                   "problemInstanceName": "555",
+                                   "dateRun": "2000-10-10",
+                                   "timeToRun": 6
+                               },
+                               {
+                                   "benchID": "333",
+                                   "benchName": "BM 3",
+                                   "algoName": "add algo",
+                                   "machineConfigName": "222222",
+                                   "implName": "fake impl",
+                                   "problemInstanceName": "666",
+                                   "dateRun": "2000-10-10",
+                                   "timeToRun": 7
+                               }
+                           ]
+                       },
+                       {
+                           "implName": "other impl",
+                           "codeURL": "google.com",
+                           "language": "c",
+                           "algorithmName": "add algo",
+                           "benchmark": [
+                               {
+                                   "benchID": "444",
+                                   "benchName": "BM 4",
+                                   "algoName": "add algo",
+                                   "machineConfigName": "33333",
+                                   "implName": "other impl",
+                                   "problemInstanceName": "666",
+                                   "dateRun": "2000-10-10",
+                                   "timeToRun": 8
+                               }
+                           ]
+                       }
+                   ],
+                   "problemInstances": [
+                       {
+                           "probInstanceUUID": "555",
+                           "probInstanceName": "pi1",
+                           "datasetURL": "2",
+                           "algoName": "add algo"
+                       },
+                       {
+                           "probInstanceUUID": "666",
+                           "probInstanceName": "pi 2",
+                           "datasetURL": "4",
+                           "algoName": "add algo"
+                       }
+                   ]
+               },
+               "machineConfigurations": [
+                   {
+                       "machineConfigName": "m1",
+                       "machineConfigUUID": "1111111",
+                       "chip": "rer",
+                       "threads": 5,
+                       "l1Cache": 12,
+                       "l2Cache": 12
+                   },
+                   {
+                       "machineConfigName": "m2",
+                       "machineConfigUUID": "222222",
+                       "chip": "sdf",
+                       "threads": 7,
+                       "l1Cache": 23,
+                       "l2Cache": 23
+                   },
+                   {
+                       "machineConfigName": "m3",
+                       "machineConfigUUID": "33333",
+                       "chip": "sd",
+                       "threads": 11,
+                       "l1Cache": 34,
+                       "l2Cache": 45
+                   }
+               ]
+           }
+       }
 
         onSuccess(
             response,
