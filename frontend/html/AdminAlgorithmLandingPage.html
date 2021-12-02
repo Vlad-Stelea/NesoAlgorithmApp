@@ -1,7 +1,7 @@
 <html><head>
     <link rel="stylesheet" href="../css/algorithmPage.css">
 <!-- remember to add javascript-->
-    <script type='text/javascript' src='../js/handleLogOut.js'></script>
+    <script type='text/javascript' src='../js/adminHandleLogOut.js'></script>
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAddAlgorithm.js'></script>
     <script type='text/javascript' src='../js/handleImplementationDelete.js'></script>
@@ -31,7 +31,7 @@
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-        updateAlgorithmPageHierarchy()
+        updateAlgorithmPageHierarchy(true)
         renderBanner(vm.user);
 
     }
@@ -44,7 +44,7 @@
 
 <body onload="initialize()">
 <div style="background-color: cadetblue; padding: 20px;">
-    <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToRegisteredUsersPage()">Home</button>
+    <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToAdminPage()">Home</button>
     <h1 style="display:inline;" class="registeredUserOnly">User 1 </h1>
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
     <button
@@ -54,7 +54,7 @@
                  float:right;
                  background-color: aqua;
                  padding: 30px 60px;"
-        onclick="vm.user.token ? handleLogOut() : handleLogin()">
+        onclick="vm.user.token ? handleAdminLogOut() : handleLogin()">
     Login
 </button>
 </div>
@@ -63,19 +63,16 @@
             <div class="leftSide">
                 <div class="section">
                     <h2 style="display:inline;" >Problem Instances</h2>
-                    <button class="registeredUserOnly button" style="background-color: green">Add Problem Instance</button>
                     <div id='ProblemInstances'></div>
                 </div>
                 <hr>
                 <div class="section">
                     <h2 style="display:inline;" >Machine Configurations</h2>
-                    <button class="button" style="background-color: green">Add Machine Configuration</button>
                     <div id='MachineConfigs'></div>
                 </div>
             </div>
             <div class="rightSide section">
                 <h2 style="display:inline;">Implementations/Benchmarks</h2>
-                <button class="registeredUserOnly button" onclick="handleAddImpPrep()" style="background-color: green">Add Implementation</button>
                 <div id='Implementation'></div>
             </div>
 

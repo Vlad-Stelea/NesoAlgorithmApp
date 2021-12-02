@@ -1,11 +1,11 @@
-function updateAlgorithmPageHierarchy() {
-    console.log("updatingHierarchyImpl")
+function updateAlgorithmPageHierarchy(admin = false) {
+    console.log("updatingAlgoHierarchyImpl")
     let onSuccessCallback = function (data) {
         console.log(data);
         let pis = renderProblemInstanceList(data.algorithmPage.algorithm.problemInstances);
         let mcs = renderMachineConfigurationList(data.algorithmPage.machineConfigurations);
 
-        renderImplementationDisplay(data, pis, mcs);
+        renderImplementationDisplay(data, pis, mcs, admin);
     };
 
     let onFailCallback = function (data, status) {
@@ -16,21 +16,23 @@ function updateAlgorithmPageHierarchy() {
 
 }
 
-function renderImplementationDisplay(algorithmHierarchy, pis, mcs){
+function renderImplementationDisplay(algorithmHierarchy, pis, mcs, admin){
     let output2 = '<ol style="list-style: none;">';
 
-    output2 = output2 + addImplementationList(algorithmHierarchy.algorithmPage.algorithm, pis, mcs)
+    output2 = output2 + addImplementationList(algorithmHierarchy.algorithmPage.algorithm, pis, mcs, admin)
 
     let implementation = document.getElementById('Implementation');
     implementation.innerHTML = output2;
 }
 
-function createImplementationView(item, isUserRegistered){
+function createImplementationView(item, isUserRegistered, admin){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
     let output = '<li class="listItem" style="background-color: sandybrown">' +
-        '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>' +
-        '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleAdd(this)">Add Benchmark</button>'
+        '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>';
+    if(!admin){
+        output += '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleAdd(this)">Add Benchmark</button>';
+    }
     if(isUserRegistered) {
         output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this, \'' + item.implName + '\', \'' + item.algorithmName + '\')">Del</button>'
     }
@@ -49,12 +51,12 @@ function createImplementationView(item, isUserRegistered){
 }
 
 
-function addImplementationList(item, pis, mcs){
+function addImplementationList(item, pis, mcs, admin){
     let output = '';
     //Implementation
     console.log(item)
     for (let j = 0; j < item.implementations.length; j++) {
-        output = output + createImplementationView(item.implementations[j],vm.user.token !== '') +
+        output = output + createImplementationView(item.implementations[j],vm.user.token !== '', admin) +
             '<li style="list-style-type:none">'+
             '<ul style="list-style: none;">'
         output = output + renderBenchmarkList(item.implementations[j].benchmark, pis, mcs) + '</ul></li>';

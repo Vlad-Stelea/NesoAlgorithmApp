@@ -5,8 +5,10 @@ class Navigation {
         this.cognitoRedirectUri = cognitoRedirectUri;
         this.pageMapping = {
             registeredUsersPage : "registeredUserLandingPage.html",
+            adminHierarchyPage : "AdminHierarchyPage.html",
             cognitoAuth : "https://nesoalgorithm.auth.us-east-2.amazoncognito.com//login?response_type=token&client_id=62lcdgq2137nmak9t45kse25q9&redirect_uri={0}",
-            algorithmPage : "algorithmLandingPage.html"
+            algorithmPage : "algorithmLandingPage.html",
+            adminAlgorithmPage : "AdminAlgorithmLandingPage.html"
         }
     }
 
@@ -15,13 +17,22 @@ class Navigation {
         this.loadPage(this.pageMapping.registeredUsersPage)
     }
 
+    goToAdminPage() {
+        vm.selectedAlgo = null;
+        this.loadPage(this.pageMapping.adminHierarchyPage)
+    }
+
     goToLogin() {
         this.redirect(this.pageMapping.cognitoAuth);
     }
 
-     goToAlgorithmPage(algoName) {
+     goToAlgorithmPage(algoName, admin) {
         vm.selectedAlgo = algoName;
-        this.loadPage(this.pageMapping.algorithmPage);
+        if(admin){
+            this.loadPage(this.pageMapping.adminAlgorithmPage);
+        }else {
+            this.loadPage(this.pageMapping.algorithmPage);
+        }
      }
 
     // Loads a page into the redirect
