@@ -75,14 +75,6 @@ public class ImplementationDAO {
 
             return true;
         }
-        //delete all benchmarks
-        /*if(rs.next()) {
-            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ?;");
-            psDelete.setString(1, rs.getString(benchmarkName);
-            psDelete.execute();
-
-            return true;
-        }*/
 
         return false;
     }
