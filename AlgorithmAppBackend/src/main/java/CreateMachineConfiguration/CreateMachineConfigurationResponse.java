@@ -68,7 +68,12 @@ public class CreateMachineConfigurationResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreateMachineConfigurationResponse that = (CreateMachineConfigurationResponse) o;
-        return L1Cache == that.L1Cache && L2Cache == that.L2Cache && threads == that.threads && Objects.equals(machineConfigName, that.machineConfigName) && machineConfigUUID.equals(that.machineConfigUUID) && Objects.equals(chip, that.chip);
+        return L1Cache == that.L1Cache &&
+                L2Cache == that.L2Cache &&
+                threads == that.threads &&
+                Objects.equals(machineConfigName, that.machineConfigName) &&
+                Objects.equals(machineConfigUUID, that.machineConfigUUID) &&
+                Objects.equals(chip, that.chip);
     }
 
     @Override
