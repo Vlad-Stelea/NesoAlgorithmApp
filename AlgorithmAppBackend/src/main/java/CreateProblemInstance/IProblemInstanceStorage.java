@@ -2,9 +2,9 @@ package CreateProblemInstance;
 
 public interface IProblemInstanceStorage {
     /**
-     * @param uuid the UUID of the problem instance to store
-     * @param payload The data to store
-     * @return the url of where the problem instance is stored
+     * Stores a problem instance
+     * @param payload the data to store
+     * @return the url of where the problem instance was stored
      */
-    String storeProblemInstance(String uuid, String payload);
+    String storeProblemInstance(String payload);
 }

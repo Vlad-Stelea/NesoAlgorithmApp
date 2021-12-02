@@ -4,31 +4,43 @@ import com.google.gson.Gson;
 
 public class CreateProblemInstanceRequest {
 
-    public String probInstanceUUID;
     public String probInstanceName;
-    public String encodedDatasetContents;
+    public String datasetPayload;
     public String algoName;
 
-    public CreateProblemInstanceRequest() {}
+    public CreateProblemInstanceRequest() {
 
-    public CreateProblemInstanceRequest(String probInstanceUUID, String probInstanceName, String encodedDatasetContents, String algoName) {
-        this.probInstanceUUID = probInstanceUUID;
+    }
+
+    public CreateProblemInstanceRequest(String probInstanceName, String datasetPayload, String algoName) {
         this.probInstanceName = probInstanceName;
-        this.encodedDatasetContents = encodedDatasetContents;
+        this.datasetPayload = datasetPayload;
         this.algoName = algoName;
     }
 
-    public String getProbInstanceUUID() { return probInstanceUUID; }
-    public void setProbInstanceUUID(String probInstanceUUID) { this.probInstanceUUID = probInstanceUUID; }
+    public String getProbInstanceName() {
+        return probInstanceName;
+    }
 
-    public String getAlgoName() { return algoName; }
-    public void setAlgoName(String algoName) { this.algoName = algoName; }
+    public void setProbInstanceName(String probInstanceName) {
+        this.probInstanceName = probInstanceName;
+    }
 
-    public String getProbInstanceName() { return probInstanceName; }
-    public void setProbInstanceName(String probInstanceName) { this.probInstanceName = probInstanceName; }
+    public String getDatasetPayload() {
+        return datasetPayload;
+    }
 
-    public String getEncodedDatasetContents() { return encodedDatasetContents; }
-    public void setEncodedDatasetContents(String datasetURL) { this.encodedDatasetContents = datasetURL; }
+    public void setDatasetPayload(String datasetPayload) {
+        this.datasetPayload = datasetPayload;
+    }
+
+    public String getAlgoName() {
+        return algoName;
+    }
+
+    public void setAlgoName(String algoName) {
+        this.algoName = algoName;
+    }
 
     @Override
     public String toString() {

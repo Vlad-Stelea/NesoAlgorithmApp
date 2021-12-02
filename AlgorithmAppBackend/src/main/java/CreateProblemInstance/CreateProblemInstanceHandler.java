@@ -2,7 +2,7 @@ package CreateProblemInstance;
 
 import db.ProblemInstanceDAO;
 
-import java.sql.SQLException;
+import java.util.UUID;
 
 public class CreateProblemInstanceHandler {
 
@@ -16,32 +16,17 @@ public class CreateProblemInstanceHandler {
 
     public CreateProblemInstanceResponse handle(CreateProblemInstanceRequest request) {
         try {
-            if(!dao.hasProblemInstance(request.getProbInstanceUUID())) {
-                String url = storage.storeProblemInstance(request.getProbInstanceUUID(), request.getEncodedDatasetContents());
-
-                if(dao.createProblemInstance(request.getProbInstanceUUID(), request.getProbInstanceName(), url, request.getAlgoName())) {
-                    return new CreateProblemInstanceResponse(
-                            200,
-                            request.getProbInstanceUUID(),
-                            request.getProbInstanceName(),
-                            url,
-                            request.getAlgoName()
-                    );
-                }
-                else {
-                    return failCreateProblemInstanceResponse(request.getProbInstanceUUID());
-                }
-            }
-            else {
-                return failCreateProblemInstanceResponse(request.getProbInstanceUUID());
+            String uuid = UUID.randomUUID().toString();
+            String url = this.storage.storeProblemInstance(request.datasetPayload);
+            if(dao.createProblemInstance(uuid, request.getProbInstanceName(), url ,request.getAlgoName())) {
+                return new CreateProblemInstanceResponse(uuid, request.getProbInstanceName(), url, request.getAlgoName(), 200);
+            } else {
+                return new CreateProblemInstanceResponse(409, "Problem Instance already exists");
             }
         } catch (Exception e) {
-            return new CreateProblemInstanceResponse(400, "Error when creating Problem Instance: " + e);
+            e.printStackTrace();
+            return new CreateProblemInstanceResponse(400, "Unable to craete problem instance");
         }
-    }
-
-    private CreateProblemInstanceResponse failCreateProblemInstanceResponse(String uuid) {
-        return new CreateProblemInstanceResponse(409, "Failed to create Problem Instance: Problem Instance " + uuid + " already exists.");
     }
 
 }

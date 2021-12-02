@@ -1,31 +1,67 @@
 package CreateProblemInstance;
 
 import com.google.gson.Gson;
-import static Utils.EqualityUtils.equalOrBothNull;
+
 public class CreateProblemInstanceResponse {
 
-    int statusCode;
+    String instanceId;
+    String instanceName;
+    String datasetUrl;
+    String algorithmName;
+    int httpCode;
     String error;
 
-    String probInstanceUUID;
-    String probInstanceName;
-    String encodedDatasetContents;
-    String algoName;
-
-    public CreateProblemInstanceResponse(int statusCode, String probInstanceUUID, String probInstanceName, String encodedDatasetContents, String algoName) {
-        this.statusCode = statusCode;
-        this.probInstanceUUID = probInstanceUUID;
-        this.probInstanceName = probInstanceName;
-        this.encodedDatasetContents = encodedDatasetContents;
-        this.algoName = algoName;
+    public CreateProblemInstanceResponse(String instanceId, String instanceName, String datasetUrl, String algorithmName, int httpCode) {
+        this.instanceId = instanceId;
+        this.instanceName = instanceName;
+        this.datasetUrl = datasetUrl;
+        this.algorithmName = algorithmName;
+        this.httpCode = httpCode;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public CreateProblemInstanceResponse(int httpCode, String error) {
+        this.httpCode = httpCode;
+        this.error = error;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
+    }
+
+    public void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
+    }
+
+    public String getDatasetUrl() {
+        return datasetUrl;
+    }
+
+    public void setDatasetUrl(String datasetUrl) {
+        this.datasetUrl = datasetUrl;
+    }
+
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
+
+    public void setAlgorithmName(String algorithmName) {
+        this.algorithmName = algorithmName;
+    }
+
+    public int getHttpCode() {
+        return httpCode;
+    }
+
+    public void setHttpCode(int httpCode) {
+        this.httpCode = httpCode;
     }
 
     public String getError() {
@@ -36,63 +72,15 @@ public class CreateProblemInstanceResponse {
         this.error = error;
     }
 
-    public String getProbInstanceUUID() {
-        return probInstanceUUID;
-    }
-
-    public void setProbInstanceUUID(String probInstanceUUID) {
-        this.probInstanceUUID = probInstanceUUID;
-    }
-
-    public String getProbInstanceName() {
-        return probInstanceName;
-    }
-
-    public void setProbInstanceName(String probInstanceName) {
-        this.probInstanceName = probInstanceName;
-    }
-
-    public String getEncodedDatasetContents() {
-        return encodedDatasetContents;
-    }
-
-    public void setEncodedDatasetContents(String encodedDatasetContents) {
-        this.encodedDatasetContents = encodedDatasetContents;
-    }
-
-    public String getAlgoName() {
-        return algoName;
-    }
-
-    public void setAlgoName(String algoName) {
-        this.algoName = algoName;
-    }
-
-    // 200 means success
-    public CreateProblemInstanceResponse(int statusCode, String error) {
-        this.statusCode = statusCode;
-        this.error = error;
-    }
-
     public String toString() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
-
+    
     @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if(o instanceof CreateProblemInstanceResponse) {
-            CreateProblemInstanceResponse otherResponse = (CreateProblemInstanceResponse) o;
-            return otherResponse.statusCode == this.statusCode &&
-                    equalOrBothNull(otherResponse.probInstanceUUID, this.probInstanceUUID) &&
-                    equalOrBothNull(otherResponse.probInstanceName, this.probInstanceName) &&
-                    equalOrBothNull(otherResponse.encodedDatasetContents, this.encodedDatasetContents) &&
-                    equalOrBothNull(otherResponse.algoName, this.algoName) &&
-                    equalOrBothNull(otherResponse.error, this.error);
-        } else {
-            return false;
-        }
+    public boolean equals(Object otherObject) {
+        if(otherObject == null) return false;
+        return this.toString().equals(otherObject.toString());
     }
 
 }

@@ -3,9 +3,7 @@ package CreateProblemInstance;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-
 import db.ProblemInstanceDAO;
-
 
 public class CreateProblemInstance implements RequestHandler<CreateProblemInstanceRequest, CreateProblemInstanceResponse> {
 
@@ -13,7 +11,9 @@ public class CreateProblemInstance implements RequestHandler<CreateProblemInstan
     CreateProblemInstanceHandler handler;
 
     public CreateProblemInstance() {
-        handler = new CreateProblemInstanceHandler(new ProblemInstanceDAO(), new S3ProblemInstanceStorage());
+        ProblemInstanceDAO dao = new ProblemInstanceDAO();
+        IProblemInstanceStorage storage = new S3ProblemInstanceStorage();
+        handler = new CreateProblemInstanceHandler(dao, storage);
     }
 
     @Override
