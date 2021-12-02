@@ -5,14 +5,13 @@ class ProblemInstanceRepo {
         this.removeProblemInstanceUrl_initial = this.apiGatewayUrl + "/ProblemInstance/Remove/";
     }
 
-    addProblemInstance(probInstanceName, datasetByteStream, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
 
         // TODO update datasetByteStream when we figure out S3 stuff
         // note: we can set the UUID to a placeholder value since it'll be set up in Java anyways
         let body = {
-            "probInstanceUUID" : "placeholder",
             "probInstanceName" : probInstanceName,
-            "datasetByteStream" : datasetByteStream,
+            "datasetPayload" : datasetPayload,
             "algoName" : algoName
         }
 
@@ -58,21 +57,16 @@ class MockProblemInstanceRepo {
         console.log("constructing mock problem instance repo");
     }
 
-    addProblemInstance(probInstanceName, datasetByteStream, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
         console.log("mocking add problem instance");
 
         let response = {
-            "probInstanceUUID" : "placeholder",
-            "probInstanceName" : probInstanceName,
-            "datasetByteStream" : datasetByteStream,
+            "instanceName" : probInstanceName,
+            "datasetPayload" : datasetPayload,
             "algoName" : algoName
         };
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 
     removeProblemInstance(probInstanceUUID, onSuccess, onFail) {
@@ -82,10 +76,6 @@ class MockProblemInstanceRepo {
             "probInstanceUUID" : probInstanceUUID
         };
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 }

@@ -4,13 +4,13 @@ function handleAddProblemInstancePrep() {
 
     // TODO add upload functionality for dataset when we get that figured out
     addProbInstanceForm.innerHTML = "<form id='createProblemInstanceForm' method='post'>" +
-                                    "<br><label for='problemInstanceName'>Problem instance name: </label>" +
+                                    "<br/><label for='problemInstanceName'>Problem instance name: </label>" +
                                     "<input type='text' id='problemInstanceName' name='problemInstanceName'/><br/>" +
                                     "<label for='datasetUpload'>Dataset: </label>" +
                                     "<input type='file' id='datasetUpload' name='datasetUpload'/>" +
                                     "<input name='datasetBase64Encoding' value='' hidden='true'/>" +
-                                    "<input id='fileUploadButton' type='submit' value='Submit' disabled onclick='handleAddProblemInstanceSubmit(this)'/>" +
-                                    "</form><br/><br/>";
+                                    "<br/><input id='fileUploadButton' type='button' value='Submit' disabled onclick='handleAddProblemInstanceSubmit(this)'/>" +
+                                    "</form><br/>";
     document.getElementById("datasetUpload").addEventListener('change', handleDatasetFileSelect, false);
 }
 
@@ -30,7 +30,7 @@ function handleDatasetFileSelect(evt) {
     console.log("in handleDatasetFileSelect");
 
     let files = evt.target.files;
-    // accept files up to 10MB
+    // accept files up to ~10MB
     if(files[0].size > 10000000) {
         document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value = "";
         alert("File size too large! (" + files[0].size + " bytes, 10MB max)");
@@ -46,21 +46,26 @@ function handleAddProblemInstanceSubmit(ele) {
 
     let algoHeader = document.getElementById("AlgoNameDisplay");
     let algoName = algoHeader.textContent;
-    let problemInstanceName = ele.parentElement.children[2].value;
-    console.log("adding " + problemInstanceName + " under " + algoName);
-    let encodedDatasetContents = document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value.split(',')[1];
-    console.log("contents: "  + encodedDatasetContents);
+    let probInstanceName = ele.parentElement.children[2].value;
+    console.log("adding " + probInstanceName + " under " + algoName);
+    let datasetPayload = document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value.split(',')[1];
+    console.log("contents: "  + datasetPayload);
 
-    let piData = {}
-    piData["problemInstanceName"] = problemInstanceName;
-    piData["algoName"] = algoName;
-    piData["encodedDatasetContents"] = encodedDatasetContents;
-
-    if(piData["problemInstanceName"] === "") {
+    if(probInstanceName === "") {
         alert("Please enter a non-empty Problem Instance name");
     }
     else {
-        let js = JSON.stringify(piData);
-        console.log("create Problem Instance JSON: " + js);
+        let onSuccessCallback = function(xhr) {
+            console.log("XHR: " + JSON.stringify(xhr, null, 4));
+            console.log("added problem instance: " + xhr["instanceName"]);
+            updateAlgorithmPageHierarchy();
+        }
+
+        let onFailCallback = function(xhr) {
+            console.log("XHR: " + JSON.stringify(xhr, null, 4));
+            console.log("failed to add problem instance.");
+        }
+
+        problemInstanceRepo.addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccessCallback, onFailCallback);
     }
 }
