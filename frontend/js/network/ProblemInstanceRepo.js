@@ -6,9 +6,7 @@ class ProblemInstanceRepo {
     }
 
     addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
-
-        // TODO update datasetByteStream when we figure out S3 stuff
-        // note: we can set the UUID to a placeholder value since it'll be set up in Java anyways
+        // note: UUIDs will be set up in Java, so no need to create/add one to our request
         let body = {
             "probInstanceName" : probInstanceName,
             "datasetPayload" : datasetPayload,

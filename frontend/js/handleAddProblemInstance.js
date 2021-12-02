@@ -2,7 +2,7 @@ function handleAddProblemInstancePrep() {
     console.log("prepping to add problem instance");
     let addProbInstanceForm = document.getElementById("AddProblemInstanceForm");
 
-    // TODO add upload functionality for dataset when we get that figured out
+    // create our form
     addProbInstanceForm.innerHTML = "<form id='createProblemInstanceForm' method='post'>" +
                                     "<br/><label for='problemInstanceName'>Problem instance name: </label>" +
                                     "<input type='text' id='problemInstanceName' name='problemInstanceName'/><br/>" +
@@ -42,14 +42,14 @@ function handleDatasetFileSelect(evt) {
 
 function handleAddProblemInstanceSubmit(ele) {
     console.log("submitting problem instance add");
-    console.log(ele);
 
+    // gather data we'll need to send to in our request
     let algoHeader = document.getElementById("AlgoNameDisplay");
     let algoName = algoHeader.textContent;
     let probInstanceName = ele.parentElement.children[2].value;
     console.log("adding " + probInstanceName + " under " + algoName);
     let datasetPayload = document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value.split(',')[1];
-    console.log("contents: "  + datasetPayload);
+    // console.log("contents: "  + datasetPayload);
 
     if(probInstanceName === "") {
         alert("Please enter a non-empty Problem Instance name");
