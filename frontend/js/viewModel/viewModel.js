@@ -5,5 +5,6 @@ class ViewModel {
         // instead which we still access property directly in code
         this.user = new User();
         this.selectedAlgo = null;
+        this.selectedUser = null;
     }
 }

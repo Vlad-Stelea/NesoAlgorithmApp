@@ -1,0 +1,51 @@
+<html><head>
+
+    <link rel="stylesheet" href="../css/registeredUser.css">
+    <!-- relative path-name to access js -->
+    <script type='text/javascript' src='../js/adminHandlers/updateUserList.js'></script>
+    <script type='text/javascript' src='../js/adminHandlers/handleUserDelete.js'></script>
+
+    <script type="text/javascript">
+        function renderBanner(user) {
+            // Render the login/ logout button
+            $("#loginButton").text(
+                user.token ? "Logout" : "Login"
+            );
+
+        }
+
+        function initialize() {
+            updateUserList();
+            renderBanner(vm.user);
+        }
+
+        // Need to do this because document isn't stable pre-ready
+        $(document).ready(function(){
+            initialize();
+        });
+    </script>
+</head>
+<body>
+
+
+<div style="background-color: cadetblue; padding: 20px; overflow: hidden;">
+    <!-- Comment out for now because not sure how to get the user name yet-->
+    <!--        <h1 style="display:inline;">User 1 </h1>-->
+    <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToAdminHierarchyPage()">Algorithm Page</button>
+    <button
+            id="loginButton";
+            style="display:inline;
+                 margin-left: auto;
+                 float:right;
+                 background-color: aqua;
+                 padding: 30px 60px;"
+            onclick="vm.user.token ? handleAdminLogOut() : handleLogin()">
+        Login
+    </button>
+</div>
+<br>
+<div id='UserList'></div>
+
+
+</body>
+</html>

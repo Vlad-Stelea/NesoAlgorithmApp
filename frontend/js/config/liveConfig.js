@@ -5,5 +5,6 @@ const LiveConfig = {
     ALGORITHMS_REPO : new AlgorithmsRepo(API_GATEWAY_URL),
     CLASSIFICATIONS_REPO : new ClassificationRepo(API_GATEWAY_URL),
     PROBLEMINSTANCES_REPO : new ProblemInstanceRepo(API_GATEWAY_URL),
-    IMPLEMENTATIONS_REPO : new ImplementationRepo(API_GATEWAY_URL)
+    IMPLEMENTATIONS_REPO : new ImplementationRepo(API_GATEWAY_URL),
+    USERS_REPO : new UserRepo(API_GATEWAY_URL)
 }
