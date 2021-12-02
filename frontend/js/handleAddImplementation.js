@@ -1,15 +1,21 @@
 function handleAddImpPrep(){
-    console.log("addImpPrep")
-    let addTopClassForm = document.getElementById('AddImpForm');
-   // Update Hierarchy result
-   addTopClassForm.innerHTML = ' <br><label for="ImplementationName">Implementation name:</label>' +
-                            '<input type="text" id="fname" name="fname">'+
-                            '<label for="Code">Code:</label>' +
-                                                        '<input type="text" id="Code" name="Code">'+
-                            '<label for="Language">Language:</label>' +
-                                    '<input type="text" id="lang" name="lang">'+
-                            '<input type="submit" value="Submit" onclick="handleAddTopLevelSubmit(this)"><br><br>'
+    let addTopClassForm = document.getElementById("addImplementationForm");
+    addTopClassForm.style.visibility = "visible"
+}
 
+function createImplementation() {
+    implName = document.getElementById("implNameInput").value;
+    language = document.getElementById("languageInput").value;
+    // TODO make sure file upload is also included
+    if(implName && language){
+        // TODO submit
+        console.log("submitting implementation")
+        document.getElementById("addImplementationForm").style.visibility = "hidden";
+    } else if(!implName) {
+        alert("Please include an implementation name")
+    } else if(!language) {
+        alert("Please include the language this implementation uses")
+    }
 }
 
 function processCreateImplementationResponse(result) {
