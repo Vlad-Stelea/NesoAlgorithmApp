@@ -1,5 +1,7 @@
 package entities;
 
+import Utils.EqualityUtils;
+
 import java.sql.Date;
 
 public class Benchmark {
@@ -89,5 +91,19 @@ public class Benchmark {
 
     public void setImplName(String implName) {
         this.implName = implName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(!(obj instanceof Benchmark)) return false;
+        Benchmark b = (Benchmark) obj;
+        return EqualityUtils.equalOrBothNull(this.algoName, b.algoName) && EqualityUtils.equalOrBothNull(this.benchID, b.benchID)
+                && EqualityUtils.equalOrBothNull(this.benchName, b.benchName)
+                && EqualityUtils.equalOrBothNull(this.machineConfigName, b.machineConfigName)
+                && EqualityUtils.equalOrBothNull(this.implName, b.implName)
+                && EqualityUtils.equalOrBothNull(this.problemInstanceName, b.problemInstanceName)
+                && EqualityUtils.equalOrBothNull(this.dateRun, b.dateRun)
+                && EqualityUtils.equalOrBothNull(this.timeToRun, b.timeToRun);
     }
 }
