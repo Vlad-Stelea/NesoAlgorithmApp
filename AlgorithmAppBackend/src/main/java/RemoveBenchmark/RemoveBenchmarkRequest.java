@@ -6,6 +6,8 @@ public class RemoveBenchmarkRequest {
 
     String benchmarkID;
 
+    public RemoveBenchmarkRequest() {}
+
     public RemoveBenchmarkRequest(String benchmarkID) {
         this.benchmarkID = benchmarkID;
     }
