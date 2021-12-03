@@ -21,15 +21,13 @@ class ProblemInstanceRepo {
 
         xhr.send(stringedBody);
 
-        console.log("sent body:");
-        console.log(stringedBody);
-
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr.response);
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr.response);
+                    onFail(xhrJSON);
                 }
             }
         }
@@ -44,10 +42,11 @@ class ProblemInstanceRepo {
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr);
+                let xhrJSON = JSON.parse(xhr.response);
+                if (xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr);
+                    onFail(xhrJSON);
                 }
             }
         }

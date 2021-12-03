@@ -2,43 +2,27 @@ function handleAddProblemInstancePrep() {
     console.log("prepping to add problem instance");
     let addProbInstanceForm = document.getElementById("AddProblemInstanceForm");
 
+    let fileInputName = "datasetBase64Encoding";
+    let formName = "createProblemInstanceForm";
+    let buttonID = "fileUploadButton";
     // create our form
-    addProbInstanceForm.innerHTML = "<form id='createProblemInstanceForm' method='post'>" +
+    addProbInstanceForm.innerHTML = "<form id=" + formName + " method='post'>" +
                                     "<br/><label for='problemInstanceName'>Problem instance name: </label>" +
                                     "<input type='text' id='problemInstanceName' name='problemInstanceName'/><br/>" +
                                     "<label for='datasetUpload'>Dataset: </label>" +
                                     "<input type='file' id='datasetUpload' name='datasetUpload'/>" +
-                                    "<input name='datasetBase64Encoding' value='' hidden='true'/>" +
-                                    "<br/><input id='fileUploadButton' type='button' value='Submit' disabled onclick='handleAddProblemInstanceSubmit(this)'/>" +
+                                    "<input name=" + fileInputName + " value='' hidden='true'/>" +
+                                    "<br/><input id=" + buttonID + " type='button' value='Submit' disabled onclick='handleAddProblemInstanceSubmit(this)'/>" +
                                     "</form><br/>";
-    document.getElementById("datasetUpload").addEventListener('change', handleDatasetFileSelect, false);
+
+    document.getElementById("datasetUpload").addEventListener('change', handleFileSelect, false);
+    document.getElementById("datasetUpload").fileInputName = fileInputName;
+    document.getElementById("datasetUpload").formName = formName;
+    document.getElementById("datasetUpload").maxFileSize = 10000000;
+    document.getElementById("datasetUpload").buttonID = buttonID;
 }
 
-function getBase64OfDataset(file) {
-    console.log("in getBase64OfDataset");
 
-    let fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-
-    fileReader.onload = function() {
-        document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value = fileReader.result;
-        document.getElementById("createProblemInstanceForm").elements["fileUploadButton"].disabled = false;
-    }
-}
-
-function handleDatasetFileSelect(evt) {
-    console.log("in handleDatasetFileSelect");
-
-    let files = evt.target.files;
-    // accept files up to ~10MB
-    if(files[0].size > 10000000) {
-        document.getElementById("createProblemInstanceForm").elements["datasetBase64Encoding"].value = "";
-        alert("File size too large! (" + files[0].size + " bytes, 10MB max)");
-    }
-    else {
-        getBase64OfDataset(files[0]);
-    }
-}
 
 function handleAddProblemInstanceSubmit(ele) {
     console.log("submitting problem instance add");
@@ -57,7 +41,6 @@ function handleAddProblemInstanceSubmit(ele) {
     else {
         let onSuccessCallback = function(xhr) {
             console.log("XHR: " + JSON.stringify(xhr, null, 4));
-            console.log(xhr)
             console.log("added problem instance: " + xhr["instanceName"]);
             updateAlgorithmPageHierarchy();
         }
@@ -68,5 +51,6 @@ function handleAddProblemInstanceSubmit(ele) {
         }
 
         problemInstanceRepo.addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccessCallback, onFailCallback);
+        document.getElementById(ele.form.id).innerHTML = "";
     }
 }
