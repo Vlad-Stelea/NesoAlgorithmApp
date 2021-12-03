@@ -19,12 +19,14 @@
         function renderBanner(user) {
             // Render the login/ logout button
             $("#loginButton").text(
-                user.token ? "Logout" : "Login"
+                user.token ? "Logout" : "Registered User Login"
             );
             if(user.token){
                 document.getElementById("loggedIn").style.display = "block";
+                document.getElementById("adminLoginButton").style.display = "none";
             } else{
                 document.getElementById("loggedIn").style.display = "none";
+                document.getElementById("adminLoginButton").style.display = "inline";
             }
 
             if(navigation.admin){
@@ -62,7 +64,18 @@
                  background-color: aqua;
                  padding: 30px 60px;"
                 onclick="vm.user.token ? handleLogOut() : handleLogin()">
-            Login
+            Registered User Login
+        </button>
+        <button
+                id="adminLoginButton";
+                style="display:none;
+                 margin-left: auto;
+                 margin-right: 20px;
+                 float:right;
+                 background-color: aqua;
+                 padding: 30px 60px;"
+                onclick="handleAdminLogin()">
+            Admin Login
         </button>
     </div>
     <br>
