@@ -57,6 +57,7 @@ function handleAddProblemInstanceSubmit(ele) {
     else {
         let onSuccessCallback = function(xhr) {
             console.log("XHR: " + JSON.stringify(xhr, null, 4));
+            console.log(xhr)
             console.log("added problem instance: " + xhr["instanceName"]);
             updateAlgorithmPageHierarchy();
         }

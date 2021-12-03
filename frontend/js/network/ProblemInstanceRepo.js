@@ -27,9 +27,9 @@ class ProblemInstanceRepo {
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if(xhr.status === 200) {
-                    onSuccess(xhr);
+                    onSuccess(xhr.response);
                 } else {
-                    onFail(xhr);
+                    onFail(xhr.response);
                 }
             }
         }
