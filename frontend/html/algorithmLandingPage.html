@@ -4,12 +4,13 @@
     <script type='text/javascript' src='../js/fileUploadUtil.js'></script>
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAddAlgorithm.js'></script>
+    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
+    <script type='text/javascript' src='../js/handleAddProblemInstance.js'></script>
+    <script type='text/javascript' src='../js/handleAddMachineConfiguration.js'></script>
     <script type='text/javascript' src='../js/handleImplementationDelete.js'></script>
     <script type='text/javascript' src='../js/handleBenchmarkDelete.js'></script>
     <script type='text/javascript' src='../js/handleMachineConfigDelete.js'></script>
     <script type='text/javascript' src='../js/handleProblemInstanceDelete.js'></script>
-    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
-    <script type='text/javascript' src='../js/handleAddProblemInstance.js'></script>
     <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
     <script type='text/javascript' src='../js/updateAlgorithmPage.js'></script>
@@ -72,7 +73,8 @@
                 <hr>
                 <div class="section">
                     <h2 style="display:inline;" >Machine Configurations</h2>
-                    <button class="button" style="background-color: green">Add Machine Configuration</button>
+                    <button class="button" style="background-color: green" onclick="handleAddMachineConfigurationPrep()">Add Machine Configuration</button>
+                    <div id='addMachineConfigForm'></div>
                     <div id='MachineConfigs'></div>
                 </div>
             </div>
