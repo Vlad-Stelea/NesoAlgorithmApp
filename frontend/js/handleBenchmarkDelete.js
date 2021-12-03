@@ -3,7 +3,7 @@ function handleBenchmarkDelete(ele, benchmarkID) {
 
     let onSuccessCallback = function(xhr) {
         console.log("XHR: " + JSON.stringify(xhr, null, 4));
-        console.log("deleted benchmark: " + xhr["benchID"]);
+        console.log("deleted benchmark with ID: " + xhr["benchmarkID"]);
         updateAlgorithmPageHierarchy();
     }
 

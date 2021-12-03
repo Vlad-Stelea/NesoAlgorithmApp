@@ -13,10 +13,11 @@ class BenchmarkRepo {
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr);
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr);
+                    onFail(xhrJSON);
                 }
             }
         }
@@ -33,7 +34,7 @@ class MockBenchmarkRepo {
 
         let response = {
             "benchmarkID" : benchmarkID,
-            "status" : 200
+            "httpCode" : 200
         };
 
         onSuccess(response);
