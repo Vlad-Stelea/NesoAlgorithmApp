@@ -126,7 +126,7 @@ function createProblemInstanceView(problemInstance, isRegisteredUser){
     let output = '<li class="listItem" style="background-color: tomato">' +
         '<h2 style="display:inline;">' + problemInstance.probInstanceName +'</h2>'
     if(isRegisteredUser) {
-        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, ' + problemInstance.probInstanceUUID + ')">Del</button>';
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, \'' + problemInstance.probInstanceUUID + '\')">Del</button>';
     }
     output = output + '<div>' +
         '<h style="display:inline;"> Download Link: </h>' + '<a href="' + problemInstance.datasetURL + '">Download</a>' +

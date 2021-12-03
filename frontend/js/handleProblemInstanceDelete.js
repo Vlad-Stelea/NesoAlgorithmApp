@@ -5,7 +5,7 @@ function handleProblemInstanceDelete(ele, probInstanceUUID){
 
     let onSuccessCallback = function(xhr) {
         console.log("XHR: " + JSON.stringify(xhr, null, 4));
-        console.log("deleted problem instance: " + xhr["probInstanceUUID"]);
+        console.log("deleted problem instance with ID: " + xhr["problemInstanceID"]);
         updateAlgorithmPageHierarchy();
     }
 
