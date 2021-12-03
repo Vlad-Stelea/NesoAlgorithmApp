@@ -41,7 +41,7 @@ class MockMachineConfigurationRepo {
         console.log("constructing mock machine config repo");
     }
 
-    addMachineConfig(machineConfigName, l1Cache, l2Cache, chip, threads, onSuccess, onFail) {
+    addMachineConfiguration(machineConfigName, l1Cache, l2Cache, chip, threads, onSuccess, onFail) {
         console.log("mocking machine config add");
 
         let response = {
