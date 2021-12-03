@@ -4,5 +4,6 @@ const DevConfig = {
     ALGORITHMS_REPO : new MockAlgorithmRepo(),
     CLASSIFICATIONS_REPO : new MockClassificationRepo(),
     PROBLEMINSTANCES_REPO : new MockProblemInstanceRepo(),
-    IMPLEMENTATIONS_REPO : new MockImplementationRepo()
-}
+    IMPLEMENTATIONS_REPO : new MockImplementationRepo(),
+    BENCHMARKS_REPO : new MockBenchmarkRepo()
+};

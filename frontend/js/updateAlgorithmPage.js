@@ -221,9 +221,9 @@ function createBenchmarkView(benchmark, isRegisteredUser){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
     let output = '<li class="listItem" style="background-color: deeppink">' +
-        '<h2 style="display:inline;">Benchmark: ' + benchmark.benchName +'</h2>'
+        '<h2 style="display:inline;">Benchmark: ' + benchmark.benchName +'</h2>';
     if(isRegisteredUser) {
-        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleBenchmarkDelete(this, ' + benchmark.benchamrkUUID + ')">Del</button>';
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleBenchmarkDelete(this, \'' + benchmark.benchID + '\')">Del</button>';
     }
     output = output + '<div>' +
         '<h style="display:inline;"> Time to Run: ' + benchmark.timeToRun + '</h>' + '<h style="display:inline; margin-left: 15px"> Date Run: ' + benchmark.dateRun + '</h>' +
