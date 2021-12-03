@@ -4,6 +4,7 @@
     <script src="../js/network/AlgorithmsRepo.js"></script>
     <script src="../js/network/BenchmarkRepo.js"></script>
     <script src="../js/network/ClassificationRepo.js"></script>
+    <script src="../js/network/MachineConfigurationRepo.js"></script>
     <script src="../js/network/ProblemInstanceRepo.js"></script>
     <script src="../js/network/mockxhr.js"></script>
     <script src="../js/network/ImplementationRepo.js"></script>
@@ -33,6 +34,7 @@
         const implementationRepo = config.IMPLEMENTATIONS_REPO;
         const userRepo = config.USERS_REPO;
         const benchmarkRepo = config.BENCHMARKS_REPO;
+        const machineConfigRepo = config.MACHINECONFIGS_REPO;
         const vm = new ViewModel();
         function initContainer() {
             vm.user.token = extractAuthToken();

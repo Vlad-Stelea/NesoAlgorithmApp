@@ -6,5 +6,6 @@ const DevConfig = {
     PROBLEMINSTANCES_REPO : new MockProblemInstanceRepo(),
     IMPLEMENTATIONS_REPO : new MockImplementationRepo(),
     USERS_REPO : new MockUserRepo(),
-    BENCHMARKS_REPO : new MockBenchmarkRepo()
+    BENCHMARKS_REPO : new MockBenchmarkRepo(),
+    MACHINECONFIGS_REPO : new MockMachineConfigurationRepo()
 };
