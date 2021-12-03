@@ -1498,6 +1498,156 @@ paths:
           application/json: '{"statusCode": 200}'
         type: mock
 
+  /MachineConfiguration:
+    post:
+      tags:
+      - MachineConfiguration
+      - RegisteredUser
+      summary: Create a new Machine Configuration object
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: machineConfigBody
+          description: The Machine Configuration Object to be created
+          schema:
+            $ref: "#/definitions/CreateMachineConfigRequest"
+      responses:
+        200:
+          description: Machine Config created successfully
+          schema:
+            $ref: "#/definitions/MachineConfiguration"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Bad request
+        409:
+          description: Resource already exists
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+
+  /MachineConfiguration/Remove/{machineConfiguration_id}:
+    post:
+      tags:
+        - Machine Configuration
+        - Admin
+      summary: remove a Machine Configuration based on its id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: machineConfiguration_id
+          type: string
+          required: true
+          description: the Machine Configuration the user wants to remove
+      responses:
+        200:
+          description: Machine Configuration removed successfully
+          schema:
+            $ref: "#/definitions/MachineConfiguration"
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Bad request
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        uri: https://www.google.com/
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: http
+    options:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: machineConfiguration_id
+          type: string
+          required: true
+          description: the machine configuration the user would like to remove
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST,GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+
   /User/Register:
     post:
       tags:
@@ -2185,7 +2335,37 @@ definitions:
         type: string
       problemInstanceID:
         type: string
-    
+
+  CreateMachineConfigRequest:
+    type: object
+    required:
+      - machineConfigUUID
+      - machineConfigName
+      - L1Cache
+      - L2Cache
+      - chip
+      - threads
+    properties:
+      machineConfigUUID:
+        type: string
+      machineConfigName:
+        type: string
+      L1Cache:
+        type: integer
+      L2Cache:
+        type: integer
+      chip:
+        type: string
+      threads:
+        type: integer
+
+  RemoveMachineConfigRequest:
+    type: object
+    required:
+      - machineConfigUUID
+    properties:
+      machineConfigUUID:
+        type: string
       
   RegisterAccountRequest:
     type: object
