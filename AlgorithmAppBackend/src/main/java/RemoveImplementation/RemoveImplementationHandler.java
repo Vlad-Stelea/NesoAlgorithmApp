@@ -1,13 +1,16 @@
 package RemoveImplementation;
 
+import db.BenchmarkDAO;
 import db.ImplementationDAO;
 
 public class RemoveImplementationHandler {
 
-    ImplementationDAO dao;
+    ImplementationDAO implDAO;
+    BenchmarkDAO benchmarkDAO;
 
-    public RemoveImplementationHandler(ImplementationDAO dao) {
-        this.dao = dao;
+    public RemoveImplementationHandler(ImplementationDAO implDAO, BenchmarkDAO benchmarkDAO) {
+        this.implDAO = implDAO;
+        this.benchmarkDAO = benchmarkDAO;
     }
 
     public RemoveImplementationResponse handle(RemoveImplementationRequest request) {
@@ -17,8 +20,7 @@ public class RemoveImplementationHandler {
         String algoName = request.getAlgoName();
 
         try {
-            // TODO: delete benchmarks that belong to these impls as well
-            if(dao.removeImplementation(implName, algoName)) {
+            if(benchmarkDAO.removeBenchmarksByImplName(implName, algoName) && implDAO.removeImplementation(implName, algoName)) {
                 response = new RemoveImplementationResponse(request.getImplementationID(), 200);
             } else {
                 response = new RemoveImplementationResponse(request.getImplementationID(), 404, "Implementation not found.");

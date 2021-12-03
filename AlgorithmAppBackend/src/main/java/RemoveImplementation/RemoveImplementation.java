@@ -3,6 +3,7 @@ package RemoveImplementation;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import db.BenchmarkDAO;
 import db.ImplementationDAO;
 
 public class RemoveImplementation implements RequestHandler<RemoveImplementationRequest, RemoveImplementationResponse> {
@@ -11,7 +12,7 @@ public class RemoveImplementation implements RequestHandler<RemoveImplementation
     RemoveImplementationHandler handler;
 
     public RemoveImplementation() {
-        handler = new RemoveImplementationHandler(new ImplementationDAO());
+        handler = new RemoveImplementationHandler(new ImplementationDAO(), new BenchmarkDAO());
     }
 
     @Override

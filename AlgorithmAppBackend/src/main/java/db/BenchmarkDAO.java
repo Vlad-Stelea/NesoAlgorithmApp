@@ -50,72 +50,96 @@ public class BenchmarkDAO {
     public ArrayList<Benchmark> getBenchmarkForAlgo(String algoName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE algoName = ?;");
         ps.setString(1, algoName);
-        ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        imps = generateArrayOfBenchmark(rs);
-
-        return imps;
+        return generateArrayOfBenchmark(rs);
     }
     public ArrayList<Benchmark> getBenchmarkForImp(String ImpName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE implName = ?;");
         ps.setString(1, ImpName);
-        ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        imps = generateArrayOfBenchmark(rs);
-
-        return imps;
+        return generateArrayOfBenchmark(rs);
     }
     public ArrayList<Benchmark> getBenchmarkForMachCong(String machineConfig) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE machineConfigUUID = ?;");
         ps.setString(1, machineConfig);
-        ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        imps = generateArrayOfBenchmark(rs);
-
-        return imps;
+        return generateArrayOfBenchmark(rs);
     }
     public ArrayList<Benchmark> getBenchmarkForProbInst(String problemInstance) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE probInstanceUUID = ?;");
         ps.setString(1, problemInstance);
-        ArrayList imps = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        imps = generateArrayOfBenchmark(rs);
+        return generateArrayOfBenchmark(rs);
+    }
 
-        return imps;
+    public boolean removeBenchmarksByImplName(String implName, String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE implName = ? AND algoName = ?;");
+        ps.setString(1, implName);
+        ps.setString(2, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ? AND algoName = ?;");
+            psDelete.setString(1, implName);
+            psDelete.setString(2, algoName);
+
+            psDelete.execute();
+        }
+
+        return true;
     }
 
     public ArrayList<Benchmark> generateArrayOfBenchmark(ResultSet rs) throws SQLException{
 
-        ArrayList imps = new ArrayList<>();
+        ArrayList<Benchmark> benchmarks = new ArrayList<>();
         while(rs.next()) {
-            imps.add(new Benchmark(rs.getString("benchmarkUUID"),rs.getString("benchmarkName"),rs.getLong("timeToRun"),rs.getDate("dateRun"),rs.getString("algoName") ,rs.getString("implName"),rs.getString("machineConfigUUID"),rs.getString("probInstanceUUID")));
+            benchmarks.add(new Benchmark(rs.getString("benchmarkUUID"),
+                    rs.getString("benchmarkName"),
+                    rs.getLong("timeToRun"),
+                    rs.getDate("dateRun"),
+                    rs.getString("algoName") ,
+                    rs.getString("implName"),
+                    rs.getString("machineConfigUUID"),
+                    rs.getString("probInstanceUUID")));
         }
-        return imps;
+        return benchmarks;
 
+    }
+
+    public boolean removeBenchmarksByProbInstanceUUID(String probInstanceUUID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE probInstanceUUID = ?;");
+        ps.setString(1, probInstanceUUID);
+        ResultSet rs = ps.executeQuery();
+
+        while(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE probInstanceUUID = ?;");
+            psDelete.setString(1, probInstanceUUID);
+
+            psDelete.execute();
+        }
+
+        return true;
     }
 
     public Benchmark generateBenchmark(ResultSet rs) throws SQLException {
         if(!rs.next()) {
-        return null;
+            return null;
         }
         String benchID = rs.getString("benchmarkUUID");
         String benchName =rs.getString("benchmarkName");
         String algoName =rs.getString("algoName");
-        String machinceConfigName =rs.getString("machineConfigUUID");
+        String machineConfigName =rs.getString("machineConfigUUID");
         String implName = rs.getString("implName");
         String problemInstanceName =rs.getString("probInstanceUUID");
         Date dateRun =rs.getDate("dateRun");
-       long timeToRun =rs.getLong("timeToRun");
+        long timeToRun =rs.getLong("timeToRun");
 
-        //TODO: see if its acceptable to return all new implementation with no children
-        return new Benchmark(benchID, benchName,timeToRun,dateRun,algoName,implName,machinceConfigName,problemInstanceName);
+        return new Benchmark(benchID, benchName,timeToRun,dateRun,algoName,implName,machineConfigName,problemInstanceName);
 
     }
-
-
 
 }
