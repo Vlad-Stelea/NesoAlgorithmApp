@@ -23,7 +23,7 @@
     <!-- Initialize everything -->
     <script type="text/javascript">
         const DEV_MODE = true;
-        const ADMIN = true;
+        const ADMIN = false;
         const config = DEV_MODE ? DevConfig : LiveConfig;
         // Initialize the nav component
         const navigation = new Navigation("#viewContainer", config.LOGIN_URL_CALLBACK);
@@ -37,7 +37,7 @@
             vm.user.token = extractAuthToken();
             // This should be done at end to make sure it initializes correctly
             if(ADMIN){
-                navigation.goToAdminHierarchyPage();
+                navigation.goToAdminLandingPage();
             }else{
                 navigation.goToRegisteredUsersPage();
             }
