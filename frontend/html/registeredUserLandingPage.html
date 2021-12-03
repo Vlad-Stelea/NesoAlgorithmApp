@@ -27,10 +27,17 @@
                 document.getElementById("loggedIn").style.display = "none";
             }
 
+            if(navigation.admin){
+                document.getElementById("adminPageButton").style.display = "inline";
+                document.getElementById("loggedIn").style.display = "none";
+            } else{
+                document.getElementById("adminPageButton").style.display = "none";
+            }
+
         }
 
         function initialize() {
-           updateHierarchy();
+           updateHierarchy(navigation.admin);
            renderBanner(vm.user);
         }
 
@@ -46,6 +53,7 @@
     <div style="background-color: cadetblue; padding: 20px; overflow: hidden;">
         <!-- Comment out for now because not sure how to get the user name yet-->
 <!--        <h1 style="display:inline;">User 1 </h1>-->
+        <button id="adminPageButton"; style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToAdminLandingPage()">Admin Home</button>
         <button
                 id="loginButton";
                 style="display:inline;
