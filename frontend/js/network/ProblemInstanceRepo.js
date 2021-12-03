@@ -6,6 +6,8 @@ class ProblemInstanceRepo {
     }
 
     addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
+        console.log("attempting to add problem instance with name: " + probInstanceName);
+
         // note: UUIDs will be set up in Java, so no need to create/add one to our request
         let body = {
             "probInstanceName" : probInstanceName,
@@ -18,6 +20,9 @@ class ProblemInstanceRepo {
         xhr.open("POST", this.createProblemInstanceUrl, true);
 
         xhr.send(stringedBody);
+
+        console.log("sent body:");
+        console.log(stringedBody);
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
