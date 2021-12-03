@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ClassificationDAO {
     private Connection conn;
-
+    private AlgorithmDAO adao = new AlgorithmDAO();
     public ClassificationDAO() {
         try {
             conn = DatabaseUtil.connect();
@@ -76,6 +76,7 @@ public class ClassificationDAO {
         return false;
     }
 
+
     private Classification generateClassification(ResultSet rs) throws SQLException {
         if(rs.next()) {
             String className = rs.getString("className");
@@ -103,5 +104,43 @@ public class ClassificationDAO {
 
         return result;
     }
+
+    public boolean updateClassification(String Name, String parentName) throws SQLException{
+        PreparedStatement ps = conn.prepareStatement("UPDATE classification SET parentClassName = ? WHERE className = ?;");
+        ps.setString(1, parentName);
+        ps.setString(2, Name);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public boolean mergeClassification(String Name,String newParentName) throws SQLException{
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE parentClassName = ?;");
+        ps.setString(1, Name);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            PreparedStatement updatePS = conn.prepareStatement("UPDATE classification SET parentClassName = ? WHERE className = ?;");
+            updatePS.setString(1, newParentName);
+            updatePS.setString(2, rs.getString("className"));
+            updatePS.executeUpdate();
+
+        }
+        PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM algorithm WHERE className = ?;");
+        ps2.setString(1, Name);
+        ResultSet rs2 = ps2.executeQuery();
+        while(rs2.next()) {
+            adao.reclassifyAlgorithm(rs2.getString("algoName"),newParentName);
+        }
+
+
+        return true;
+    }
+
+
 
 }
