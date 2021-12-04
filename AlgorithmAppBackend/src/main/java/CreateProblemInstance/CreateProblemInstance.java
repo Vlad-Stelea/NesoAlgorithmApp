@@ -10,8 +10,10 @@ public class CreateProblemInstance implements RequestHandler<CreateProblemInstan
     public LambdaLogger logger = null;
     CreateProblemInstanceHandler handler;
 
-    public CreateProblemInstance(ProblemInstanceDAO dao) {
-        handler = new CreateProblemInstanceHandler(dao);
+    public CreateProblemInstance() {
+        ProblemInstanceDAO dao = new ProblemInstanceDAO();
+        IProblemInstanceStorage storage = new S3ProblemInstanceStorage();
+        handler = new CreateProblemInstanceHandler(dao, storage);
     }
 
     @Override

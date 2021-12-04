@@ -5,14 +5,13 @@ class ProblemInstanceRepo {
         this.removeProblemInstanceUrl_initial = this.apiGatewayUrl + "/ProblemInstance/Remove/";
     }
 
-    addProblemInstance(probInstanceName, datasetByteStream, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
+        console.log("attempting to add problem instance with name: " + probInstanceName);
 
-        // TODO update datasetByteStream when we figure out S3 stuff
-        // note: we can set the UUID to a placeholder value since it'll be set up in Java anyways
+        // note: UUIDs will be set up in Java, so no need to create/add one to our request
         let body = {
-            "probInstanceUUID" : "placeholder",
             "probInstanceName" : probInstanceName,
-            "datasetByteStream" : datasetByteStream,
+            "datasetPayload" : datasetPayload,
             "algoName" : algoName
         }
 
@@ -24,10 +23,11 @@ class ProblemInstanceRepo {
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr);
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr);
+                    onFail(xhrJSON);
                 }
             }
         }
@@ -42,10 +42,11 @@ class ProblemInstanceRepo {
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr);
+                let xhrJSON = JSON.parse(xhr.response);
+                if (xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr);
+                    onFail(xhrJSON);
                 }
             }
         }
@@ -58,21 +59,16 @@ class MockProblemInstanceRepo {
         console.log("constructing mock problem instance repo");
     }
 
-    addProblemInstance(probInstanceName, datasetByteStream, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
         console.log("mocking add problem instance");
 
         let response = {
-            "probInstanceUUID" : "placeholder",
-            "probInstanceName" : probInstanceName,
-            "datasetByteStream" : datasetByteStream,
+            "instanceName" : probInstanceName,
+            "datasetPayload" : datasetPayload,
             "algoName" : algoName
         };
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 
     removeProblemInstance(probInstanceUUID, onSuccess, onFail) {
@@ -82,10 +78,6 @@ class MockProblemInstanceRepo {
             "probInstanceUUID" : probInstanceUUID
         };
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 }

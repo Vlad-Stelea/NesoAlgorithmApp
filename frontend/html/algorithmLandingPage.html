@@ -1,14 +1,16 @@
 <html><head>
     <link rel="stylesheet" href="../css/algorithmPage.css">
-<!-- remember to add javascript-->
-    <script type='text/javascript' src='../js/handleLogOut.js'></script>
+
+    <script type='text/javascript' src='../js/fileUploadUtil.js'></script>
     <script type='text/javascript' src='../js/initializeRegisterUser.js'></script>
     <script type='text/javascript' src='../js/handleAddAlgorithm.js'></script>
+    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
+    <script type='text/javascript' src='../js/handleAddProblemInstance.js'></script>
+    <script type='text/javascript' src='../js/handleAddMachineConfiguration.js'></script>
     <script type='text/javascript' src='../js/handleImplementationDelete.js'></script>
     <script type='text/javascript' src='../js/handleBenchmarkDelete.js'></script>
     <script type='text/javascript' src='../js/handleMachineConfigDelete.js'></script>
     <script type='text/javascript' src='../js/handleProblemInstanceDelete.js'></script>
-    <script type='text/javascript' src='../js/handleAddImplementation.js'></script>
     <script type='text/javascript' src='../js/auth/handleLogin.js'></script>
     <script type='text/javascript' src='../js/intializeAlgorithmPage.js'></script>
     <script type='text/javascript' src='../js/updateAlgorithmPage.js'></script>
@@ -46,7 +48,6 @@
 <div style="background-color: cadetblue; padding: 20px;">
     <button style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToRegisteredUsersPage()">Home</button>
     <h1 style="display:inline;" class="registeredUserOnly">User 1 </h1>
-    <!--TODO:Figure out how to get algorithm name to display-->
     <h1 id="AlgoNameDisplay" style="display:inline; margin-left: 20%;margin-right: 20%;"> Algorithm Name</h1>
     <button
         id="loginButton";
@@ -64,13 +65,16 @@
             <div class="leftSide">
                 <div class="section">
                     <h2 style="display:inline;" >Problem Instances</h2>
-                    <button class="registeredUserOnly button" style="background-color: green">Add Problem Instance</button>
+                    <button class="registeredUserOnly button" style="background-color: green" onclick="handleAddProblemInstancePrep()">Add Problem Instance</button>
+                    <!-- when the user clicks the Add Problem Instance button, the following will allow them to enter their input -->
+                    <div id='AddProblemInstanceForm'></div>
                     <div id='ProblemInstances'></div>
                 </div>
                 <hr>
                 <div class="section">
                     <h2 style="display:inline;" >Machine Configurations</h2>
-                    <button class="button" style="background-color: green">Add Machine Configuration</button>
+                    <button class="button" style="background-color: green" onclick="handleAddMachineConfigurationPrep()">Add Machine Configuration</button>
+                    <div id='addMachineConfigForm'></div>
                     <div id='MachineConfigs'></div>
                 </div>
             </div>
@@ -93,13 +97,13 @@
 
         </div>
 <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    let coll = document.getElementsByClassName("collapsible");
+    let i;
 
     for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
         this.classList.toggle("active");
-        var content = this.nextElementSibling;
+        let content = this.nextElementSibling;
         if (content.style.display === "block") {
           content.style.display = "none";
         } else {

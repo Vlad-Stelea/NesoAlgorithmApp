@@ -37,6 +37,25 @@ public class BenchmarkDAO {
 
         return true;
     }
+
+    public boolean removeBenchmark(String benchmarkID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE benchmarkUUID = ?;");
+        ps.setString(1, benchmarkID);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE benchmarkUUID = ?;");
+            psDelete.setString(1, benchmarkID);
+            psDelete.execute();
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
     public Benchmark getBenchmark(String benchID) throws SQLException{
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE benchmarkUUID = ?;");
         ps.setString(1, benchID);
