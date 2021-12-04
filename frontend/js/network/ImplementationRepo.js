@@ -42,4 +42,20 @@ class MockImplementationRepo {
             new MockXHR()
         );
     }
+
+    createImplementation(implName, algoName, encodedCode, language, onSuccess, onFail) {
+        let response = {
+            statusCode: "200",
+            implName: implName,
+            algoName: algoName,
+            codeUrl: "Fake Url",
+            language: language
+        }
+
+        onSuccess(
+            response,
+            200,
+            new MockXHR()
+        )
+    }
 }

@@ -7,16 +7,25 @@ function createImplementation() {
     let implName = document.getElementById("implNameInput").value;
     let language = document.getElementById("languageInput").value;
     let selectedFile = document.getElementById("uploadCodeButton").files[0];
-    // TODO make sure file upload is also included
+    let algoName = vm.selectedAlgo;
+
     if(implName && language && selectedFile){
         console.log("submitting implementation");
         // Get the base 64 encoding
         getFileBase64EncodingPromise(selectedFile)
             .then((base64String) => {
-                // TODO Make http call
+                let onSuccessCallback = function (response, responseCode, xhr) {
+                    processCreateImplementationResponse(response);
+                    // Hide the add Implementation dialog
+                    document.getElementById("addImplementationForm").style.visibility = "hidden";
+                }
 
-                // Hide the add Implementation dialog
-                document.getElementById("addImplementationForm").style.visibility = "hidden";
+                let onFailCallback = function(response, code, xhr) {
+                    alert("Error uploading file. Please try again later");
+                }
+
+                implementationRepo.createImplementation(implName, algoName, base64String, language, onSuccessCallback, onFailCallback)
+
             })
             .catch(() => alert("Error loading file please try again"))
 
