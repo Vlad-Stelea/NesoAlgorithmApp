@@ -14,14 +14,16 @@ function createImplementation() {
         // Get the base 64 encoding
         getFileBase64EncodingPromise(selectedFile)
             .then((base64String) => {
-                let onSuccessCallback = function (response, responseCode, xhr) {
+                let onSuccessCallback = function (response) {
                     processCreateImplementationResponse(response);
                     // Hide the add Implementation dialog
                     document.getElementById("addImplementationForm").style.visibility = "hidden";
                 }
 
-                let onFailCallback = function(response, code, xhr) {
-                    alert("Error uploading file. Please try again later");
+                let onFailCallback = function(response, code) {
+                    if(code === 400) alert("Unknown Error uploading file. Please try again later.");
+                    if(code === 409) alert("Error: implementation already exists. Please create a new implementation.");
+                    else alert("Super unkown error: " + code);
                 }
 
                 implementationRepo.createImplementation(implName, algoName, base64String, language, onSuccessCallback, onFailCallback)
