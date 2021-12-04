@@ -4,17 +4,29 @@ function handleAddImpPrep(){
 }
 
 function createImplementation() {
-    implName = document.getElementById("implNameInput").value;
-    language = document.getElementById("languageInput").value;
+    let implName = document.getElementById("implNameInput").value;
+    let language = document.getElementById("languageInput").value;
+    let selectedFile = document.getElementById("uploadCodeButton").files[0];
     // TODO make sure file upload is also included
-    if(implName && language){
-        // TODO submit
-        console.log("submitting implementation")
-        document.getElementById("addImplementationForm").style.visibility = "hidden";
+    if(implName && language && selectedFile){
+        console.log("submitting implementation");
+        // Get the base 64 encoding
+        getFileBase64EncodingPromise(selectedFile)
+            .then((base64String) => {
+                // TODO Make http call
+
+                // Hide the add Implementation dialog
+                document.getElementById("addImplementationForm").style.visibility = "hidden";
+            })
+            .catch(() => alert("Error loading file please try again"))
+
+
     } else if(!implName) {
-        alert("Please include an implementation name")
+        alert("Please include an implementation name");
     } else if(!language) {
-        alert("Please include the language this implementation uses")
+        alert("Please include the language this implementation uses");
+    } else if(!selectedFile) {
+        alert("Please upload a file");
     }
 }
 
