@@ -66,6 +66,7 @@ class MockProblemInstanceRepo {
         let response = {
             "instanceName" : probInstanceName,
             "datasetPayload" : datasetPayload,
+            "fileExtension": fileExtension,
             "algoName" : algoName
         };
 
