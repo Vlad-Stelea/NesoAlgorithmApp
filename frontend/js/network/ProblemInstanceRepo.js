@@ -5,13 +5,14 @@ class ProblemInstanceRepo {
         this.removeProblemInstanceUrl_initial = this.apiGatewayUrl + "/ProblemInstance/Remove/";
     }
 
-    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, fileExtension, onSuccess, onFail) {
         console.log("attempting to add problem instance with name: " + probInstanceName);
 
         // note: UUIDs will be set up in Java, so no need to create/add one to our request
         let body = {
             "probInstanceName" : probInstanceName,
             "datasetPayload" : datasetPayload,
+            "fileExtension" : fileExtension,
             "algoName" : algoName
         }
 
@@ -59,12 +60,13 @@ class MockProblemInstanceRepo {
         console.log("constructing mock problem instance repo");
     }
 
-    addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccess, onFail) {
+    addProblemInstance(probInstanceName, datasetPayload, algoName, fileExtension, onSuccess, onFail) {
         console.log("mocking add problem instance");
 
         let response = {
             "instanceName" : probInstanceName,
             "datasetPayload" : datasetPayload,
+            "fileExtension": fileExtension,
             "algoName" : algoName
         };
 
