@@ -36,7 +36,7 @@ public class CreateProblemInstanceTest extends LambdaTest {
         mockUidUtil.when(UUID::randomUUID).thenReturn(mockUUID);
         probInstance = new ProblemInstance("cpi_test", "cpiAlgo_test");
         cpiHandler = new CreateProblemInstanceHandler(dao, storage);
-        req = new CreateProblemInstanceRequest("cpi_test", "cpi_payload_test", "cpiAlgo_test");
+        req = new CreateProblemInstanceRequest("cpi_test", "cpi_payload_test", ".txt", "cpiAlgo_test");
     }
 
     @After
@@ -48,18 +48,18 @@ public class CreateProblemInstanceTest extends LambdaTest {
     @Test
     public void testCreateProblemInstance() throws SQLException {
         // add the problem instance and make sure we get the correct response
-        when(dao.createProblemInstance("Fake-uuid", "cpi_test", "fake_url", "cpiAlgo_test")).thenReturn(true);
-        when(storage.storeProblemInstance(any())).thenReturn("fake_url");
+        when(dao.createProblemInstance("Fake-uuid", "cpi_test", "fake_url.txt", "cpiAlgo_test")).thenReturn(true);
+        when(storage.storeProblemInstance(any(), eq(".txt"))).thenReturn("fake_url.txt");
         CreateProblemInstanceResponse handleResult = cpiHandler.handle(req);
-        CreateProblemInstanceResponse expectedResponse = new CreateProblemInstanceResponse("Fake-uuid", "cpi_test", "fake_url", "cpiAlgo_test", 200);
+        CreateProblemInstanceResponse expectedResponse = new CreateProblemInstanceResponse("Fake-uuid", "cpi_test", "fake_url.txt", "cpiAlgo_test", 200);
         assertEquals(expectedResponse, handleResult);
     }
 
     @Test
     public void testFailCreateProblemInstance() throws SQLException {
         // add the problem instance, mock that the problem instance was added already, and ensure the handler responds appropriately
-        when(dao.createProblemInstance("cpi_uuid_test", "cpi_test", "fake_url", "cpiAlgo_test")).thenReturn(false);
-        when(storage.storeProblemInstance(any())).thenReturn("fake_url");
+        when(dao.createProblemInstance("cpi_uuid_test", "cpi_test", "fake_url.txt", "cpiAlgo_test")).thenReturn(false);
+        when(storage.storeProblemInstance(any(), eq(".txt"))).thenReturn("fake_url.txt");
         CreateProblemInstanceResponse handleResult = cpiHandler.handle(req);
         CreateProblemInstanceResponse expectedResponse = new CreateProblemInstanceResponse(409, "Problem Instance already exists");
         assertEquals(expectedResponse, handleResult);

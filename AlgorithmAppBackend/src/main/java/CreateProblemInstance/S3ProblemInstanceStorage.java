@@ -23,12 +23,12 @@ public class S3ProblemInstanceStorage implements IProblemInstanceStorage{
     }
 
     @Override
-    public String storeProblemInstance(String payload) {
-        return s3Util.storeFile(bucketLocation, generateProblemInstanceStorageLocation(), payload);
+    public String storeProblemInstance(String payload, String fileExtension) {
+        return s3Util.storeFile(bucketLocation, generateProblemInstanceStorageLocation(fileExtension), payload);
     }
 
-    private static String generateProblemInstanceStorageLocation() {
+    private static String generateProblemInstanceStorageLocation(String fileExtension) {
         String fileName = UUID.randomUUID().toString();
-        return "ProblemInstances/" + fileName;
+        return "ProblemInstances/" + fileName + fileExtension;
     }
 }
