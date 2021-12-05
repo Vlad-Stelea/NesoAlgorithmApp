@@ -6,5 +6,5 @@ public interface IProblemInstanceStorage {
      * @param payload the data to store
      * @return the url of where the problem instance was stored
      */
-    String storeProblemInstance(String payload);
+    String storeProblemInstance(String payload, String fileExtension);
 }

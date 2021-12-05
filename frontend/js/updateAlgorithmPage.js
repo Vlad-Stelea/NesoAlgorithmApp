@@ -92,7 +92,7 @@ function createMachineConfigurationView(machineConfig, isRegisteredUser){
     let output = '<li class="listItem" style="background-color: pink">' +
         '<h2 style="display:inline;">' + machineConfig.machineConfigName +'</h2>'
     if(isRegisteredUser){
-        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" >Del</button>';
+        output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleMachineConfigDelete(this, \'' + machineConfig.machineConfigUUID + '\')">Del</button>';
     }
     output = output + '<div style="margin-left: 15px;">'+
         '<h style="display:inline;" > L1 Cache: ' + machineConfig.l1Cache + '</h>'

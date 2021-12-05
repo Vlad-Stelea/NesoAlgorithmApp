@@ -19,13 +19,14 @@ function handleProblemInstanceAddFormSubmit(ele) {
     console.log("submitting problem instance add");
 
     let selectedFile = document.getElementById("datasetUpload").files[0];
-
     // check that the file isn't too large
     if(selectedFile.size < 1000000) {
         let datasetReadCallback = function addProblemInstanceCallback(datasetPayload, formElement) {
             // gather data we'll need to send to in our request
             let algoHeader = document.getElementById("AlgoNameDisplay");
             let algoName = algoHeader.textContent;
+            let file = document.getElementById("datasetUpload").files[0];
+            let fileExtension = file.name.substr(file.name.lastIndexOf("."))
             let probInstanceName = formElement.parentElement.children[2].value;
             console.log("adding " + probInstanceName + " under " + algoName);
             // console.log("contents: "  + datasetPayload);
@@ -44,7 +45,7 @@ function handleProblemInstanceAddFormSubmit(ele) {
                     console.log("failed to add problem instance.");
                 }
 
-                problemInstanceRepo.addProblemInstance(probInstanceName, datasetPayload, algoName, onSuccessCallback, onFailCallback);
+                problemInstanceRepo.addProblemInstance(probInstanceName, datasetPayload, algoName, fileExtension, onSuccessCallback, onFailCallback);
                 document.getElementById(formElement.form.id).innerHTML = "";
             }
         }
