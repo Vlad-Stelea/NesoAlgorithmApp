@@ -7,11 +7,11 @@ public class MergeClassificationRequest {
     private String newName;
     private String parentName;
     public MergeClassificationRequest(){}
-    public MergeClassificationRequest(String class1, String class2,String newName, String parentName) {
+    public MergeClassificationRequest(String class1, String class2,String newName) {
         this.class1 = class1;
         this.class2 = class2;
         this.newName =newName;
-        this.parentName = parentName;
+
     }
 
     public String getClass1() {
@@ -38,13 +38,7 @@ public class MergeClassificationRequest {
         this.newName = newName;
     }
 
-    public String getParentName() {
-        return parentName;
-    }
 
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
 
     @Override
     public String toString() {
