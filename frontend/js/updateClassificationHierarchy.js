@@ -39,16 +39,21 @@ function createAlgorithmView(algoName, isUserRegistered) {
     return output;
 }
 
-function createClassificationView(classificationName, isUserRegistered) {
+function createClassificationView(classificationName, isUserRegistered, parentClassification) {
     let output ='<li class="listItem" style="background-color: tomato">'+
         '<h3 style="display:inline;">+</h3>'+
         '<h3 style="margin-left: 20px;" class="button">' + classificationName + '</h3>'
     if(isUserRegistered) {
         output +=
-            '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'+
             '<button style="background-color: green; margin-left: 10px;" class="button" onclick="handleAddSubClassificationPrep(this)">Add Classification</button>' +
             '<button style="background-color: limegreen; margin-left: 10px;" class="button" onclick="handleAddAlgorithm(this)">Add Algorithm</button>'+
             '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</button>'
+        if(parentClassification == null){
+            output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
+        } else {
+            output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
+        }
+
     }
     output += '</li>' +
         '<li style="list-style-type:none">'+
@@ -58,7 +63,7 @@ function createClassificationView(classificationName, isUserRegistered) {
 }
 
 function addClassificationListItem(item){
-    let output = createClassificationView(item.className, vm.user.token !== '')
+    let output = createClassificationView(item.className, vm.user.token !== '', item.parentClassification)
 
     for (let j = 0; j < item.algorithms.length; j++) {
         output = output + createAlgorithmView(item.algorithms[j].algoName,vm.user.token !== '');

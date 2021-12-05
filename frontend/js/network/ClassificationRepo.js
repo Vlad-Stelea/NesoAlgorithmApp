@@ -3,6 +3,7 @@ class ClassificationRepo {
         this.apiGatewayUrl = apiGatewayUrl;
         this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierarchy";
         this.createClassification_url = this.apiGatewayUrl + "/Classification";
+        this.mergeClassification_url = this.apiGatewayUrl +"/Classification/Merge"
     }
 
     getClassificationHierarchy(onSuccess, onFail) {
@@ -40,6 +41,34 @@ class ClassificationRepo {
             let xhr = new XMLHttpRequest();
             xhr.responseType = "json";
             xhr.open("POST", this.createClassification_url, true);
+            xhr.send(js);
+
+            xhr.onloadend = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let response = xhr.response;
+                        onSuccess(response);
+                    } else {
+                        onFail(xhr.response, xhr.status);
+                    }
+                }
+            }
+        }
+    }
+    mergeClassification(class1,class2,newName,onSuccess, onFail){
+        let iData = {};
+        iData["class1"] = class1;
+        iData["class2"] = class2;
+        iData["newName"] = newName;
+        if(class2 === "" || newName ==="") {
+            alert("Please enter the correct information")
+        }else {
+            let js = JSON.stringify(cData);
+            console.log("Create merge Classification JSON: " + js);
+
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = "json";
+            xhr.open("POST", this.mergeClassification_url, true);
             xhr.send(js);
 
             xhr.onloadend = function () {
@@ -130,6 +159,19 @@ class MockClassificationRepo {
 
     addClassification(className, parentClassName, onSuccess, onFail){
         console.log("Mock Class repo adding hierachy")
+        let response = {
+            "response":"worked",
+            "statusCode":200,
+            "error":""
+        };
+
+        onSuccess (
+            response,
+            200
+        );
+    }
+    mergeClassification(class1,class2,newName,onSuccess, onFail){
+        console.log("Mock Class repo mergingClassification")
         let response = {
             "response":"worked",
             "statusCode":200,
