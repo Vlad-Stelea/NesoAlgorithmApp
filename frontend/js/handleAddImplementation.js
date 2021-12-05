@@ -1,15 +1,44 @@
 function handleAddImpPrep(){
-    console.log("addImpPrep")
-    let addTopClassForm = document.getElementById('AddImpForm');
-   // Update Hierarchy result
-   addTopClassForm.innerHTML = ' <br><label for="ImplementationName">Implementation name:</label>' +
-                            '<input type="text" id="fname" name="fname">'+
-                            '<label for="Code">Code:</label>' +
-                                                        '<input type="text" id="Code" name="Code">'+
-                            '<label for="Language">Language:</label>' +
-                                    '<input type="text" id="lang" name="lang">'+
-                            '<input type="submit" value="Submit" onclick="handleAddTopLevelSubmit(this)"><br><br>'
+    let addTopClassForm = document.getElementById("addImplementationForm");
+    addTopClassForm.style.visibility = "visible"
+}
 
+function createImplementation() {
+    let implName = document.getElementById("implNameInput").value;
+    let language = document.getElementById("languageInput").value;
+    let selectedFile = document.getElementById("uploadCodeButton").files[0];
+    let algoName = vm.selectedAlgo;
+
+    if(implName && language && selectedFile){
+        console.log("submitting implementation");
+        // Get the base 64 encoding
+        getFileBase64EncodingPromise(selectedFile)
+            .then((base64String) => {
+                let onSuccessCallback = function (response) {
+                    processCreateImplementationResponse(response);
+                    // Hide the add Implementation dialog
+                    document.getElementById("addImplementationForm").style.visibility = "hidden";
+                }
+
+                let onFailCallback = function(response, code) {
+                    if(code === 400) alert("Unknown Error uploading file. Please try again later.");
+                    if(code === 409) alert("Error: implementation already exists. Please create a new implementation.");
+                    else alert("Super unkown error: " + code);
+                }
+
+                implementationRepo.createImplementation(implName, algoName, base64String, language, onSuccessCallback, onFailCallback)
+
+            })
+            .catch(() => alert("Error loading file please try again"))
+
+
+    } else if(!implName) {
+        alert("Please include an implementation name");
+    } else if(!language) {
+        alert("Please include the language this implementation uses");
+    } else if(!selectedFile) {
+        alert("Please upload a file");
+    }
 }
 
 function processCreateImplementationResponse(result) {

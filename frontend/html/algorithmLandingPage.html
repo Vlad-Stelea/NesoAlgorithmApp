@@ -81,6 +81,16 @@
             <div class="rightSide section">
                 <h2 style="display:inline;">Implementations/Benchmarks</h2>
                 <button class="registeredUserOnly button" onclick="handleAddImpPrep()" style="background-color: green">Add Implementation</button>
+                <div id="addImplementationForm"
+                     style="visibility:hidden;">
+                    <label>Implementation Name</label>
+                    <input type="text" placeholder="Implementation Name" id="implNameInput">
+                    <label>Language</label>
+                    <input type="text" placeholder="Language" id="languageInput">
+                    <label for="uploadCodeButton">Upload Code</label>
+                    <input type="file" id="uploadCodeButton"/>
+                    <button onclick="createImplementation()">Submit Implementation</button>
+                </div>
                 <div id='Implementation'></div>
             </div>
 
