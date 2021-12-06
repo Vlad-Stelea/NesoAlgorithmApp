@@ -21,10 +21,20 @@
     function renderBanner(user) {
         // Render the login/ logout button
         $("#loginButton").text(
-            user.token ? "Logout" : "Login"
+            user.token ? "Logout" : "Registered User Login"
         );
         if(!user.token){
             var btns = document.getElementsByClassName('registeredUserOnly');
+            for(i = 0; i < btns.length; i++) {
+                btns[i].style.display = 'none';
+            }
+            document.getElementById("adminLoginButton").style.display = "inline";
+        }else{
+            document.getElementById("adminLoginButton").style.display = "none";
+        }
+        //remove the stuff admins aren't supposed to see
+        if(vm.admin){
+            var btns = document.getElementsByClassName('notAdmin');
             for(i = 0; i < btns.length; i++) {
                 btns[i].style.display = 'none';
             }
@@ -33,7 +43,7 @@
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-        updateAlgorithmPageHierarchy()
+        updateAlgorithmPageHierarchy(vm.admin)
         renderBanner(vm.user);
 
     }
@@ -57,15 +67,26 @@
                  background-color: aqua;
                  padding: 30px 60px;"
         onclick="vm.user.token ? handleLogOut() : handleLogin()">
-    Login
-</button>
+        Login
+    </button>
+    <button
+            id="adminLoginButton";
+            style="display:none;
+                 margin-left: auto;
+                 margin-right: 20px;
+                 float:right;
+                 background-color: aqua;
+                 padding: 30px 60px;"
+            onclick="handleAdminLogin()">
+        Admin Login
+    </button>
 </div>
 
         <div >
             <div class="leftSide">
                 <div class="section">
                     <h2 style="display:inline;" >Problem Instances</h2>
-                    <button class="registeredUserOnly button" style="background-color: green" onclick="handleAddProblemInstancePrep()">Add Problem Instance</button>
+                    <button class="notAdmin registeredUserOnly button" style="background-color: green" onclick="handleAddProblemInstancePrep()">Add Problem Instance</button>
                     <!-- when the user clicks the Add Problem Instance button, the following will allow them to enter their input -->
                     <div id='AddProblemInstanceForm'></div>
                     <div id='ProblemInstances'></div>
@@ -73,14 +94,14 @@
                 <hr>
                 <div class="section">
                     <h2 style="display:inline;" >Machine Configurations</h2>
-                    <button class="button" style="background-color: green" onclick="handleAddMachineConfigurationPrep()">Add Machine Configuration</button>
+                    <button class="notAdmin button" style="background-color: green" onclick="handleAddMachineConfigurationPrep()">Add Machine Configuration</button>
                     <div id='addMachineConfigForm'></div>
                     <div id='MachineConfigs'></div>
                 </div>
             </div>
             <div class="rightSide section">
                 <h2 style="display:inline;">Implementations/Benchmarks</h2>
-                <button class="registeredUserOnly button" onclick="handleAddImpPrep()" style="background-color: green">Add Implementation</button>
+                <button class="notAdmin registeredUserOnly button" onclick="handleAddImpPrep()" style="background-color: green">Add Implementation</button>
                 <div id="addImplementationForm"
                      style="visibility:hidden;">
                     <label>Implementation Name</label>
