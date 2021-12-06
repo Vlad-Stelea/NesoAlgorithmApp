@@ -16,7 +16,6 @@ public class CreateProblemInstanceHandler {
 
     public CreateProblemInstanceResponse handle(CreateProblemInstanceRequest request) {
         try {
-            System.out.println(request.fileExtension);
             String uuid = UUID.randomUUID().toString();
             String url = this.storage.storeProblemInstance(request.datasetPayload, request.fileExtension);
             if(dao.createProblemInstance(uuid, request.getProbInstanceName(), url ,request.getAlgoName())) {
