@@ -33,7 +33,7 @@
             document.getElementById("adminLoginButton").style.display = "none";
         }
         //remove the stuff admins aren't supposed to see
-        if(navigation.admin){
+        if(vm.admin){
             var btns = document.getElementsByClassName('notAdmin');
             for(i = 0; i < btns.length; i++) {
                 btns[i].style.display = 'none';
@@ -43,7 +43,7 @@
     function initialize() {
         $("#AlgoNameDisplay").text(vm.selectedAlgo)
        console.log("working")
-        updateAlgorithmPageHierarchy(navigation.admin)
+        updateAlgorithmPageHierarchy(vm.admin)
         renderBanner(vm.user);
 
     }

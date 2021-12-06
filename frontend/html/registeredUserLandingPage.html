@@ -29,7 +29,7 @@
                 document.getElementById("adminLoginButton").style.display = "inline";
             }
 
-            if(navigation.admin){
+            if(vm.admin){
                 document.getElementById("adminPageButton").style.display = "inline";
                 document.getElementById("loggedIn").style.display = "none";
             } else{
@@ -39,7 +39,7 @@
         }
 
         function initialize() {
-           updateHierarchy(navigation.admin);
+           updateHierarchy(vm.admin);
            renderBanner(vm.user);
         }
 

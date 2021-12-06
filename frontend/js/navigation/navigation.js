@@ -1,6 +1,6 @@
 class Navigation {
 
-    constructor(containerId, cognitoRedirectUri, admin) {
+    constructor(containerId, cognitoRedirectUri) {
         this.containerId = containerId;
         this.cognitoRedirectUri = cognitoRedirectUri;
         this.pageMapping = {
@@ -11,7 +11,6 @@ class Navigation {
             adminLandingPage : "AdminLandingPage.html",
             adminUserActivityPage : "AdminUserActivityPage.html"
         }
-        this.admin = admin
     }
 
     goToRegisteredUsersPage() {

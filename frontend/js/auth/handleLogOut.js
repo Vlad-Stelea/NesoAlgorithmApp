@@ -1,5 +1,5 @@
 function handleLogOut(){
-    if(navigation.admin){
+    if(vm.admin){
         handleAdminLogOut();
     }
     console.log("logout")
