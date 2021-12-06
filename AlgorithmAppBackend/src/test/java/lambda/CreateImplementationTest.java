@@ -29,7 +29,7 @@ public class CreateImplementationTest extends LambdaTest {
         dao = mock(ImplementationDAO.class);
         storage = mock(IImplementationStorage.class);
         caHandler = new CreateImplementationHandler(dao, storage);
-        reqWithParent = new CreateImplementationRequest("childTest","TestCode", "TestLang", "TestClass");
+        reqWithParent = new CreateImplementationRequest("childTest","TestCode", ".test", "TestLang", "TestClass");
 
     }
 
