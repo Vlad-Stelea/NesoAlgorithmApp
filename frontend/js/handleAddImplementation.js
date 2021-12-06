@@ -26,10 +26,9 @@ function createImplementation() {
                     else alert("Super unkown error: " + code);
                 }
 
-
-                let file = document.getElementById("datasetUpload").files[0];
+                let file = document.getElementById("uploadCodeButton").files[0];
                 let fileExtension = file.name.substr(file.name.lastIndexOf("."))
-
+                
                 implementationRepo.createImplementation(implName, algoName, base64String, fileExtension, language, onSuccessCallback, onFailCallback)
 
             })
