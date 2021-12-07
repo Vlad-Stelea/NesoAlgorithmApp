@@ -8,16 +8,18 @@ public class CreateImplementationRequest {
     public String implName;
     public String algoName;
     public String code;
+    public String fileExtension;
     public String language;
 
     public CreateImplementationRequest(){
         // DO NOTHING
     }
 
-    public CreateImplementationRequest(String implName, String codeUrl, String language, String algoName){
+    public CreateImplementationRequest(String implName, String code, String fileExtension, String language, String algoName){
         this.implName = implName;
         this.algoName = algoName;
-        this.code = codeUrl;
+        this.code = code;
+        this.fileExtension = fileExtension;
         this.language = language;
     }
 
@@ -38,8 +40,17 @@ public class CreateImplementationRequest {
     public void setImplName(String implName) {
         this.implName = implName;
     }
+
     public String getCode() {
         return code;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
     }
 
     public void setCode(String code) {

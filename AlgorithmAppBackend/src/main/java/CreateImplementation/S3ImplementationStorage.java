@@ -14,12 +14,12 @@ public class S3ImplementationStorage implements IImplementationStorage{
     }
 
     @Override
-    public String storeImplementation(String name, String payload) {
-        return s3Util.storeFile(bucketLocation, generateImplementationStorageLocation(), payload);
+    public String storeImplementation(String payload, String fileExtension) {
+        return s3Util.storeFile(bucketLocation, generateImplementationStorageLocation(fileExtension), payload);
     }
 
-    private static String generateImplementationStorageLocation() {
+    private static String generateImplementationStorageLocation(String fileExtension) {
         String fileName = UUID.randomUUID().toString();
-        return "Implementations/" + fileName;
+        return "Implementations/" + fileName + fileExtension;
     }
 }

@@ -24,11 +24,12 @@ class ImplementationRepo {
         }
     }
 
-    createImplementation(implName, algoName, encodedCode, language, onSuccess, onFail) {
+    createImplementation(implName, algoName, encodedCode, fileExtension, language, onSuccess, onFail) {
         let body = {
             implName: implName,
             algoName: algoName,
             code: encodedCode,
+            fileExtension: fileExtension,
             language: language
         }
 
@@ -75,7 +76,7 @@ class MockImplementationRepo {
         );
     }
 
-    createImplementation(implName, algoName, encodedCode, language, onSuccess, onFail) {
+    createImplementation(implName, algoName, encodedCode, fileExtension, language, onSuccess, onFail) {
         let response = {
             statusCode: 200,
             implName: implName,
