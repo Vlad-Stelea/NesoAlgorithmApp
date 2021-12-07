@@ -25,6 +25,22 @@ public class GetHierarchyResponse {
         this.error = errorMessage;
     }
 
+    public List<Classification> getTopClassifications() {
+        return topClassifications;
+    }
+
+    public void setTopClassifications(List<Classification> topClassifications) {
+        this.topClassifications = topClassifications;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public String getError() {
+        return error;
+    }
+
     @Override
     public String toString() {
         Gson gson = new Gson();
