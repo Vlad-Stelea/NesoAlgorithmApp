@@ -83,6 +83,22 @@ public class ProblemInstanceDAO {
         return false;
     }
 
+    public boolean removeProblemInstancesByAlgorithm(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM problemInstance WHERE algoName = ?;");
+            psDelete.setString(1, algoName);
+            psDelete.execute();
+
+            return true;
+        }
+
+        return false;
+    }
+
     private Optional<ProblemInstance> generateProblemInstance(ResultSet rs) throws SQLException {
         if (!rs.isBeforeFirst()) { return Optional.empty(); }
         if(!rs.next()) { return Optional.empty(); }
