@@ -1,6 +1,6 @@
 package LogUserAction;
 
-import java.util.Date;
+import entities.PrettyDate;
 
 public class LogUserActionResponse {
     int statusCode;
@@ -8,7 +8,7 @@ public class LogUserActionResponse {
     String activityLogUUID;
     String username;
     String action;
-    Date date;
+    PrettyDate date;
 
     String error;
 
@@ -16,7 +16,7 @@ public class LogUserActionResponse {
         // Do Nothing
     }
 
-    public LogUserActionResponse(int statusCode, String activityLogUUID, String username, String action, Date date) {
+    public LogUserActionResponse(int statusCode, String activityLogUUID, String username, String action, PrettyDate date) {
         this.statusCode = statusCode;
         this.activityLogUUID = activityLogUUID;
         this.username = username;
@@ -61,11 +61,11 @@ public class LogUserActionResponse {
         this.action = action;
     }
 
-    public Date getDate() {
+    public PrettyDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(PrettyDate date) {
         this.date = date;
     }
 
