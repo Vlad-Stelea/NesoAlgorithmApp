@@ -4,6 +4,7 @@ class AlgorithmsRepo {
         this.createAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm";
         this.reclassifyAlgorithmUrl = this.apiGatewayUrl + '/' + "Algorithm/Reclassify";
         this.getAlgorithmHierarchyUrlBegin = this.apiGatewayUrl + '/' + "Algorithm/"
+        this.deleteAlgorithmBegin = this.apiGatewayUrl + '/Algorithm/Remove/'
     }
 
     addAlgorithm(algorithmName, className, onSuccess, onFail) {
@@ -55,12 +56,36 @@ class AlgorithmsRepo {
     }
 
     getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
-        console.log("getting algo hierarchy")
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json"
         xhr.open("GET", this.getAlgorithmHierarchyUrlBegin + algorithmName, true);
 
         xhr.send();
+
+        xhr.onloadend = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if(xhr.status === 200) {
+                    let response = xhr.response;
+                    onSuccess(response);
+                } else {
+                    onFail(xhr.response, xhr.status);
+                }
+            }
+        }
+    }
+
+    deleteAlgorithm(algorithmName, onSuccess, onFail){
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+
+        let body = {
+            "algoName" : algorithmName
+        }
+
+        let stringedBody = JSON.stringify(body);
+        xhr.open("POST", this.deleteAlgorithmBegin + algorithmName, true);
+
+        xhr.send(stringedBody);
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -223,5 +248,15 @@ class MockAlgorithmRepo {
             200,
             new MockXHR()
         );
+    }
+
+    deleteAlgorithm(algorithmName, onSuccess, onFail){
+        let response = {
+            "algoName" : algorithmName,
+            "httpCode" : 200
+        };
+
+        onSuccess(response);
+
     }
 }
