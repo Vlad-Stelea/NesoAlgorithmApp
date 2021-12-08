@@ -3,6 +3,7 @@ class ClassificationRepo {
         this.apiGatewayUrl = apiGatewayUrl;
         this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierarchy";
         this.createClassification_url = this.apiGatewayUrl + "/Classification";
+        this.removeClassificationUrl_initial = this.apiGatewayUrl + "/Classification/Remove/";
     }
 
     getClassificationHierarchy(onSuccess, onFail) {
@@ -50,6 +51,29 @@ class ClassificationRepo {
                     } else {
                         onFail(xhr.response, xhr.status);
                     }
+                }
+            }
+        }
+    }
+
+    removeClassification(classificationName, onSuccess, onFail) {
+        console.log("attempting to remove classification " + classificationName);
+
+        let removeRequest = {};
+        removeRequest["classificationName"] = classificationName;
+
+        let jsonRequest = JSON.stringify(removeRequest);
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", this.removeClassificationUrl_initial + classificationName, true);
+        xhr.send(jsonRequest);
+
+        xhr.onloadend = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
+                } else {
+                    onFail(xhrJSON);
                 }
             }
         }
@@ -140,5 +164,16 @@ class MockClassificationRepo {
             response,
             200
         );
+    }
+
+    removeClassification(classificationName, onSuccess, onFail) {
+        console.log("mocking remove classification");
+        let response = {
+            "classificationName" : classificationName,
+            "httpCode" : 200,
+            "error" : ""
+        };
+
+        onSuccess(response);
     }
 }
