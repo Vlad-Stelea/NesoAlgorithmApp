@@ -21,7 +21,6 @@ public class RemoveAlgorithmHandler {
 
     public RemoveAlgorithmResponse handle(RemoveAlgorithmRequest request) {
         RemoveAlgorithmResponse response;
-        // TODO this is a hack because we have the remove Implementation set to take a path ID in our YAML, but our db key is impl/algo name
         String algoName = request.getAlgoName();
 
         try {
