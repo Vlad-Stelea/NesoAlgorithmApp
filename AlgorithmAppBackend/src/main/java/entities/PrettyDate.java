@@ -19,6 +19,15 @@ public class PrettyDate {
         this.seconds = date.getSeconds();
     }
 
+    public PrettyDate(int month, int day, int year, int hours, int minutes, int seconds) {
+        this.month = month;
+        this.day = day;
+        this.year = year;
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
+    }
+
     public int getMonth() {
         return month;
     }
