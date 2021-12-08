@@ -20,7 +20,7 @@ public class RemoveAlgorithm implements RequestHandler<RemoveAlgorithmRequest, R
     @Override
     public RemoveAlgorithmResponse handleRequest(RemoveAlgorithmRequest req, Context context) {
         logger = context.getLogger();
-        logger.log("Loading Java Lambda handler to remove Implementation...");
+        logger.log("Loading Java Lambda handler to remove Algorithm...");
         logger.log("Remove Implementation request: " + req.toString());
 
         return handler.handle(req);
