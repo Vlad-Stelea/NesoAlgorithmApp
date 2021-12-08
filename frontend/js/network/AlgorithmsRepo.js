@@ -75,7 +75,6 @@ class AlgorithmsRepo {
     }
 
     deleteAlgorithm(algorithmName, onSuccess, onFail){
-        console.log("removing algo")
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json"
 
