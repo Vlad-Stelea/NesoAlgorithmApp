@@ -1,5 +1,6 @@
 package LogUserAction;
 
+import com.google.gson.Gson;
 import entities.PrettyDate;
 
 public class LogUserActionResponse {
@@ -75,5 +76,11 @@ public class LogUserActionResponse {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

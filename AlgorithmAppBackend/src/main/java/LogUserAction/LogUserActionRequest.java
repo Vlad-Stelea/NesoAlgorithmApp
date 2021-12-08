@@ -1,5 +1,7 @@
 package LogUserAction;
 
+import com.google.gson.Gson;
+
 public class LogUserActionRequest {
     String username;
     String action;
@@ -27,5 +29,11 @@ public class LogUserActionRequest {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
