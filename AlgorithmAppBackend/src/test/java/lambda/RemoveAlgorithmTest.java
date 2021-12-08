@@ -3,9 +3,6 @@ package lambda;
 import RemoveAlgorithm.RemoveAlgorithmHandler;
 import RemoveAlgorithm.RemoveAlgorithmRequest;
 import RemoveAlgorithm.RemoveAlgorithmResponse;
-import RemoveImplementation.RemoveImplementationHandler;
-import RemoveImplementation.RemoveImplementationRequest;
-import RemoveImplementation.RemoveImplementationResponse;
 import db.AlgorithmDAO;
 import db.BenchmarkDAO;
 import db.ImplementationDAO;
@@ -47,7 +44,7 @@ public class RemoveAlgorithmTest {
         when(probDAO.removeProblemInstancesByAlgorithm("testAlgoName")).thenReturn(true);
         when(algoDAO.removeAlgorithm("testAlgoName")).thenReturn(true);
         RemoveAlgorithmResponse handleResult = raHandler.handle(req);
-        assertEquals(handleResult.getAlgorithmName(), "testAlgoName");
+        assertEquals(handleResult.getAlgoName(), "testAlgoName");
         assertEquals(handleResult.getHttpCode(), 200);
     }
 
@@ -59,7 +56,7 @@ public class RemoveAlgorithmTest {
         when(probDAO.removeProblemInstancesByAlgorithm("testAlgoName")).thenReturn(true);
         when(algoDAO.removeAlgorithm("testAlgoName")).thenReturn(false);
         RemoveAlgorithmResponse handleResult = raHandler.handle(req);
-        assertEquals(handleResult.getAlgorithmName(), "testAlgoName");
+        assertEquals(handleResult.getAlgoName(), "testAlgoName");
         assertEquals(handleResult.getHttpCode(), 404);
         assertEquals(handleResult.getError(), "Algorithm not found.");
     }
