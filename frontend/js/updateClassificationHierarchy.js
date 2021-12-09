@@ -54,7 +54,7 @@ function createClassificationView(classificationName, isUserRegistered, admin) {
     }
     //add delete button
     if(isUserRegistered){
-        output += '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this, \'' + classificationName + '\')">Del</button>'
+        output += '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(\'' + classificationName + '\')">Del</button>'
     }
     output += '</li>' +
         '<li style="list-style-type:none">'+

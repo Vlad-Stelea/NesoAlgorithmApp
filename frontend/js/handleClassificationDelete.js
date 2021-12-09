@@ -1,4 +1,4 @@
-function handleClassificationDelete(ele, classificationName){
+function handleClassificationDelete(classificationName){
     console.log("handling classification delete for classification " + classificationName);
 
     let onSuccessCallback = function(xhr) {
