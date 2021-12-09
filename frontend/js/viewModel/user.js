@@ -5,7 +5,7 @@ class User {
 
     get username() {
         // Make sure token is set already
-        if(this.token === null) return null;
+        if(this.token === "") return null;
         // parse the token out
         return this.parseUsername(this.token);
     }
