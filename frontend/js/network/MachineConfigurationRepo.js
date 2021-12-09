@@ -26,6 +26,16 @@ class MachineConfigurationRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    let username = vm.user.username;
+                    let action = ""
+                    if(username == null){
+                        action = "Unregistered user added MachineConfig " + machineConfigName;
+                    }else {
+                        action = username + " added MachineConfig " + machineConfigName;
+                    }
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -45,6 +55,11 @@ class MachineConfigurationRepo {
                 console.log(xhr.response);
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " removed MachineConfig " + machineConfigurationID;
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -73,6 +88,15 @@ class MockMachineConfigurationRepo {
             "httpCode": 200
         };
 
+        let username = vm.user.username;
+        let action = ""
+        if(username == null){
+            action = "Unregistered user added MachineConfig " + machineConfigName;
+        }else {
+            action = username + " added MachineConfig " + machineConfigName;
+        }
+        addActivity(username, action);
+
         onSuccess(response);
     }
 
@@ -83,6 +107,10 @@ class MockMachineConfigurationRepo {
             "machineConfigurationID" : "fake-news-ID",
             "httpCode": 200
         };
+
+        let username = vm.user.username;
+        let action = username + " removed MachineConfig " + machineConfigurationID;
+        addActivity(username, action);
 
         onSuccess(response);
     }

@@ -26,6 +26,11 @@ class ProblemInstanceRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " added Problem Instance " + probInstanceName;
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -45,6 +50,10 @@ class ProblemInstanceRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if (xhrJSON["httpCode"] === 200) {
+                    let username = vm.user.username;
+                    let action = username + " removed Problem Instance " + probInstanceUUID;
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -70,6 +79,10 @@ class MockProblemInstanceRepo {
             "algoName" : algoName
         };
 
+        let username = vm.user.username;
+        let action = username + " added Problem Instance " + probInstanceName;
+        addActivity(username, action);
+
         onSuccess(response);
     }
 
@@ -79,6 +92,10 @@ class MockProblemInstanceRepo {
         let response = {
             "probInstanceUUID" : probInstanceUUID
         };
+
+        let username = vm.user.username;
+        let action = username + " removed Problem Instance " + probInstanceUUID;
+        addActivity(username, action);
 
         onSuccess(response);
     }
