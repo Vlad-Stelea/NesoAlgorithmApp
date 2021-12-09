@@ -79,6 +79,21 @@ public class ImplementationDAO {
         return false;
     }
 
+    public boolean removeImplementationsByAlgorithm(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM implementation WHERE algoName = ?;");
+            psDelete.setString(1, algoName);
+            psDelete.execute();
+
+            return true;
+        }
+
+        return false;
+    }
+
     public ArrayList<Implementation> getImplementationForAlgo(String algoName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM implementation WHERE algoName = ?;");
         ps.setString(1, algoName);
