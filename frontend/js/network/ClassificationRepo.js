@@ -59,16 +59,13 @@ class ClassificationRepo {
     removeClassification(classificationName, onSuccess, onFail) {
         console.log("attempting to remove classification " + classificationName);
 
-        let removeRequest = {};
-        removeRequest["classificationName"] = classificationName;
-
-        let jsonRequest = JSON.stringify(removeRequest);
         let xhr = new XMLHttpRequest();
         xhr.open("POST", this.removeClassificationUrl_initial + classificationName, true);
-        xhr.send(jsonRequest);
+        xhr.send();
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                console.log(xhr);
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
                     onSuccess(xhrJSON);

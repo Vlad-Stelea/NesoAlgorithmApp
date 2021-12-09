@@ -1,5 +1,7 @@
 package entities;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,5 +186,11 @@ public class Classification {
         }else{
             return c.className == null;
         }
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

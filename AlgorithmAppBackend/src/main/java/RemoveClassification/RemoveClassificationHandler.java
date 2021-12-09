@@ -2,8 +2,10 @@ package RemoveClassification;
 
 import GetHierarchy.GetHierarchyHandler;
 import GetHierarchy.GetHierarchyResponse;
-import db.AlgorithmDAO;
-import db.ClassificationDAO;
+import RemoveAlgorithm.RemoveAlgorithmHandler;
+import RemoveAlgorithm.RemoveAlgorithmRequest;
+import RemoveAlgorithm.RemoveAlgorithmResponse;
+import db.*;
 import entities.Algorithm;
 import entities.Classification;
 
@@ -24,7 +26,7 @@ public class RemoveClassificationHandler {
     public RemoveClassificationResponse handle(RemoveClassificationRequest req) {
         GetHierarchyHandler hierarchyHandler = new GetHierarchyHandler(this.classDAO, this.algoDAO);
         GetHierarchyResponse hierarchyResponse = hierarchyHandler.handle();
-        String classNameToRemove = req.getClassificationName();
+        String classNameToRemove = req.getClassificationName().replaceAll("%20", " ");
 
         // make sure we can get the hierarchy, as otherwise we can't delete things
         if(hierarchyResponse.getStatusCode() == 200) {
@@ -32,9 +34,11 @@ public class RemoveClassificationHandler {
 
             // find the classification we want to remove
             Classification classToRemove = null;
-            for(Classification classification : topClasses) {
-                if(classification.getClassName().equals(classNameToRemove)) {
-                    classToRemove = classification;
+            List<Classification> allClasses = getAllClasses(topClasses); // get a "flat" list of classes
+            for(Classification c : allClasses) {
+                if(c.getClassName().equals(classNameToRemove)) {
+                    classToRemove = c;
+                    break;
                 }
             }
 
@@ -42,12 +46,12 @@ public class RemoveClassificationHandler {
             if(classToRemove != null) {
                 List<String> allSubclassNames = findAllSubclassNames(classToRemove);
                 List<String> allAlgoNames = findAllAlgoNames(classToRemove);
+                RemoveAlgorithmHandler removeAlgorithmHandler = new RemoveAlgorithmHandler(algoDAO, new ImplementationDAO(), new BenchmarkDAO(), new ProblemInstanceDAO());
 
-                // TODO integrate RemoveAlgorithmHandler to get rid of Algorithms!!!
                 for(String algoName : allAlgoNames) {
                     RemoveAlgorithmResponse removeAlgoResponse = removeAlgorithmHandler.handle(new RemoveAlgorithmRequest(algoName));
                     if(removeAlgoResponse.getHttpCode() != 200) {
-                        return new RemoveClassificationResponse(removealgoResponse.getHttpCode(), "Error occurred while removing algorithm: " + algoName);
+                        return new RemoveClassificationResponse(removeAlgoResponse.getHttpCode(), "Error occurred while removing algorithm: " + algoName + "\n" + removeAlgoResponse.getError());
                     }
                 }
 
@@ -55,7 +59,7 @@ public class RemoveClassificationHandler {
                 for(String subclassName : allSubclassNames) {
                     try {
                         if(!classDAO.removeClassification(subclassName)) {
-                            return new RemoveClassificationResponse(404, "Could not find subclassification \"" + subclassName + "\" to remove.")
+                            return new RemoveClassificationResponse(404, "Could not find subclassification \"" + subclassName + "\" to remove.");
                         }
                     }
                     catch(Exception e) {
@@ -67,7 +71,7 @@ public class RemoveClassificationHandler {
                 String parentName = classToRemove.getClassName();
                 try {
                     if(classDAO.removeClassification(parentName)) {
-                        return new RemoveClassificationResponse(200, "Successfully removed Classification: " + parentName);
+                        return new RemoveClassificationResponse(parentName, 200);
                     }
                     else {
                         return new RemoveClassificationResponse(404, "Could not find parent class \"" + parentName + "\" to remove.");
@@ -84,6 +88,30 @@ public class RemoveClassificationHandler {
         else {
             return new RemoveClassificationResponse(hierarchyResponse.getStatusCode(), "error when getting hierarchy for removal");
         }
+    }
+
+    private List<Classification> getAllClasses(List<Classification> topClasses) {
+        List<Classification> allClasses = new ArrayList<>();
+        Stack<Classification> classStack = new Stack<>();
+
+        // add our top classes to the result list and the stack
+        for(Classification c : topClasses) {
+            allClasses.add(c);
+            classStack.push(c);
+        }
+
+        // go through the parent class, its subclasses, and all of their subclasses to add all subclasses onto our list
+        while(!classStack.isEmpty()) {
+            Classification currClass = classStack.pop();
+
+            // add each subclass to the stack and also grab their names
+            for(Classification c : currClass.getSubclassifications()) {
+                allClasses.add(c);
+                classStack.push(c);
+            }
+        }
+
+        return allClasses;
     }
 
     private List<String> findAllSubclassNames(Classification parentClass) {
@@ -115,7 +143,7 @@ public class RemoveClassificationHandler {
             Classification currClass = classStack.pop();
 
             // add all algos to the return list
-            for(Algorithm a : parentClass.getAlgorithms()) {
+            for(Algorithm a : currClass.getAlgorithms()) {
                 algoNames.add(a.getAlgoName());
             }
 

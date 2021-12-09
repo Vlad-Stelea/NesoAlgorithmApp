@@ -4,7 +4,7 @@ function handleClassificationDelete(ele, classificationName){
     let onSuccessCallback = function(xhr) {
         console.log("XHR: " + JSON.stringify(xhr, null, 4));
         console.log("removed classification with name: " + xhr["classificationName"]);
-        updateAlgorithmPageHierarchy();
+        updateHierarchy();
     }
 
     let onFailCallback = function(xhr) {

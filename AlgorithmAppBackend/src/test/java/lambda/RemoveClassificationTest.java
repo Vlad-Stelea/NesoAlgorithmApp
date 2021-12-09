@@ -35,6 +35,7 @@ public class RemoveClassificationTest {
         classDAO = mock(ClassificationDAO.class);
         handler = new RemoveClassificationHandler(algoDAO, classDAO);
         rootClass = createRootClass();
+        classes = new ArrayList<>();
         classes.add(rootClass);
         classes.add(new Classification("someOtherClass"));  // throw another arbitrary class to make sure it doesn't get deleted as well
         classes.add(new Classification("someOtherSubclass", "someOtherClass"));
@@ -93,10 +94,9 @@ public class RemoveClassificationTest {
         when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
         when(classDAO.getAllClassifications()).thenReturn(classes);
         when(classDAO.removeClassification("rootClass")).thenReturn(false);
-        when(classDAO.removeClassification(any(String.class))).thenReturn(true);
 
         RemoveClassificationResponse actualResponse = handler.handle(request);
-        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse("Could not find parent class rootClass to remove.", 404);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find parent class rootClass to remove.");
         assertEquals(expectedResponse, actualResponse);
         assertEquals(actualResponse.getHttpCode(), 404);
     }
