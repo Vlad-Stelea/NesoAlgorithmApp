@@ -18,11 +18,13 @@ class ActivityRepo {
 
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+
                     let response = xhr.response;
-                    onSuccess(response);
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr.response, xhr.status);
+                    onFail(xhrJSON);
                 }
             }
         }
