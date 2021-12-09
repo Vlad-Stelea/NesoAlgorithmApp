@@ -21,7 +21,7 @@ class ImplementationRepo {
                     let action = username + " removed Implementation " + implName + " from " + algoName;
                     addActivity(username, action);
 
-                    onSuccess(JSON.parse(xhr.response));
+                    onSuccess(xhr);
                 } else {
                     onFail(xhr);
                 }
@@ -84,7 +84,11 @@ class MockImplementationRepo {
         let action = username + " removed Implementation " + implName + " from " + algoName;
         addActivity(username, action);
 
-        onSuccess(response);
+        onSuccess(
+            response,
+            200,
+            new MockXHR()
+        );
     }
 
     createImplementation(implName, algoName, encodedCode, fileExtension, language, onSuccess, onFail) {
