@@ -62,6 +62,6 @@ CREATE TABLE `algoApp`.`activityLog` (
 	`activityLogUUID` CHAR(36),
     `username` VARCHAR(20),
     `action` VARCHAR(200),
-    `date` DATE,
+    `date` TIMESTAMP,
     PRIMARY KEY (`activityLogUUID`)
 );
