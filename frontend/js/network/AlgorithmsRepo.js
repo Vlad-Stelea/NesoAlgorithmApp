@@ -13,8 +13,6 @@ class AlgorithmsRepo {
             "className" : className
         }
 
-        let username = vm.user.username;
-
         let stringedBody = JSON.stringify(body);
         let xhr = new XMLHttpRequest();
         xhr.open("POST", this.createAlgorithmUrl, true);
