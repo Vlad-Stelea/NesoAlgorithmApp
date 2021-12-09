@@ -27,7 +27,7 @@ class AlgorithmsRepo {
                     let response = xhr.response
 
                     let username = vm.user.username;
-                    let action = username + " added Algorithm " + algorithmName;
+                    let action = username + " added Algorithm " + algorithmName + " to " + className;
                     addActivity(username, action);
 
                     onSuccess(response);
@@ -130,7 +130,7 @@ class MockAlgorithmRepo {
         }
 
         let username = vm.user.username;
-        let action = username + " added Algorithm " + algorithmName;
+        let action = username + " added Algorithm " + algorithmName + " to " + className;
         addActivity(username, action);
 
         onSuccess(response);
@@ -147,7 +147,7 @@ class MockAlgorithmRepo {
         }
 
         let username = vm.user.username;
-        let action = username + " reclassified Algorithm " + algorithmName + " to " + newClassName;
+        let action = username + " reclassified Algorithm " + algoName + " to " + newClassName;
         addActivity(username, action);
         
         onSuccess(response);

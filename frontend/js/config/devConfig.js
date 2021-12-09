@@ -8,5 +8,5 @@ const DevConfig = {
     USERS_REPO : new MockUserRepo(),
     BENCHMARKS_REPO : new MockBenchmarkRepo(),
     MACHINECONFIGS_REPO : new MockMachineConfigurationRepo(),
-    ACTIVITY_REPO : new ActivityRepo()
+    ACTIVITY_REPO : new MockActivityRepo()
 };

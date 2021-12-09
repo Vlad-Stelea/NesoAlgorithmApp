@@ -28,7 +28,7 @@ class ProblemInstanceRepo {
                 if(xhrJSON["httpCode"] === 200) {
 
                     let username = vm.user.username;
-                    let action = username + " added Problem Instance " + probInstanceName;
+                    let action = username + " added Problem Instance " + probInstanceName + " to " + algoName;
                     addActivity(username, action);
 
                     onSuccess(xhrJSON);
@@ -80,7 +80,7 @@ class MockProblemInstanceRepo {
         };
 
         let username = vm.user.username;
-        let action = username + " added Problem Instance " + probInstanceName;
+        let action = username + " added Problem Instance " + probInstanceName + " to " + algoName;
         addActivity(username, action);
 
         onSuccess(response);

@@ -49,6 +49,10 @@ class MockActivityRepo {
             "error": ""
         }
 
+        console.log("here###############\n##########")
+        console.log(action)
+        console.log(username)
+
         onSuccess(response);
 
     }
