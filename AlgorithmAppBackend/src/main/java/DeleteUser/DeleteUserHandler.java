@@ -21,7 +21,9 @@ public class DeleteUserHandler {
             this.identityProvider.adminDeleteUser(deleteUserRequest);
             return new DeleteUserResponse(200, username);
         } catch (Exception e) {
-            return new DeleteUserResponse(400, "Error deleting the user");
+            DeleteUserResponse response = new DeleteUserResponse(400);
+            response.setError("Error deleting the user");
+            return response;
         }
     }
 }

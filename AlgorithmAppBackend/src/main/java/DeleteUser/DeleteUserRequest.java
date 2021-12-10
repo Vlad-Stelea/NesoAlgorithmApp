@@ -8,6 +8,10 @@ public class DeleteUserRequest {
     public DeleteUserRequest() {
     }
 
+    public DeleteUserRequest(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
