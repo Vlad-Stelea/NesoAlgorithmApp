@@ -20,18 +20,27 @@
         function renderBanner(user) {
             // Render the login/ logout button
             $("#loginButton").text(
-                user.token ? "Logout" : "Login"
+                user.token ? "Logout" : "Registered User Login"
             );
             if(user.token){
                 document.getElementById("loggedIn").style.display = "block";
+                document.getElementById("adminLoginButton").style.display = "none";
             } else{
                 document.getElementById("loggedIn").style.display = "none";
+                document.getElementById("adminLoginButton").style.display = "inline";
+            }
+
+            if(vm.admin){
+                document.getElementById("adminPageButton").style.display = "inline";
+                document.getElementById("loggedIn").style.display = "none";
+            } else{
+                document.getElementById("adminPageButton").style.display = "none";
             }
 
         }
 
         function initialize() {
-           updateHierarchy();
+           updateHierarchy(vm.admin);
            renderBanner(vm.user);
         }
 
@@ -47,6 +56,7 @@
     <div style="background-color: cadetblue; padding: 20px; overflow: hidden;">
         <!-- Comment out for now because not sure how to get the user name yet-->
 <!--        <h1 style="display:inline;">User 1 </h1>-->
+        <button id="adminPageButton"; style="display:inline; background-color: aqua; padding: 30px 60px;" onclick="navigation.goToAdminLandingPage()">Admin Home</button>
         <button
                 id="loginButton";
                 style="display:inline;
@@ -55,7 +65,18 @@
                  background-color: aqua;
                  padding: 30px 60px;"
                 onclick="vm.user.token ? handleLogOut() : handleLogin()">
-            Login
+            Registered User Login
+        </button>
+        <button
+                id="adminLoginButton";
+                style="display:none;
+                 margin-left: auto;
+                 margin-right: 20px;
+                 float:right;
+                 background-color: aqua;
+                 padding: 30px 60px;"
+                onclick="handleAdminLogin()">
+            Admin Login
         </button>
     </div>
     <br>

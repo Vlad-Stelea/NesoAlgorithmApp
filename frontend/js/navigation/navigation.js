@@ -6,17 +6,37 @@ class Navigation {
         this.pageMapping = {
             registeredUsersPage : "registeredUserLandingPage.html",
             cognitoAuth : "https://nesoalgorithm.auth.us-east-2.amazoncognito.com//login?response_type=token&client_id=62lcdgq2137nmak9t45kse25q9&redirect_uri={0}",
-            algorithmPage : "algorithmLandingPage.html"
+            cognitoAdminAuth : "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            algorithmPage : "algorithmLandingPage.html",
+            adminLandingPage : "AdminLandingPage.html",
+            adminUserActivityPage : "AdminUserActivityPage.html"
         }
     }
 
     goToRegisteredUsersPage() {
         vm.selectedAlgo = null;
+        vm.selectedUser = null;
         this.loadPage(this.pageMapping.registeredUsersPage)
+    }
+
+    goToAdminUserActivityPage(user) {
+        vm.selectedAlgo = null;
+        vm.selectedUser = user;
+        this.loadPage(this.pageMapping.adminUserActivityPage)
+    }
+
+    goToAdminLandingPage() {
+        vm.selectedAlgo = null;
+        vm.selectedUser = null;
+        this.loadPage(this.pageMapping.adminLandingPage)
     }
 
     goToLogin() {
         this.redirect(this.pageMapping.cognitoAuth);
+    }
+
+    goToAdminLogin() {
+        this.redirect(this.pageMapping.cognitoAdminAuth);
     }
 
      goToAlgorithmPage(algoName) {

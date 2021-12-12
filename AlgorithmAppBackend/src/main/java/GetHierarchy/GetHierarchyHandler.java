@@ -31,9 +31,8 @@ public class GetHierarchyHandler {
 
             ArrayList<Classification> topClasses = new ArrayList<>();
 
-            buildClassificationTree(topClasses, allClassL, allClassesHM);
             addAlgorithms(allAlgosL, allClassesHM);
-
+            buildClassificationTree(topClasses, allClassL, allClassesHM);
 
             response = new GetHierarchyResponse(topClasses, 200);
 

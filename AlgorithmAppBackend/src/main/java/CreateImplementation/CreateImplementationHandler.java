@@ -19,7 +19,7 @@ public class CreateImplementationHandler{
         try {
             // Successful case of creating an implementation
             if(!dao.hasImplementation(request.getImplName(), request.getAlgoName())) {
-                String url = storage.storeImplementation(request.getImplName(), request.getCode());
+                String url = storage.storeImplementation(request.getCode(), request.getFileExtension());
                 // Try to create an implementation
                 if(dao.createImplementation(request.getImplName(),url, request.getLanguage() ,request.getAlgoName())) {
                     return new CreateImplementationResponse(

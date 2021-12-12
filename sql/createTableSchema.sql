@@ -1,5 +1,4 @@
 DROP TABLE `algoApp`.`activityLog`;
-DROP TABLE `algoApp`.`user`;
 DROP TABLE `algoApp`.`benchmark`;
 DROP TABLE `algoApp`.`machineConfiguration`;
 DROP TABLE `algoApp`.`problemInstance`;
@@ -21,7 +20,7 @@ CREATE TABLE `algoApp`.`algorithm` (
 );
 CREATE TABLE `algoApp`.`implementation` (
     `implName` VARCHAR(40),
-    `codeURL` VARCHAR(1000),
+    `codeURL` VARCHAR(150),
     `language` VARCHAR(30),
     `algoName` VARCHAR(40),
     PRIMARY KEY (`implName`, `algoName`),
@@ -43,7 +42,6 @@ CREATE TABLE `algoApp`.`problemInstance` (
     `algoName` VARCHAR(40),
     PRIMARY KEY (`probInstanceUUID`),
     FOREIGN KEY (`algoName`) REFERENCES algorithm(`algoName`)
-    /*FOREIGN KEY (`benchmarkID`) REFERENCES benchmark(`benchmarkID`)*/
 );
 CREATE TABLE `algoApp`.`benchmark` (
 	`benchmarkUUID` CHAR(36),
@@ -60,16 +58,10 @@ CREATE TABLE `algoApp`.`benchmark` (
     FOREIGN KEY (`machineConfigUUID`) REFERENCES machineConfiguration(`machineConfigUUID`),
     FOREIGN KEY (`probInstanceUUID`) REFERENCES problemInstance(`probInstanceUUID`)
 );
-CREATE TABLE `algoApp`.`user` (
-	`username` VARCHAR(20) NOT NULL,
-    `isAdmin` INT NOT NULL,
-    PRIMARY KEY (`username`)
-);
 CREATE TABLE `algoApp`.`activityLog` (
 	`activityLogUUID` CHAR(36),
     `username` VARCHAR(20),
     `action` VARCHAR(200),
-    `date` DATE,
-    PRIMARY KEY (`activityLogUUID`),
-    FOREIGN KEY (`username`) REFERENCES user(`username`)
+    `date` TIMESTAMP,
+    PRIMARY KEY (`activityLogUUID`)
 );

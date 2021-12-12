@@ -37,6 +37,25 @@ public class BenchmarkDAO {
 
         return true;
     }
+
+    public boolean removeBenchmark(String benchmarkID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE benchmarkUUID = ?;");
+        ps.setString(1, benchmarkID);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE benchmarkUUID = ?;");
+            psDelete.setString(1, benchmarkID);
+            psDelete.execute();
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
     public Benchmark getBenchmark(String benchID) throws SQLException{
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE benchmarkUUID = ?;");
         ps.setString(1, benchID);
@@ -82,10 +101,40 @@ public class BenchmarkDAO {
         ps.setString(2, algoName);
         ResultSet rs = ps.executeQuery();
 
-        while(rs.next()) {
+        if(rs.next()) {
             PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE implName = ? AND algoName = ?;");
             psDelete.setString(1, implName);
             psDelete.setString(2, algoName);
+
+            psDelete.execute();
+        }
+
+        return true;
+    }
+
+    public boolean removeBenchmarksByAlgorithm(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE algoName = ?;");
+            psDelete.setString(1, algoName);
+            psDelete.execute();
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean removeBenchmarksByProbInstanceUUID(String probInstanceUUID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE probInstanceUUID = ?;");
+        ps.setString(1, probInstanceUUID);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE probInstanceUUID = ?;");
+            psDelete.setString(1, probInstanceUUID);
 
             psDelete.execute();
         }
@@ -108,21 +157,6 @@ public class BenchmarkDAO {
         }
         return benchmarks;
 
-    }
-
-    public boolean removeBenchmarksByProbInstanceUUID(String probInstanceUUID) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM benchmark WHERE probInstanceUUID = ?;");
-        ps.setString(1, probInstanceUUID);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM benchmark WHERE probInstanceUUID = ?;");
-            psDelete.setString(1, probInstanceUUID);
-
-            psDelete.execute();
-        }
-
-        return true;
     }
 
     public Benchmark generateBenchmark(ResultSet rs) throws SQLException {

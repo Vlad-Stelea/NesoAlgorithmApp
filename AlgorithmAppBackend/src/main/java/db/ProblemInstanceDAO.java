@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ProblemInstanceDAO {
 
@@ -38,7 +39,12 @@ public class ProblemInstanceDAO {
         return true;
     }
 
-    public ProblemInstance getProblemInstance(String probInstanceUUID) throws SQLException {
+    public boolean hasProblemInstance(String probInstanceUUID) throws SQLException {
+        Optional<ProblemInstance> problemInstance = getProblemInstance(probInstanceUUID);
+        return problemInstance.isPresent();
+    }
+
+    public Optional<ProblemInstance> getProblemInstance(String probInstanceUUID) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE probInstanceUUID = ?;");
         ps.setString(1, probInstanceUUID);
         ResultSet rs = ps.executeQuery();
@@ -77,15 +83,32 @@ public class ProblemInstanceDAO {
         return false;
     }
 
-    private ProblemInstance generateProblemInstance(ResultSet rs) throws SQLException {
-        if(!rs.next()) { return null; }
+    public boolean removeProblemInstancesByAlgorithm(String algoName) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE algoName = ?;");
+        ps.setString(1, algoName);
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM problemInstance WHERE algoName = ?;");
+            psDelete.setString(1, algoName);
+            psDelete.execute();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private Optional<ProblemInstance> generateProblemInstance(ResultSet rs) throws SQLException {
+        if (!rs.isBeforeFirst()) { return Optional.empty(); }
+        if(!rs.next()) { return Optional.empty(); }
 
         String probInstanceUUID = rs.getString("probInstanceUUID");
         String probInstanceName = rs.getString("probInstanceName");
         String datasetURL = rs.getString("datasetURL");
         String algoName = rs.getString("algoName");
 
-        return new ProblemInstance(probInstanceUUID, probInstanceName, datasetURL, algoName);
+        return Optional.of(new ProblemInstance(probInstanceUUID, probInstanceName, datasetURL, algoName));
     }
 
     private ArrayList<ProblemInstance> generateProblemInstances(ResultSet rs) throws SQLException {
