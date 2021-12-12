@@ -1,9 +1,10 @@
 package CreateBenchmark;
 
+import com.google.gson.Gson;
+
 import java.sql.Date;
 
 public class CreateBenchmarkRequest {
-    public String benchID;
     public String benchName;
     public String algoName;
     public String machineConfigName;
@@ -14,8 +15,7 @@ public class CreateBenchmarkRequest {
     public CreateBenchmarkRequest(){
 
     }
-    public CreateBenchmarkRequest(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName){
-        this.benchID = benchID;
+    public CreateBenchmarkRequest(String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName){
         this.benchName = benchName;
         this.dateRun = dateRun;
         this.timeToRun =timeToRun;
@@ -23,14 +23,6 @@ public class CreateBenchmarkRequest {
         this.problemInstanceName =problemInstanceName;
         this.machineConfigName =machineConfigName;
         this.implName = implName;
-    }
-
-    public String getBenchID() {
-        return benchID;
-    }
-
-    public void setBenchID(String benchID) {
-        this.benchID = benchID;
     }
 
     public String getBenchName() {
@@ -91,10 +83,8 @@ public class CreateBenchmarkRequest {
 
     @Override
     public String toString() {
-        return "CreateBenchmark(" + benchID + ", " + benchName + ", " + timeToRun + ", " + dateRun + ", " + algoName + ", " + implName+ ", " + machineConfigName +", " + problemInstanceName +")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
-
-
-
 
 }
