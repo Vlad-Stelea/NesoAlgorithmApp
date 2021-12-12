@@ -28,14 +28,13 @@ public class MachineConfigurationDAO {
         }
     }
 
-    public boolean createMachineConfiguration(String machineConfigName, String machineConfigUUID, int l1Cache, int l2Cache, String chip, int threads) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO machineConfiguration (machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads) VALUES (?, ?, ?, ?, ?, ?);");
+    public boolean createMachineConfiguration(String machineConfigName, int l1Cache, int l2Cache, String chip, int threads) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO machineConfiguration (machineConfigName, l1Cache, l2Cache, chip, threads) VALUES (?, ?, ?, ?, ?);");
         ps.setString(1, machineConfigName);
-        ps.setString(2, machineConfigUUID);
-        ps.setInt(3, l1Cache);
-        ps.setInt(4, l2Cache);
-        ps.setString(5, chip);
-        ps.setInt(6, threads);
+        ps.setInt(2, l1Cache);
+        ps.setInt(3, l2Cache);
+        ps.setString(4, chip);
+        ps.setInt(5, threads);
         ps.execute();
 
         return true;

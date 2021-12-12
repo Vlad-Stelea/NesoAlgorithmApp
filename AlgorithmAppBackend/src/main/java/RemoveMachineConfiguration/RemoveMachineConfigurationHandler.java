@@ -20,7 +20,7 @@ public class RemoveMachineConfigurationHandler {
                 return new RemoveMachineConfigurationResponse(machineConfigurationID, 200);
             }
             else {
-                return new RemoveMachineConfigurationResponse(404, "Machine configuration with UUID: '" + machineConfigurationID + "' could not be found.");
+                return new RemoveMachineConfigurationResponse(404, "Machine configuration with name: '" + machineConfigurationID + "' could not be found.");
             }
         } catch (Exception e) {
             return new RemoveMachineConfigurationResponse(400, "Unable to remove machine configuration: " + e);
