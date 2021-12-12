@@ -120,16 +120,13 @@ public class ClassificationDAO {
 
 
     public boolean mergeClassification(String Name,String newParentName) throws SQLException{
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE parentClassName = ?;");
-        ps.setString(1, Name);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            PreparedStatement updatePS = conn.prepareStatement("UPDATE classification SET parentClassName = ? WHERE className = ?;");
+
+            PreparedStatement updatePS = conn.prepareStatement("UPDATE classification SET parentClassName = ? WHERE parentClassName = ?;");
             updatePS.setString(1, newParentName);
-            updatePS.setString(2, rs.getString("className"));
+            updatePS.setString(2, newParentName);
             updatePS.executeUpdate();
 
-        }
+
         PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM algorithm WHERE className = ?;");
         ps2.setString(1, Name);
         ResultSet rs2 = ps2.executeQuery();

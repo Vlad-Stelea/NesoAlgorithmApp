@@ -45,11 +45,12 @@ class ClassificationRepo {
 
             xhr.onloadend = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let response = xhr.response;
+                    let xhrJSON = JSON.parse(xhr.response);
+                    if (xhrJSON["httpCode"] === 200) {
+                        let response = xhrJSON;
                         onSuccess(response);
                     } else {
-                        onFail(xhr.response, xhr.status);
+                        onFail(xhrJSON);
                     }
                 }
             }
@@ -61,7 +62,7 @@ class ClassificationRepo {
         iData["class2"] = class2;
         iData["newName"] = newName;
         if(class2 === "" || newName ==="") {
-            alert("Please enter the correct information")
+            alert("Please enter a sibling of the class you are trying to merge and an original new name")
         }else {
             let js = JSON.stringify(cData);
             console.log("Create merge Classification JSON: " + js);

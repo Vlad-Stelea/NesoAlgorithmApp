@@ -1,5 +1,7 @@
 package MergeClassification;
 
+import com.google.gson.Gson;
+
 public class MergeClassificationRequest {
 
     private String class1;
@@ -39,9 +41,17 @@ public class MergeClassificationRequest {
     }
 
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
     @Override
     public String toString() {
-        return "MergeClassification(" + class1 + "," + class2 + "," + newName+ "," + parentName + ")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

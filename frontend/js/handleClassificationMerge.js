@@ -45,15 +45,13 @@ function mergeClassification(parentClass,ele){
     }
 
 // Note, this doesn't work since lambda function doesn't return anything other than 200
-    let onFailCallback = function (data, status) {
+    let onFailCallback = function (data) {
         console.log("Status != 200. Merge classification response: " + xhr.responseText);
         let newJS = JSON.parse(xhr.responseText);
         let err = newJS["response"];
         alert(err);
     }
 
-    let className = ele.parentElement.children[2].value;
     classificationRepo.mergeClassification(class1, class2,newName, onSuccessCallback, onFailCallback)
-
 
 }
