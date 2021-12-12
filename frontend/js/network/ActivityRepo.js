@@ -1,6 +1,7 @@
 class ActivityRepo {
     constructor(apiGatewayUrl) {
-
+        this.apiGatewayUrl = apiGatewayUrl;
+        this.addActivityURL = this.apiGatewayUrl + "/User/LogAction";
     }
 
     addActivity(username, action, onSuccess, onFail) {
@@ -19,7 +20,7 @@ class ActivityRepo {
         xhr.onloadend = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
-                if(xhrJSON["httpCode"] === 200) {
+                if(xhrJSON["statusCode"] === 200) {
 
                     let response = xhr.response;
                     onSuccess(xhrJSON);
