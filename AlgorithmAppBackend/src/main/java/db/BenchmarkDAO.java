@@ -152,7 +152,7 @@ public class BenchmarkDAO {
                     rs.getDate("dateRun"),
                     rs.getString("algoName") ,
                     rs.getString("implName"),
-                    rs.getString("machineConfigUUID"),
+                    rs.getString("machineConfigName"),
                     rs.getString("probInstanceUUID")));
         }
         return benchmarks;
@@ -166,7 +166,7 @@ public class BenchmarkDAO {
         String benchID = rs.getString("benchmarkUUID");
         String benchName =rs.getString("benchmarkName");
         String algoName =rs.getString("algoName");
-        String machineConfigName =rs.getString("machineConfigUUID");
+        String machineConfigName =rs.getString("machineConfigName");
         String implName = rs.getString("implName");
         String problemInstanceName =rs.getString("probInstanceUUID");
         Date dateRun =rs.getDate("dateRun");

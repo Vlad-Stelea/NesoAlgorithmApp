@@ -13,6 +13,8 @@ public class RemoveMachineConfigurationHandler {
     }
 
     public RemoveMachineConfigurationResponse handle(RemoveMachineConfigurationRequest request) {
+        
+
         try {
             String machineConfigurationID = request.getMachineConfigurationID();
 

@@ -55,15 +55,15 @@ public class MachineConfigurationDAO {
         return generateMachineConfigurations(rs);
     }
 
-    public boolean removeMachineConfiguration(String machineConfigUUID) throws SQLException {
+    public boolean removeMachineConfiguration(String machineConfigName) throws SQLException {
         // make sure the Machine Configuration exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigUUID = ?;");
-        ps.setString(1, machineConfigUUID);
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigName = ?;");
+        ps.setString(1, machineConfigName);
         ResultSet rs = ps.executeQuery();
 
         if(rs.next()) {
-            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM machineConfiguration WHERE machineConfigUUID = ?;");
-            psDelete.setString(1, machineConfigUUID);
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM machineConfiguration WHERE machineConfigName = ?;");
+            psDelete.setString(1, machineConfigName);
             psDelete.execute();
 
             return true;
@@ -75,13 +75,12 @@ public class MachineConfigurationDAO {
     private MachineConfiguration generateMachineConfiguration(ResultSet rs) throws SQLException {
         if(rs.next()) {
             String machineConfigName = rs.getString("machineConfigName");
-            String machineConfigUUID = rs.getString("machineConfigUUID");
             int l1Cache = rs.getInt("l1Cache");
             int l2Cache = rs.getInt("l2Cache");
             String chip = rs.getString("chip");
             int threads = rs.getInt("threads");
 
-            return new MachineConfiguration(machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads);
+            return new MachineConfiguration(machineConfigName, l1Cache, l2Cache, chip, threads);
         }
 
         return null;
@@ -92,13 +91,12 @@ public class MachineConfigurationDAO {
 
         while(rs.next()) {
             String machineConfigName = rs.getString("machineConfigName");
-            String machineConfigUUID = rs.getString("machineConfigUUID");
             int l1Cache = rs.getInt("l1Cache");
             int l2Cache = rs.getInt("l2Cache");
             String chip = rs.getString("chip");
             int threads = rs.getInt("threads");
 
-            result.add(new MachineConfiguration(machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads));
+            result.add(new MachineConfiguration(machineConfigName, l1Cache, l2Cache, chip, threads));
         }
 
         return result;
