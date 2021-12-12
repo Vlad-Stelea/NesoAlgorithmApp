@@ -23,16 +23,16 @@ public class BenchmarkDAO {
             System.out.println("Connection has failed!");
         }
     }
-    public boolean createBenchmark(String benchID,String benchName, long timeToRun, Date dateRun, String algoName, String problemInstanceName, String machineConfigName, String probInstanceName) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO benchmark (benchmarkUUID,benchmarkName, timeToRun, dateRun, algoName, implName, machineConfigUUID,probInstanceUUID) VALUES (?, ?, ?, ?, ?, ?,);");
-        ps.setString(1, benchID);
-        ps.setString(2, benchName);
+    public boolean createBenchmark(String benchmarkUUID, String benchmarkName, long timeToRun, Date dateRun, String algoName, String implName, String machineConfigName, String probInstanceUUID) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO benchmark (benchmarkUUID, benchmarkName, timeToRun, dateRun, algoName, implName, machineConfigName, probInstanceUUID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+        ps.setString(1, benchmarkUUID);
+        ps.setString(2, benchmarkName);
         ps.setLong(3, timeToRun);
         ps.setDate(4, dateRun);
         ps.setString(5, algoName);
-        ps.setString(6, problemInstanceName);
+        ps.setString(6, implName);
         ps.setString(7, machineConfigName);
-        ps.setString(8, probInstanceName);
+        ps.setString(8, probInstanceUUID);
         ps.execute();
 
         return true;
