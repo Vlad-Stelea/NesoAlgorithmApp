@@ -1,14 +1,46 @@
 class UserRepo {
     constructor(apiGatewayUrl) {
+        this.apiGatewayUrl = apiGatewayUrl;
+        this.getUserActivityUrl = this.apiGatewayUrl + '/' + "Admin/Activity";
+        this.getUserUrl = this.apiGatewayUrl + '/' + "Admin/Users";
 
     }
 
     getUsers(onSuccess, onFail) {
+        console.log("Getting user")
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("GET", this.getUserUrl, true);
+        xhr.send();
+        xhr.onloadend = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let response = xhr.response;
+                    onSuccess(response);
+                } else {
+                    onFail(xhr.response, xhr.status);
+                }
+            }
 
+        }
     }
 
     getUserActivity(userName, onSuccess, onFail) {
-
+        console.log("Getting userActions")
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("GET", this.getUserActivityUrl, true);
+        xhr.send();
+        xhr.onloadend = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let response = xhr.response;
+                    onSuccess(response);
+                } else {
+                    onFail(xhr.response, xhr.status);
+                }
+            }
+        }
     }
 
 
