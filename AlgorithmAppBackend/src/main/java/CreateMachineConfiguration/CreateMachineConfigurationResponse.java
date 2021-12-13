@@ -7,7 +7,6 @@ import java.util.Objects;
 public class CreateMachineConfigurationResponse {
 
     String machineConfigName;
-    String machineConfigUUID;
     int L1Cache;
     int L2Cache;
     String chip;
@@ -16,9 +15,8 @@ public class CreateMachineConfigurationResponse {
     int httpCode;
     String error;
 
-    public CreateMachineConfigurationResponse(String machineConfigName, String machineConfigUUID, int l1Cache, int l2Cache, String chip, int threads, int httpCode) {
+    public CreateMachineConfigurationResponse(String machineConfigName, int l1Cache, int l2Cache, String chip, int threads, int httpCode) {
         this.machineConfigName = machineConfigName;
-        this.machineConfigUUID = machineConfigUUID;
         L1Cache = l1Cache;
         L2Cache = l2Cache;
         this.chip = chip;
@@ -34,10 +32,6 @@ public class CreateMachineConfigurationResponse {
     public String getMachineConfigName() { return machineConfigName; }
 
     public void setMachineConfigName(String machineConfigName) { this.machineConfigName = machineConfigName; }
-
-    public String getMachineConfigUUID() { return machineConfigUUID; }
-
-    public void setMachineConfigUUID(String machineConfigUUID) { this.machineConfigUUID = machineConfigUUID; }
 
     public int getL1Cache() { return L1Cache; }
 
@@ -72,7 +66,6 @@ public class CreateMachineConfigurationResponse {
                 L2Cache == that.L2Cache &&
                 threads == that.threads &&
                 Objects.equals(machineConfigName, that.machineConfigName) &&
-                Objects.equals(machineConfigUUID, that.machineConfigUUID) &&
                 Objects.equals(chip, that.chip);
     }
 

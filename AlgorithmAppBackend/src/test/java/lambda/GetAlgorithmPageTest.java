@@ -72,9 +72,9 @@ public class GetAlgorithmPageTest {
     }
 
     private ArrayList<MachineConfiguration> makeMachs() {
-        MachineConfiguration m1 = new MachineConfiguration("m1", "m1", 1, 2, "jfvh", 4);
-        MachineConfiguration m2 = new MachineConfiguration("m2", "m2", 10, 2, "jfvh", 4);
-        MachineConfiguration m3 = new MachineConfiguration("m3", "m3", 100, 2, "jfvh", 4);
+        MachineConfiguration m1 = new MachineConfiguration("m1", 1, 2, "jfvh", 4);
+        MachineConfiguration m2 = new MachineConfiguration("m2", 10, 2, "jfvh", 4);
+        MachineConfiguration m3 = new MachineConfiguration("m3", 100, 2, "jfvh", 4);
         ArrayList<MachineConfiguration> ms = new ArrayList<>();
         ms.add(m1);
         ms.add(m2);
@@ -118,9 +118,9 @@ public class GetAlgorithmPageTest {
         ps.add(p3);
         algo.setProblemInstances(ps);
 
-        MachineConfiguration m1 = new MachineConfiguration("m1", "m1", 1, 2, "jfvh", 4);
-        MachineConfiguration m2 = new MachineConfiguration("m2", "m2", 10, 2, "jfvh", 4);
-        MachineConfiguration m3 = new MachineConfiguration("m3", "m3", 100, 2, "jfvh", 4);
+        MachineConfiguration m1 = new MachineConfiguration("m1", 1, 2, "jfvh", 4);
+        MachineConfiguration m2 = new MachineConfiguration("m2", 10, 2, "jfvh", 4);
+        MachineConfiguration m3 = new MachineConfiguration("m3", 100, 2, "jfvh", 4);
         ArrayList<MachineConfiguration> ms = new ArrayList<>();
         ms.add(m1);
         ms.add(m2);
@@ -186,7 +186,7 @@ public class GetAlgorithmPageTest {
         GetAlgorithmPageResponse handleResponse = handler.handle(new GetAlgorithmPageRequest("efsTest"));
 
         assertEquals(handleResponse.statusCode, 400);
-        assertEquals(handleResponse.error, "Unable to get Algorithm Page: efsTest");
+        assertTrue(handleResponse.error.contains("Unable to get Algorithm Page: efsTest"));
 
 
     }

@@ -79,7 +79,6 @@ class MockMachineConfigurationRepo {
         console.log("mocking machine config add");
 
         let response = {
-            "machineConfigUUID" : "fake-news-ID",
             "machineConfigName" : machineConfigName,
             "l1Cache" : l1Cache,
             "l2Cache" : l2Cache,
