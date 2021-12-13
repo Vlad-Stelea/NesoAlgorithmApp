@@ -21,10 +21,13 @@ class ImplementationRepo {
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 let parsedPayload = JSON.parse(xhr.response);
                 if(parsedPayload.httpCode === 200) {
+                    let username = vm.user.username;
+                    let action = username + " removed Implementation " + implName + " from " + algoName;
+                    addActivity(username, action);
                     onSuccess(parsedPayload);
                 } else {
                     console.log("XHR: " + xhr.responseText);
-                    onFail(parsedPayload, parsedPayload.statusCode);
+                    onFail(parsedPayload);
                 }
             }
         }
@@ -52,6 +55,11 @@ class ImplementationRepo {
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 let parsedPayload = JSON.parse(xhr.response);
                 if(parsedPayload.statusCode === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " added Implementation " + implName + " to " + algoName;
+                    addActivity(username, action);
+
                     onSuccess(parsedPayload);
                 } else {
                     console.log("XHR: " + xhr.responseText);
@@ -76,6 +84,11 @@ class MockImplementationRepo {
             "algoName" : algoName
         };
 
+
+        let username = vm.user.username;
+        let action = username + " removed Implementation " + implName + " from " + algoName;
+        addActivity(username, action);
+
         onSuccess(
             response,
             200,
@@ -92,8 +105,10 @@ class MockImplementationRepo {
             language: language
         }
 
-        onSuccess(
-            response
-        )
+        let username = vm.user.username;
+        let action = username + " added Implementation " + implName + " to " + algoName;
+        addActivity(username, action);
+
+        onSuccess(response)
     }
 }

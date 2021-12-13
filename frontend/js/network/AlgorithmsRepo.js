@@ -23,6 +23,11 @@ class AlgorithmsRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if(xhr.status === 200) {
                     let response = xhr.response
+
+                    let username = vm.user.username;
+                    let action = username + " added Algorithm " + algorithmName + " to " + className;
+                    addActivity(username, action);
+
                     onSuccess(response);
                 } else {
                     onFail(xhr.response, xhr.status)
@@ -47,6 +52,11 @@ class AlgorithmsRepo {
               if (xhr.readyState === XMLHttpRequest.DONE) {
                   if(xhr.status === 200) {
                       let response = xhr.response;
+
+                      let username = vm.user.username;
+                      let action = username + " reclassified Algorithm " + algoName + " to " + newClassName;
+                      addActivity(username, action);
+
                       onSuccess(response);
                   } else {
                       onFail(xhr.response, xhr.status);
@@ -91,6 +101,11 @@ class AlgorithmsRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if(xhr.status === 200) {
                     let response = xhr.response;
+
+                    let username = vm.user.username;
+                    let action = username + " deleted Algorithm " + algorithmName;
+                    addActivity(username, action);
+
                     onSuccess(response);
                 } else {
                     onFail(xhr.response, xhr.status);
@@ -112,25 +127,28 @@ class MockAlgorithmRepo {
             "className":className
         }
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        let username = vm.user.username;
+        let action = username + " added Algorithm " + algorithmName + " to " + className;
+        addActivity(username, action);
+
+        onSuccess(response);
     }
 
     reclassifyAlgorithm(algoName, newClassName, onSuccess, onFail) {
+
+
+
         console.log("Mock algo repo reclassify algo")
         let response = {
             "algoName": algoName,
             "newClassName": newClassName
         }
+
+        let username = vm.user.username;
+        let action = username + " reclassified Algorithm " + algoName + " to " + newClassName;
+        addActivity(username, action);
         
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 
     getAlgorithmHierarchy(algorithmName, onSuccess, onFail){
@@ -243,11 +261,7 @@ class MockAlgorithmRepo {
            }
        }
 
-        onSuccess(
-            response,
-            200,
-            new MockXHR()
-        );
+        onSuccess(response);
     }
 
     deleteAlgorithm(algorithmName, onSuccess, onFail){
@@ -255,6 +269,11 @@ class MockAlgorithmRepo {
             "algoName" : algorithmName,
             "httpCode" : 200
         };
+
+
+        let username = vm.user.username;
+        let action = username + " deleted Algorithm " + algorithmName;
+        addActivity(username, action);
 
         onSuccess(response);
 

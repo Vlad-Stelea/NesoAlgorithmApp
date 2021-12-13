@@ -47,6 +47,11 @@ class BenchmarkRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " removed Benchmark " + benchmarkID;
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -85,6 +90,10 @@ class MockBenchmarkRepo {
             "benchmarkID" : benchmarkID,
             "httpCode" : 200
         };
+
+        let username = vm.user.username;
+        let action = username + " removed Benchmark " + benchmarkID;
+        addActivity(username, action);
 
         onSuccess(response);
     }
