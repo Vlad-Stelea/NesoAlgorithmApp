@@ -42,7 +42,7 @@ function createAlgorithmView(algoName, isUserRegistered, admin) {
     return output;
 }
 
-function createClassificationView(classificationName, isUserRegistered, admin) {
+function createClassificationView(classificationName, isUserRegistered, admin, parentClassification) {
     let output ='<li class="listItem" style="background-color: tomato">'+
         '<h3 style="display:inline;">+</h3>'+
         '<h3 style="margin-left: 20px;" class="button">' + classificationName + '</h3>'
@@ -71,7 +71,7 @@ function createClassificationView(classificationName, isUserRegistered, admin) {
 }
 
 function addClassificationListItem(item, admin){
-    let output = createClassificationView(item.className, vm.user.token !== '', admin)
+    let output = createClassificationView(item.className, vm.user.token !== '', admin, item.parentClassification)
 
     for (let j = 0; j < item.algorithms.length; j++) {
         output = output + createAlgorithmView(item.algorithms[j].algoName,vm.user.token !== '', admin);
