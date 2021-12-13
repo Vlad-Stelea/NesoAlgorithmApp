@@ -9,6 +9,8 @@
     <script src="../js/network/mockxhr.js"></script>
     <script src="../js/network/ImplementationRepo.js"></script>
     <script src="../js/network/UserRepo.js"></script>
+    <script src="../js/network/ActivityRepo.js"></script>
+    <script src="../js/handleAddActivity.js"></script>
     <script type='text/javascript' src='../js/api.js'></script>
     <!-- Import the jquery lib to make development more simple -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -32,7 +34,7 @@
         const classificationRepo = config.CLASSIFICATIONS_REPO;
         const problemInstanceRepo = config.PROBLEMINSTANCES_REPO;
         const implementationRepo = config.IMPLEMENTATIONS_REPO;
-        const userRepo = config.USERS_REPO;
+        const activityRepo = config.ACTIVITY_REPO;
         const benchmarkRepo = config.BENCHMARKS_REPO;
         const machineConfigRepo = config.MACHINECONFIGS_REPO;
         const vm = new ViewModel(false);

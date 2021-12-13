@@ -8,5 +8,6 @@ const LiveConfig = {
     IMPLEMENTATIONS_REPO : new ImplementationRepo(API_GATEWAY_URL),
     USERS_REPO : new UserRepo(API_GATEWAY_URL),
     BENCHMARKS_REPO : new BenchmarkRepo(API_GATEWAY_URL),
-    MACHINECONFIGS_REPO : new MachineConfigurationRepo(API_GATEWAY_URL)
+    MACHINECONFIGS_REPO : new MachineConfigurationRepo(API_GATEWAY_URL),
+    ACTIVITY_REPO : new ActivityRepo(API_GATEWAY_URL)
 };
