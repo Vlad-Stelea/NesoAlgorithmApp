@@ -21,41 +21,29 @@ public class CreateMachineConfigurationTest {
     MachineConfigurationDAO dao;
     CreateMachineConfigurationHandler handler;
     CreateMachineConfigurationRequest request;
-    MockedStatic<UUID> mockUuidUtil;
-    final String UUIDString = "Fake-mc-UUID";
 
     @Before
     public void setup() {
         dao = mock(MachineConfigurationDAO.class);
         handler = new CreateMachineConfigurationHandler(dao);
-        mockUuidUtil = mockStatic(UUID.class);
-        UUID mockUUID = mock(UUID.class);
-        when(mockUUID.toString()).thenReturn(UUIDString);
-        mockUuidUtil.when(UUID::randomUUID).thenReturn(mockUUID);
         request = new CreateMachineConfigurationRequest("cmc_test", 123, 456, "cmc_chip", 10);
-    }
-
-    @After
-    public void tearDown() {
-        // Need to do this to deregister static mocking or else error will occur
-        mockUuidUtil.close();
     }
 
     @Test
     public void testCreateMachineConfiguration() throws SQLException {
         // mock add the machine config and see if we get the right response
-        when(dao.createMachineConfiguration(request.getMachineConfigName(), UUIDString, request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenReturn(true);
+        when(dao.createMachineConfiguration(request.getMachineConfigName(), request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenReturn(true);
         CreateMachineConfigurationResponse handleResult = handler.handle(request);
-        CreateMachineConfigurationResponse expectedResponse = new CreateMachineConfigurationResponse(request.getMachineConfigName(), UUIDString, request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads(), 200);
+        CreateMachineConfigurationResponse expectedResponse = new CreateMachineConfigurationResponse(request.getMachineConfigName(), request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads(), 200);
         assertEquals(expectedResponse, handleResult);
     }
 
     @Test
     public void testFailCreateMachineConfiguration() throws SQLException {
         // mock add the problem instance, simulate a failed response, and make sure the handler responds appropriately
-        when(dao.createMachineConfiguration(request.getMachineConfigName(), UUIDString, request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenReturn(false);
+        when(dao.createMachineConfiguration(request.getMachineConfigName(), request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenReturn(false);
         CreateMachineConfigurationResponse handleResult = handler.handle(request);
-        CreateMachineConfigurationResponse expectedResponse = new CreateMachineConfigurationResponse(409, "Machine configuration with UUID: '" + UUIDString + "' already exists.");
+        CreateMachineConfigurationResponse expectedResponse = new CreateMachineConfigurationResponse(409, "Machine configuration with UUID: '" + request.getMachineConfigName() + "' already exists.");
         assertEquals(expectedResponse, handleResult);
     }
 

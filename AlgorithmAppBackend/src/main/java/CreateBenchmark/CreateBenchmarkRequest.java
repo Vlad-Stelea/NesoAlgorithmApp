@@ -1,44 +1,36 @@
 package CreateBenchmark;
 
+import com.google.gson.Gson;
+
 import java.sql.Date;
 
 public class CreateBenchmarkRequest {
-    public String benchID;
-    public String benchName;
+    public String benchmarkName;
     public String algoName;
     public String machineConfigName;
     public String implName;
-    public String problemInstanceName;
+    public String probInstanceUUID;
     public Date dateRun;
     public long timeToRun;
     public CreateBenchmarkRequest(){
 
     }
-    public CreateBenchmarkRequest(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName){
-        this.benchID = benchID;
-        this.benchName = benchName;
+    public CreateBenchmarkRequest(String benchmarkName, long timeToRun, Date dateRun, String algoName, String implName, String machineConfigName, String probInstanceUUID){
+        this.benchmarkName = benchmarkName;
         this.dateRun = dateRun;
         this.timeToRun =timeToRun;
         this.algoName = algoName;
-        this.problemInstanceName =problemInstanceName;
+        this.probInstanceUUID =probInstanceUUID;
         this.machineConfigName =machineConfigName;
         this.implName = implName;
     }
 
-    public String getBenchID() {
-        return benchID;
+    public String getBenchmarkName() {
+        return benchmarkName;
     }
 
-    public void setBenchID(String benchID) {
-        this.benchID = benchID;
-    }
-
-    public String getBenchName() {
-        return benchName;
-    }
-
-    public void setBenchName(String benchName) {
-        this.benchName = benchName;
+    public void setBenchmarkName(String benchmarkName) {
+        this.benchmarkName = benchmarkName;
     }
 
     public String getAlgoName() {
@@ -65,12 +57,12 @@ public class CreateBenchmarkRequest {
         this.implName = implName;
     }
 
-    public String getProblemInstanceName() {
-        return problemInstanceName;
+    public String getProbInstanceUUID() {
+        return probInstanceUUID;
     }
 
-    public void setProblemInstanceName(String problemInstanceName) {
-        this.problemInstanceName = problemInstanceName;
+    public void setProbInstanceUUID(String probInstanceUUID) {
+        this.probInstanceUUID = probInstanceUUID;
     }
 
     public Date getDateRun() {
@@ -91,10 +83,8 @@ public class CreateBenchmarkRequest {
 
     @Override
     public String toString() {
-        return "CreateBenchmark(" + benchID + ", " + benchName + ", " + timeToRun + ", " + dateRun + ", " + algoName + ", " + implName+ ", " + machineConfigName +", " + problemInstanceName +")";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
-
-
-
 
 }
