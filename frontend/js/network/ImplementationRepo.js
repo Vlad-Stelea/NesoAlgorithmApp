@@ -1,29 +1,33 @@
 class ImplementationRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
-        this.removeImplementationUrl_initial = this.apiGatewayUrl + "/Implementation/Remove/";
+        this.removeImplementationUrl = this.apiGatewayUrl + "/Implementation/Remove/";
         this.createImplementationUrl = this.apiGatewayUrl + "/Implementation";
     }
 
     removeImplementation(implName, algoName, onSuccess, onFail) {
         let xhr = new XMLHttpRequest();
 
-        // TODO: implName concatenated with algo name is a hack, fix when we fix our YAML
-        xhr.open("POST", this.removeImplementationUrl_initial + implName + "," + algoName, true);
-        console.log("sending: " + this.removeImplementationUrl_initial + implName + "," + algoName);
-        xhr.send();
+        let jsonBody = {
+            "implName" : implName,
+            "algoName" : algoName
+        };
+
+        let payload = JSON.stringify(jsonBody);
+        xhr.open("POST", this.removeImplementationUrl, true);
+        xhr.send(payload);
 
         xhr.onloadend = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-
+            if(xhr.readyState === XMLHttpRequest.DONE) {
+                let parsedPayload = JSON.parse(xhr.response);
+                if(parsedPayload.httpCode === 200) {
                     let username = vm.user.username;
                     let action = username + " removed Implementation " + implName + " from " + algoName;
                     addActivity(username, action);
-
-                    onSuccess(xhr);
+                    onSuccess(parsedPayload);
                 } else {
-                    onFail(xhr);
+                    console.log("XHR: " + xhr.responseText);
+                    onFail(parsedPayload);
                 }
             }
         }
@@ -76,7 +80,8 @@ class MockImplementationRepo {
         console.log("mocking remove implementation");
 
         let response = {
-            "implementationID" : implName + "," + algoName
+            "implName" : implName,
+            "algoName" : algoName
         };
 
 
