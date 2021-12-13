@@ -1,5 +1,7 @@
 package GetRegisteredUsers;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 public class GetRegisteredUsersResponse {
@@ -28,5 +30,10 @@ public class GetRegisteredUsersResponse {
 
     public void setUsers(List<String> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }
