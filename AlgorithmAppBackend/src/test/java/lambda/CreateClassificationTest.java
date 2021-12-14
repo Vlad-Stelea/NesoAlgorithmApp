@@ -59,6 +59,32 @@ public class CreateClassificationTest extends LambdaTest {
         assertEquals(handleResult.error, "Classification already exists.");
     }
 
+    @Test
+    public void testFailToConnect() throws SQLException {
+        // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
+        when(dao.createClassification("createTest", null)).thenThrow(new NullPointerException());
+        CreateClassificationResponse handleResult = ccHandler.handle(req);
+        System.out.println(handleResult.response);
+        System.out.println(handleResult.error);
+        assertEquals(handleResult.response, "Unable to create classification: createTest with parent null\n(null)");
+        assertEquals(handleResult.httpCode, 400);
+        assertEquals(handleResult.error, "");
+    }
+
+    @Test
+    public void testRequestAndResponseClasses() {
+        CreateClassificationRequest req = new CreateClassificationRequest();
+        req.setClassName("test");
+        assertEquals(req.getName(), "test");
+        req.setParentClassName("test1");
+        assertEquals(req.getParentClassName(), "test1");
+        assertEquals(req.toString(), "CreateClassification(test, test1)");
+
+        CreateClassificationResponse response = new CreateClassificationResponse("s", 300);
+        assertEquals(response.toString(), "{\"response\":\"s\",\"httpCode\":300,\"error\":\"\"}");
+
+    }
+
 
 
 }
