@@ -16,7 +16,7 @@ public class CreateAlgorithmResponse {
     // 200 means success
     public CreateAlgorithmResponse (String s, int code) {
         this.response = s;
-        this.httpCode = 200;
+        this.httpCode = code;
         this.error = "";
     }
 
