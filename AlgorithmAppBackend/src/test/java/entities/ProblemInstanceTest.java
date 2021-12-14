@@ -1,9 +1,7 @@
-package entityTest;
+package entities;
 
 import static org.junit.Assert.*;
 
-import entities.Classification;
-import entities.ProblemInstance;
 import org.junit.Before;
 import org.junit.Test;
 

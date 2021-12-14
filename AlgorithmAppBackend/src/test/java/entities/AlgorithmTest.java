@@ -1,11 +1,8 @@
-package entityTest;
+package entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import entities.Algorithm;
-import entities.Classification;
-import entities.Implementation;
 import org.junit.Test;
 
 import java.util.ArrayList;
