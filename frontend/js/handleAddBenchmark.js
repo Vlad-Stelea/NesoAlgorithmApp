@@ -1,10 +1,15 @@
-function handleBenchmarkAdd(ele, probInstanceUUID, implName, algoName) {
+function handleBenchmarkAdd(ele, implName, algoName, problemInstances) {
     console.log("handling benchmark add");
-    console.log(ele);
+    pis = JSON.parse(atob(problemInstances));
 
-    let addBenchmarkForm = document.getElementById("addBenchmarkForm");
+    let addBenchmarkForm = document.getElementById("addBenchmarkForm" + implName);
 
-    addBenchmarkForm.innerHTML = "<form id='createBenchmarkForm' method='post'>" +
+    if(addBenchmarkForm.innerHTML != ''){
+        addBenchmarkForm.innerHTML = '';
+        return;
+    }
+
+    let addBMFormHTML = "<form id='createBenchmarkForm' method='post'>" +
         "<br/><label for='benchmarkName'>Benchmark name: </label>" +
         "<input type='text' id='benchmarkName' name='benchmarkName'/>" +
         "<br/><label for='benchmarkTimeToRun'>Time to run: </label>" +
@@ -13,12 +18,20 @@ function handleBenchmarkAdd(ele, probInstanceUUID, implName, algoName) {
         "<input type='date' id='benchmarkDateRun' name='benchmarkDateRun'/>" +
         "<br/><label for='benchmarkMachineConfigName'>Machine configuration name: </label>" +
         "<input type='text' id='benchmarkMachineConfigName' name='benchmarkMachineConfigName'/>" +
-        "<br/><input id='submitBenchmarkButton' type='button' value='Submit' onclick='handleAddBenchmarkFormSubmit(this.parentElement, \"" + probInstanceUUID + "\", \"" + implName + "\", \"" + algoName + "\")'/>" +
+        "<br/><label for='probInstanceName'>Problem Instance name: </label>" +
+        "<select name='probInstanceName' id='probInstanceName'>"
+        for(let i = 0; i < pis.length; i++){
+            addBMFormHTML += "<option value='" + pis[i].probInstanceUUID + "'>" + pis[i].probInstanceName + "</option>"
+        }
+        addBMFormHTML += "</select>" +
+        "<br/><input id='submitBenchmarkButton' type='button' value='Submit' onclick='handleAddBenchmarkFormSubmit(this.parentElement, \"" + implName + "\", \"" + algoName + "\")'/>" +
         "</form><br/>";
+
+    addBenchmarkForm.innerHTML = addBMFormHTML;
 
 }
 
-function handleAddBenchmarkFormSubmit(formElement, probInstanceUUID, implName, algoName) {
+function handleAddBenchmarkFormSubmit(formElement, implName, algoName) {
     console.log("benchmark form submit");
     console.log(formElement.id)
 
@@ -26,6 +39,7 @@ function handleAddBenchmarkFormSubmit(formElement, probInstanceUUID, implName, a
     let timeToRun = formElement[1].value;
     let dateRun = formElement[2].value;
     let machineConfigName = formElement[3].value;
+    let problemInstanceUUID = formElement[4].value;
 
     if(benchmarkName && machineConfigName) {
         let onSuccessCallback = function (xhr) {
@@ -39,7 +53,7 @@ function handleAddBenchmarkFormSubmit(formElement, probInstanceUUID, implName, a
             console.log("failed to add benchmark.");
         }
 
-        benchmarkRepo.addBenchmark(benchmarkName, algoName, machineConfigName, implName, probInstanceUUID, dateRun, timeToRun, onSuccessCallback, onFailCallback);
+        benchmarkRepo.addBenchmark(benchmarkName, algoName, machineConfigName, implName, problemInstanceUUID, dateRun, timeToRun, onSuccessCallback, onFailCallback);
         // document.getElementById(formElement.id).innerHTML = "";
 
     }
