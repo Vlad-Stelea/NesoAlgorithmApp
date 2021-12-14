@@ -48,7 +48,7 @@ public class CreateMachineConfigurationTest {
     }
 
     @Test
-    public void testFailConectDB() throws SQLException {
+    public void testFailConnectDB() throws SQLException {
         // mock add the problem instance, simulate a failed response, and make sure the handler responds appropriately
         when(dao.createMachineConfiguration(request.getMachineConfigName(), request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenThrow(new NullPointerException());
         CreateMachineConfigurationResponse handleResult = handler.handle(request);

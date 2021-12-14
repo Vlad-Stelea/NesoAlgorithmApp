@@ -25,7 +25,7 @@ public class CreateProblemInstanceHandler {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new CreateProblemInstanceResponse(400, "Unable to craete problem instance");
+            return new CreateProblemInstanceResponse(400, "Unable to create problem instance");
         }
     }
 
