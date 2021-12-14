@@ -47,4 +47,52 @@ public class CreateMachineConfigurationTest {
         assertEquals(expectedResponse, handleResult);
     }
 
+    @Test
+    public void testFailConectDB() throws SQLException {
+        // mock add the problem instance, simulate a failed response, and make sure the handler responds appropriately
+        when(dao.createMachineConfiguration(request.getMachineConfigName(), request.getL1Cache(), request.getL2Cache(), request.getChip(), request.getThreads())).thenThrow(new NullPointerException());
+        CreateMachineConfigurationResponse handleResult = handler.handle(request);
+        CreateMachineConfigurationResponse expectedResponse = new CreateMachineConfigurationResponse(400, "Unable to create machine configuration.");
+        assertEquals(expectedResponse, handleResult);
+    }
+
+
+    @Test
+    public void testRequestAndResponseClasses() throws SQLException {
+        CreateMachineConfigurationRequest req = new CreateMachineConfigurationRequest();
+        req.setChip("test");
+        assertEquals(req.getChip(), "test");
+        req.setMachineConfigName("test1");
+        assertEquals(req.getMachineConfigName(), "test1");
+        req.setL1Cache(1);
+        assertEquals(req.getL1Cache(), 1);
+        req.setL2Cache(2);
+        assertEquals(req.getL2Cache(), 2);
+        req.setThreads(3);
+        assertEquals(req.getThreads(), 3);
+
+        assertEquals(req.toString(), "{\"machineConfigName\":\"test1\",\"L1Cache\":1,\"L2Cache\":2,\"chip\":\"test\",\"threads\":3}");
+
+        CreateMachineConfigurationResponse response = new CreateMachineConfigurationResponse(3, "23");
+        response.setChip("test");
+        assertEquals(response.getChip(), "test");
+        response.setMachineConfigName("test1");
+        assertEquals(response.getMachineConfigName(), "test1");
+        response.setL1Cache(1);
+        assertEquals(response.getL1Cache(), 1);
+        response.setL2Cache(2);
+        assertEquals(response.getL2Cache(), 2);
+        response.setThreads(3);
+        assertEquals(response.getThreads(), 3);
+        response.setError("123");
+        assertEquals(response.getError(), "123");
+        response.setHttpCode(123);
+        assertEquals(response.getHttpCode(), 123);
+
+        assertEquals(response.toString(), "{\"machineConfigName\":\"test1\",\"L1Cache\":1,\"L2Cache\":2,\"chip\":\"test\",\"threads\":3,\"httpCode\":123,\"error\":\"123\"}");
+
+    }
+
+
+
 }
