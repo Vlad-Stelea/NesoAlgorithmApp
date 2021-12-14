@@ -1,9 +1,11 @@
 package lambda;
 
 
+import RemoveMachineConfiguration.RemoveMachineConfiguration;
 import RemoveMachineConfiguration.RemoveMachineConfigurationHandler;
 import RemoveMachineConfiguration.RemoveMachineConfigurationRequest;
 import RemoveMachineConfiguration.RemoveMachineConfigurationResponse;
+import com.amazonaws.services.lambda.runtime.Context;
 import db.BenchmarkDAO;
 import db.MachineConfigurationDAO;
 
@@ -46,6 +48,22 @@ public class RemoveMachineConfigurationTest {
         RemoveMachineConfigurationResponse handleResult = rmcHandler.handle(req);
         RemoveMachineConfigurationResponse actualResponse = new RemoveMachineConfigurationResponse(404, "Machine configuration with UUID: '" + mcUUID + "' could not be found.");
         assertEquals(handleResult, actualResponse);
+    }
+
+    @Test
+    public void testMainMachineConfiguration() throws SQLException {
+        // mock the main lambda function
+        RemoveMachineConfigurationHandler mockHandler = mock(RemoveMachineConfigurationHandler.class);
+        RemoveMachineConfiguration mainLambda = new RemoveMachineConfiguration(mockHandler);
+        RemoveMachineConfigurationRequest mockRequest = new RemoveMachineConfigurationRequest("some_UUID");
+        Context mockContext = new TestContext();
+
+        RemoveMachineConfigurationResponse mockResponse = new RemoveMachineConfigurationResponse("some_UUID", 200);
+        when(mainLambda.handleRequest(mockRequest, mockContext)).thenReturn(mockResponse);
+        RemoveMachineConfigurationResponse receivedResponse = mainLambda.handleRequest(mockRequest, mockContext);
+
+        assertEquals(mockResponse, receivedResponse);
+        assertEquals(mockResponse.toString(), receivedResponse.toString());
     }
 
 }
