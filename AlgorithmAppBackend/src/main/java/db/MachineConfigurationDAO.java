@@ -40,14 +40,6 @@ public class MachineConfigurationDAO {
         return true;
     }
 
-    public MachineConfiguration getMachineConfiguration(String machineConfigUUID) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigUUID = ?;");
-        ps.setString(1, machineConfigUUID);
-        ResultSet rs = ps.executeQuery();
-
-        return generateMachineConfiguration(rs);
-    }
-
     public List<MachineConfiguration> getAllMachineConfigurations() throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration;");
         ResultSet rs = ps.executeQuery();
@@ -70,20 +62,6 @@ public class MachineConfigurationDAO {
         }
 
         return false;
-    }
-
-    private MachineConfiguration generateMachineConfiguration(ResultSet rs) throws SQLException {
-        if(rs.next()) {
-            String machineConfigName = rs.getString("machineConfigName");
-            int l1Cache = rs.getInt("l1Cache");
-            int l2Cache = rs.getInt("l2Cache");
-            String chip = rs.getString("chip");
-            int threads = rs.getInt("threads");
-
-            return new MachineConfiguration(machineConfigName, l1Cache, l2Cache, chip, threads);
-        }
-
-        return null;
     }
 
     private List<MachineConfiguration> generateMachineConfigurations(ResultSet rs) throws SQLException {
