@@ -96,9 +96,116 @@ public class RemoveClassificationTest {
         when(classDAO.removeClassification("rootClass")).thenReturn(false);
 
         RemoveClassificationResponse actualResponse = handler.handle(request);
-        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find parent class rootClass to remove.");
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find subclassification \"subclass1\" to remove.");
         assertEquals(expectedResponse, actualResponse);
         assertEquals(actualResponse.getHttpCode(), 404);
+    }
+
+    @Test
+    public void testFailHierarchyResponse() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
+        when(classDAO.getAllClassifications()).thenThrow(new NullPointerException());
+        when(classDAO.removeClassification("rootClass")).thenReturn(false);
+
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "error when getting hierarchy for removal");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 400);
+    }
+
+    @Test
+    public void testFailWrongClass() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
+        when(classDAO.getAllClassifications()).thenReturn(classes);
+        when(classDAO.removeClassification("rootClass")).thenReturn(false);
+
+        request.setClassificationName("hfksdjksdjhcksjcdjdsncd");
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        request.setClassificationName("rootClass");
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "could not find classification to remove with name: hfksdjksdjhcksjcdjdsncd");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 404);
+    }
+
+    @Test
+    public void testFailRemove() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
+        when(classDAO.getAllClassifications()).thenReturn(classes);
+        when(classDAO.removeClassification(any(String.class))).thenReturn(true);
+        when(classDAO.removeClassification("rootClass")).thenThrow(new NullPointerException());
+
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "Error occurred while removing parent classification: rootClass");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 400);
+    }
+
+    @Test
+    public void testFailRemoveSubClass() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
+        when(classDAO.getAllClassifications()).thenReturn(classes);
+        when(classDAO.removeClassification(any(String.class))).thenThrow(new NullPointerException());
+
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "Error occurred while removing subclass: subclass1");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 400);
+    }
+
+    @Test
+    public void testFailFindParent() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenReturn(true);
+        when(classDAO.getAllClassifications()).thenReturn(classes);
+        when(classDAO.removeClassification(any(String.class))).thenReturn(true);
+        when(classDAO.removeClassification("rootClass")).thenReturn(false);
+
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find parent class \"rootClass\" to remove.");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 404);
+    }
+
+    @Test
+    public void testFailDeleteAlgo() throws SQLException {
+        // pretend that we can't find the classification to delete
+        when(algoDAO.getAllAlgorithms()).thenReturn(new ArrayList<>()); // we won't be using this in the test, as classes will hold all our algos
+        when(algoDAO.removeAlgorithm(any(String.class))).thenThrow(new NullPointerException());
+        when(classDAO.getAllClassifications()).thenReturn(classes);
+        when(classDAO.removeClassification(any(String.class))).thenReturn(true);
+
+        RemoveClassificationResponse actualResponse = handler.handle(request);
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "Error occurred while removing algorithm: algo_sc3s1\n");
+        assertEquals(expectedResponse, actualResponse);
+        assertEquals(actualResponse.getHttpCode(), 400);
+    }
+
+    @Test
+    public void testRequestAndResponseClasses() throws SQLException {
+        RemoveClassificationRequest req = new RemoveClassificationRequest();
+        req.setClassificationName("test");
+        assertEquals(req.getClassificationName(), "test");
+        assertEquals(req.toString(), "{\"classificationName\":\"test\"}");
+
+        RemoveClassificationResponse response = new RemoveClassificationResponse(20, "");
+        response.setClassificationName("test");
+        assertEquals(response.getClassificationName(), "test");
+        response.setError("test1");
+        assertEquals(response.getError(), "test1");
+        response.setHttpCode(202);
+        assertEquals(response.getHttpCode(), 202);
+        assertEquals(response.toString(), "{\"classificationName\":\"test\",\"httpCode\":202,\"error\":\"test1\"}");
+
+
     }
 
 }
