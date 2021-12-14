@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ClassificationTest {
 
     private Classification classification;
@@ -12,6 +15,36 @@ public class ClassificationTest {
     @Before
     public void setup() {
         classification = new Classification("entities");
+    }
+
+    @Test
+    public void testInit() {
+        String className = "className";
+        String parentClassName = "parent";
+        List<Algorithm> algorithms = Arrays.asList(new Algorithm(null));
+        List<Classification> subClassifications = Arrays.asList(new Classification("Test"));
+
+        Classification classification = new Classification(className, parentClassName, algorithms, subClassifications);
+        assertEquals(className, classification.getClassName());
+        assertEquals(parentClassName, classification.getParentClassificationName());
+        assertEquals(algorithms, classification.getAlgorithms());
+        assertEquals(subClassifications, classification.getSubclassifications());
+    }
+
+    @Test
+    public void testGetsAndSets() {
+        Classification classification = new Classification("className");
+        String parentClassName = "parent";
+        List<Algorithm> algorithms = Arrays.asList(new Algorithm(null));
+        List<Classification> subClassifications = Arrays.asList(new Classification("Test"));
+
+        classification.setParentClassificationName(parentClassName);
+        classification.setAlgorithms(algorithms);
+        classification.setSubclassifications(subClassifications);
+
+        assertEquals(parentClassName, classification.getParentClassificationName());
+        assertEquals(algorithms, classification.getAlgorithms());
+        assertEquals(subClassifications, classification.getSubclassifications());
     }
 
     @Test

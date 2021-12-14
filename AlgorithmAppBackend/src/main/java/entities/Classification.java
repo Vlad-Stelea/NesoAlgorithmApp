@@ -26,7 +26,7 @@ public class Classification {
         subclassifications = new ArrayList<>();
     }
 
-    public Classification(String className, String parentClassificationName, ArrayList<Algorithm> algorithms, ArrayList<Classification> subclassifications) {
+    public Classification(String className, String parentClassificationName, List<Algorithm> algorithms, List<Classification> subclassifications) {
         this.className = className;
         this.parentClassificationName = parentClassificationName;
         this.algorithms = algorithms;
@@ -62,8 +62,6 @@ public class Classification {
         this.subclassifications = subclassifications;
     }
 
-
-  
     // non-getter and setter methods
     public boolean addAlgorithm(Algorithm a) {
         a.setParentClassificationName(this.className);
