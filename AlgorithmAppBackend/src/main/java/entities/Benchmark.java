@@ -17,6 +17,9 @@ public class Benchmark {
     private long timeToRun;
 
 
+    public Benchmark() {
+        // DO Nothing
+    }
 
     public Benchmark(String benchID, String benchName, long timeToRun, Date dateRun, String algoName,String implName , String machineConfigName, String problemInstanceName){
         this.benchID = benchID;
