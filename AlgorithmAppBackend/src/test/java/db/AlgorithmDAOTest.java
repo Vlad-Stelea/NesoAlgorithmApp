@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class AlgorithmDAOTest {
 
-  /*
+
     static AlgorithmDAO dao;
 
     @BeforeClass
@@ -41,7 +41,7 @@ public class AlgorithmDAOTest {
         assertTrue(dao.createAlgorithm("efsdaoTest2", null));
         // check that we can remove the Algorithm, then check it doesn't exist
         assertTrue(dao.removeAlgorithm("efsdaoTest2"));
-        assertEquals(null, dao.getAlgorithm("efsdaoTest2"));
+        assertNull(dao.getAlgorithm("efsdaoTest2"));
     }
 
     @Test
@@ -84,7 +84,24 @@ public class AlgorithmDAOTest {
         assertFalse(retEmpty.contains(new Algorithm("efsdaoTest6")));
         assertFalse(retEmpty.contains(new Algorithm("efsdaoTest7")));
 
-       }
-       */
+   }
+
+    @Test
+    public void testReclassifyAlgorithm() throws SQLException {
+        ClassificationDAO classDao = new ClassificationDAO();
+        classDao.createClassification("algoTestClass1", null);
+        classDao.createClassification("algoTestClass2", null);
+        dao.createAlgorithm("algoToReclassifyTest", "algoTestClass1");
+
+        // check that we can reclassify
+        assertTrue(dao.reclassifyAlgorithm("algoToReclassifyTest", "algoTestClass2"));
+        Algorithm expectedAlgo = new Algorithm("algoToReclassifyTest", "algoTestClass2");
+        assertEquals(dao.getAlgorithm("algoToReclassifyTest"), expectedAlgo);
+
+        // clean up
+        dao.removeAlgorithm("algoToReclassifyTest");
+        classDao.removeClassification("algoTestClass1");
+        classDao.removeClassification("algoTestClass2");
+    }
 
 }
