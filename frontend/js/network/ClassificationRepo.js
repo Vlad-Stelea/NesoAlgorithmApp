@@ -3,6 +3,7 @@ class ClassificationRepo {
         this.apiGatewayUrl = apiGatewayUrl;
         this.getHierarchyUrl = this.apiGatewayUrl + '/' + "Classification/Hierarchy";
         this.createClassification_url = this.apiGatewayUrl + "/Classification";
+        this.mergeClassification_url = this.apiGatewayUrl +"/Classification/Merge"
         this.removeClassificationUrl_initial = this.apiGatewayUrl + "/Classification/Remove/";
     }
 
@@ -41,6 +42,35 @@ class ClassificationRepo {
             let xhr = new XMLHttpRequest();
             xhr.responseType = "json";
             xhr.open("POST", this.createClassification_url, true);
+            xhr.send(js);
+
+            xhr.onloadend = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    let xhrJSON = JSON.parse(xhr.response);
+                    if (xhrJSON["httpCode"] === 200) {
+                        let response = xhrJSON;
+                        onSuccess(response);
+                    } else {
+                        onFail(xhrJSON);
+                    }
+                }
+            }
+        }
+    }
+    mergeClassification(class1,class2,newName,onSuccess, onFail){
+        let iData = {};
+        iData["class1"] = class1;
+        iData["class2"] = class2;
+        iData["newName"] = newName;
+        if(class2 === "" || newName ==="") {
+            alert("Please enter a sibling of the class you are trying to merge and an original new name")
+        }else {
+            let js = JSON.stringify(cData);
+            console.log("Create merge Classification JSON: " + js);
+
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = "json";
+            xhr.open("POST", this.mergeClassification_url, true);
             xhr.send(js);
 
             xhr.onloadend = function () {
@@ -177,6 +207,19 @@ class MockClassificationRepo {
         addActivity(username, action);
 
         onSuccess (response);
+    }
+    mergeClassification(class1,class2,newName,onSuccess, onFail){
+        console.log("Mock Class repo mergingClassification")
+        let response = {
+            "response":"worked",
+            "statusCode":200,
+            "error":""
+        };
+
+        onSuccess (
+            response,
+            200
+        );
     }
 
     removeClassification(classificationName, onSuccess, onFail) {
