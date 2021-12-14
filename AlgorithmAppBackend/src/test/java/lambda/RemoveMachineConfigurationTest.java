@@ -51,7 +51,7 @@ public class RemoveMachineConfigurationTest {
     }
 
     @Test
-    public void testMainMachineConfiguration() throws SQLException {
+    public void testMainRemoveMachineConfiguration() throws SQLException {
         // mock the main lambda function
         RemoveMachineConfigurationHandler mockHandler = mock(RemoveMachineConfigurationHandler.class);
         RemoveMachineConfiguration mainLambda = new RemoveMachineConfiguration(mockHandler);

@@ -14,6 +14,10 @@ public class RemoveBenchmark implements RequestHandler<RemoveBenchmarkRequest, R
         handler = new RemoveBenchmarkHandler(new BenchmarkDAO());
     }
 
+    public RemoveBenchmark(RemoveBenchmarkHandler handler) {
+        this.handler = handler;
+    }
+
     @Override
     public RemoveBenchmarkResponse handleRequest(RemoveBenchmarkRequest req, Context context) {
         logger = context.getLogger();

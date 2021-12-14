@@ -1,8 +1,10 @@
 package lambda;
 
+import RemoveProblemInstance.RemoveProblemInstance;
 import RemoveProblemInstance.RemoveProblemInstanceHandler;
 import RemoveProblemInstance.RemoveProblemInstanceRequest;
 import RemoveProblemInstance.RemoveProblemInstanceResponse;
+import com.amazonaws.services.lambda.runtime.Context;
 import db.BenchmarkDAO;
 import db.ProblemInstanceDAO;
 
@@ -49,6 +51,22 @@ public class RemoveProblemInstanceTest {
         assertEquals(handleResult.problemInstanceID, "rpi_uuid_test");
         assertEquals(handleResult.httpCode, 404);
         assertEquals(handleResult.error, "Problem instance not found.");
+    }
+
+    @Test
+    public void testMainRemoveProblemInstance() throws SQLException {
+        // mock the main lambda function
+        RemoveProblemInstanceHandler mockHandler = mock(RemoveProblemInstanceHandler.class);
+        RemoveProblemInstance mainLambda = new RemoveProblemInstance(mockHandler);
+        RemoveProblemInstanceRequest mockRequest = new RemoveProblemInstanceRequest("some_UUID");
+        Context mockContext = new TestContext();
+
+        RemoveProblemInstanceResponse mockResponse = new RemoveProblemInstanceResponse("some_UUID", 200);
+        when(mainLambda.handleRequest(mockRequest, mockContext)).thenReturn(mockResponse);
+        RemoveProblemInstanceResponse receivedResponse = mainLambda.handleRequest(mockRequest, mockContext);
+
+        assertEquals(mockResponse, receivedResponse);
+        assertEquals(mockResponse.toString(), receivedResponse.toString());
     }
     
 }
