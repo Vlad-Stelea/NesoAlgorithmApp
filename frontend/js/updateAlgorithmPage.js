@@ -1,7 +1,6 @@
 function updateAlgorithmPageHierarchy(admin = false) {
     console.log("updatingAlgoHierarchyImpl")
     let onSuccessCallback = function (data) {
-        console.log(data);
         let pis = renderProblemInstanceList(data.algorithmPage.algorithm.problemInstances);
         let mcs = renderMachineConfigurationList(data.algorithmPage.machineConfigurations);
 
@@ -35,7 +34,6 @@ function createImplementationView(item, isUserRegistered, admin, data){
         output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this, \'' + item.implName + '\', \'' + item.algorithmName + '\')">Del</button>'
     }
     if(!admin){
-        console.log(btoa(JSON.stringify(data.algorithmPage.algorithm.problemInstances)))
         output += '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleBenchmarkAdd(this, \'' + item.implName + '\', \'' + item.algorithmName + '\', \'' + btoa(JSON.stringify(data.algorithmPage.algorithm.problemInstances)) + '\')">Add Benchmark</button>';
         output += '<div id="addBenchmarkForm' + item.implName + '"></div>';
     }
