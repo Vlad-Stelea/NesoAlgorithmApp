@@ -11,10 +11,11 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ImplementationDAOTest {
 
-  /*
+
     static ImplementationDAO dao;
     static AlgorithmDAO algoDao;
 
@@ -31,17 +32,22 @@ public class ImplementationDAOTest {
         algoDao.removeAlgorithm("daoTest");
         assertTrue(algoDao.createAlgorithm("daoTest", null));
         assertTrue(dao.createImplementation("daoTest","daoTest","daoTest","daoTest"));
+        assertTrue(dao.hasImplementation("daoTest", "daoTest"));
+        Implementation expectedImplementation1 = new Implementation("daoTest", "daoTest", "daoTest", "daoTest");
+        assertTrue(dao.getImplementationForAlgo("daoTest").contains(expectedImplementation1));
+
         // clean up
-        Implementation retrieved = dao.getImplementation("daoTest","daoTest");
-        assertTrue(dao.removeImplementation("daoTest","daoTest"));
+        Optional<Implementation> retrieved = dao.getImplementation("daoTest","daoTest");
+        assertTrue(dao.removeImplementationsByAlgorithm("daoTest"));
+        assertFalse(dao.removeImplementation("daoTest","daoTest"));
         assertTrue(algoDao.removeAlgorithm("daoTest"));
 
         //test after so the clean up always runs
-        Implementation expectedImplementation= new Implementation("daoTest","daoTest","daoTest","daoTest");
-        assertEquals(expectedImplementation, retrieved);
+        Implementation expectedImplementation2 = new Implementation("daoTest","daoTest","daoTest","daoTest");
+        assertEquals(expectedImplementation2, retrieved.get());
 
     }
-    */
+
 
 
 
