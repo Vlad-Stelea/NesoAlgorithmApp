@@ -65,7 +65,7 @@ class ClassificationRepo {
         if(class2 === "" || newName ==="") {
             alert("Please enter a sibling of the class you are trying to merge and an original new name")
         }else {
-            let js = JSON.stringify(cData);
+            let js = JSON.stringify(iData);
             console.log("Create merge Classification JSON: " + js);
 
             let xhr = new XMLHttpRequest();
