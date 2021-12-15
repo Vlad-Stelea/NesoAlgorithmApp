@@ -1,11 +1,12 @@
-package entityTest;
+package entities;
 
 import static org.junit.Assert.*;
 
-import entities.Algorithm;
-import entities.Classification;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ClassificationTest {
 
@@ -13,7 +14,37 @@ public class ClassificationTest {
 
     @Before
     public void setup() {
-        classification = new Classification("entityTest");
+        classification = new Classification("entities");
+    }
+
+    @Test
+    public void testInit() {
+        String className = "className";
+        String parentClassName = "parent";
+        List<Algorithm> algorithms = Arrays.asList(new Algorithm(null));
+        List<Classification> subClassifications = Arrays.asList(new Classification("Test"));
+
+        Classification classification = new Classification(className, parentClassName, algorithms, subClassifications);
+        assertEquals(className, classification.getClassName());
+        assertEquals(parentClassName, classification.getParentClassificationName());
+        assertEquals(algorithms, classification.getAlgorithms());
+        assertEquals(subClassifications, classification.getSubclassifications());
+    }
+
+    @Test
+    public void testGetsAndSets() {
+        Classification classification = new Classification("className");
+        String parentClassName = "parent";
+        List<Algorithm> algorithms = Arrays.asList(new Algorithm(null));
+        List<Classification> subClassifications = Arrays.asList(new Classification("Test"));
+
+        classification.setParentClassificationName(parentClassName);
+        classification.setAlgorithms(algorithms);
+        classification.setSubclassifications(subClassifications);
+
+        assertEquals(parentClassName, classification.getParentClassificationName());
+        assertEquals(algorithms, classification.getAlgorithms());
+        assertEquals(subClassifications, classification.getSubclassifications());
     }
 
     @Test
@@ -21,7 +52,7 @@ public class ClassificationTest {
         Classification childClass = new Classification("childClass", null);
         // add a subclassification and check that its parent is this classification and that it has been add to the list
         classification.addSubclassification(childClass);
-        assertEquals(childClass.getParentClassificationName(), "entityTest");
+        assertEquals(childClass.getParentClassificationName(), "entities");
         assertTrue(classification.getSubclassifications().contains(childClass));
     }
 
@@ -47,7 +78,7 @@ public class ClassificationTest {
         // add an algorithm and check that it exists
         classification.addAlgorithm(algorithm);
         assertTrue(classification.getAlgorithms().contains(algorithm));
-        assertEquals(algorithm.getParentClassificationName(), "entityTest");
+        assertEquals(algorithm.getParentClassificationName(), "entities");
     }
 
     @Test
@@ -71,7 +102,7 @@ public class ClassificationTest {
         assertTrue(classification.isTopLevel());
 
         // create a classification with a parent and check that it's not considered top level
-        Classification childClass = new Classification("childClass", "entityTest");
+        Classification childClass = new Classification("childClass", "entities");
         assertFalse(childClass.isTopLevel());
     }
 

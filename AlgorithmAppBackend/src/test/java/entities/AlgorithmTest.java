@@ -1,16 +1,32 @@
-package entityTest;
+package entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import entities.Algorithm;
-import entities.Classification;
-import entities.Implementation;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AlgorithmTest {
+
+    @Test
+    public void testAlgoCreate() {
+        String algoName = "algoName";
+        String parentClass = "Parent";
+        ArrayList<Implementation> implementations = new ArrayList<>();
+        implementations.add(new Implementation("imp", "url", "lang", "algoname"));
+        Algorithm a = new Algorithm(algoName, parentClass, implementations);
+        assertEquals(a.getImplementations(), implementations);
+
+        ArrayList<Implementation> otherImpl = new ArrayList<>();
+        otherImpl.add(new Implementation("impl", "url", "lang", "algoname"));
+        a.setImplementations(otherImpl);
+        assertEquals(otherImpl, a.getImplementations());
+        assertEquals(new ArrayList<>(), a.getProblemInstances());
+    }
+
     @Test
     public void testAddImpl() {
         Algorithm a = new Algorithm("test");

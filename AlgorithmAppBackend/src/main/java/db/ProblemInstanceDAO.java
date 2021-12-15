@@ -39,24 +39,12 @@ public class ProblemInstanceDAO {
         return true;
     }
 
-    public boolean hasProblemInstance(String probInstanceUUID) throws SQLException {
-        Optional<ProblemInstance> problemInstance = getProblemInstance(probInstanceUUID);
-        return problemInstance.isPresent();
-    }
-
     public Optional<ProblemInstance> getProblemInstance(String probInstanceUUID) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance WHERE probInstanceUUID = ?;");
         ps.setString(1, probInstanceUUID);
         ResultSet rs = ps.executeQuery();
 
         return generateProblemInstance(rs);
-    }
-
-    public ArrayList<ProblemInstance> getAllProblemInstances() throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM problemInstance ");
-        ResultSet rs = ps.executeQuery();
-
-        return generateProblemInstances(rs);
     }
 
     public ArrayList<ProblemInstance> getAllAlgosProblemInstances(String algoName) throws SQLException {
