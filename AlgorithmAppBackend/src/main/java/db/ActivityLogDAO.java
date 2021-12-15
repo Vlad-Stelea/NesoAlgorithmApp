@@ -1,10 +1,14 @@
 package db;
 
 import Utils.DateAndTimeUtils;
+import entities.Algorithm;
+import entities.UserAction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ActivityLogDAO implements IActivityLogDAO{
@@ -31,4 +35,31 @@ public class ActivityLogDAO implements IActivityLogDAO{
 
         return true;
     }
-}
+
+
+    public ArrayList<UserAction> getUserAction(String userName) throws SQLException {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM activityLog WHERE username = ?");
+            ps.setString(1,userName);
+            ResultSet rs = ps.executeQuery();
+
+
+            return generateUserAction(rs);
+    }
+
+
+    private ArrayList<UserAction> generateUserAction(ResultSet rs) throws SQLException {
+        ArrayList<UserAction> ret = new ArrayList<>();
+        while(rs.next()) {
+            String activityLogUUID = rs.getString("activityLogUUID");
+            String username = rs.getString("username");
+            String action = rs.getString("action");
+            Date date = rs.getDate("date");
+
+            ret.add(new UserAction(activityLogUUID, username,action,date));
+
+        }
+        return ret;
+    }
+
+
+    }
