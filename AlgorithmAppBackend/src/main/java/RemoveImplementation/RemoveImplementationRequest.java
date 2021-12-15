@@ -4,29 +4,27 @@ import com.google.gson.Gson;
 
 public class RemoveImplementationRequest {
 
-    String implementationID;
+    String implName;
+    String algoName;
 
     public RemoveImplementationRequest() {}
 
-    public RemoveImplementationRequest(String implementationID) {
-        this.implementationID = implementationID;
-    }
-
-    public String getImplementationID() {
-        return implementationID;
-    }
-
-    public void setImplementationID(String implementationID) {
-        this.implementationID = implementationID;
+    public RemoveImplementationRequest(String implName, String algoName) {
+        this.implName = implName;
+        this.algoName = algoName;
     }
 
     public String getImplName() {
-        return implementationID.split(",")[0];
+        return implName;
     }
 
-    public String getAlgoName() {
-        return implementationID.split(",")[1];
+    public void setImplName(String implName) {
+        this.implName = implName;
     }
+
+    public String getAlgoName() { return algoName; }
+
+    public void setAlgoName(String algoName) { this.algoName = algoName; }
 
     @Override
     public String toString() {

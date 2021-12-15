@@ -76,6 +76,16 @@ class ClassificationRepo {
             xhr.onloadend = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+
+                        let username = vm.user.username;
+                        let action = ""
+                        if(parentClassName != null) {
+                            action = username + " added Classification " + className + " to " + parentClassName;
+                        }else{
+                            action = username + " added top Classification " + className;
+                        }
+                        addActivity(username, action);
+
                         let response = xhr.response;
                         onSuccess(response);
                     } else {
@@ -187,10 +197,16 @@ class MockClassificationRepo {
             "error":""
         };
 
-        onSuccess (
-            response,
-            200
-        );
+        let username = vm.user.username;
+        let action = ""
+        if(parentClassName != null) {
+            action = username + " added Classification " + className + " to " + parentClassName;
+        }else{
+            action = username + " added top Classification " + className;
+        }
+        addActivity(username, action);
+
+        onSuccess (response);
     }
     mergeClassification(class1,class2,newName,onSuccess, onFail){
         console.log("Mock Class repo mergingClassification")

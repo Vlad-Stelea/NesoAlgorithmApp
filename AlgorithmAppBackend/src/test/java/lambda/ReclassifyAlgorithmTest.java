@@ -49,4 +49,25 @@ public class ReclassifyAlgorithmTest {
         assertEquals(handleResult.error, "Classification does not exist.");
     }
 
+    @Test
+    public void testFailDBConnection() throws SQLException {
+        when(dao.reclassifyAlgorithm(algoName, className)).thenThrow(new NullPointerException());
+        ReclassifyAlgorithmResponse handleResult = rcHandler.handle(rcRequest);
+        assertEquals(handleResult.response, "Unable to reclassify Algorithm: testReclassify_algo (testReclassify_class)\n" +
+                "(null)");
+        assertEquals(handleResult.httpCode, 400);
+        assertEquals(handleResult.error, "");
+    }
+
+    @Test
+    public void testResponseAndRequestClasses() throws SQLException {
+        ReclassifyAlgorithmRequest req = new ReclassifyAlgorithmRequest();
+        req.setAlgoName("test1");
+        req.setNewClassName("test2");
+        assertEquals(req.toString(), "ReclassifyAlgorithm(test1,test2)");
+
+        ReclassifyAlgorithmResponse response = new ReclassifyAlgorithmResponse("123", 20);
+        assertEquals(response.toString(), "{\"response\":\"123\",\"httpCode\":20,\"error\":\"\"}");
+    }
+
 }

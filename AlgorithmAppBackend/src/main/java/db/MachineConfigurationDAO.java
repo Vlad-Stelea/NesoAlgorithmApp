@@ -28,25 +28,16 @@ public class MachineConfigurationDAO {
         }
     }
 
-    public boolean createMachineConfiguration(String machineConfigName, String machineConfigUUID, int l1Cache, int l2Cache, String chip, int threads) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO machineConfiguration (machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads) VALUES (?, ?, ?, ?, ?, ?);");
+    public boolean createMachineConfiguration(String machineConfigName, int l1Cache, int l2Cache, String chip, int threads) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO machineConfiguration (machineConfigName, l1Cache, l2Cache, chip, threads) VALUES (?, ?, ?, ?, ?);");
         ps.setString(1, machineConfigName);
-        ps.setString(2, machineConfigUUID);
-        ps.setInt(3, l1Cache);
-        ps.setInt(4, l2Cache);
-        ps.setString(5, chip);
-        ps.setInt(6, threads);
+        ps.setInt(2, l1Cache);
+        ps.setInt(3, l2Cache);
+        ps.setString(4, chip);
+        ps.setInt(5, threads);
         ps.execute();
 
         return true;
-    }
-
-    public MachineConfiguration getMachineConfiguration(String machineConfigUUID) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigUUID = ?;");
-        ps.setString(1, machineConfigUUID);
-        ResultSet rs = ps.executeQuery();
-
-        return generateMachineConfiguration(rs);
     }
 
     public List<MachineConfiguration> getAllMachineConfigurations() throws SQLException {
@@ -56,15 +47,15 @@ public class MachineConfigurationDAO {
         return generateMachineConfigurations(rs);
     }
 
-    public boolean removeMachineConfiguration(String machineConfigUUID) throws SQLException {
+    public boolean removeMachineConfiguration(String machineConfigName) throws SQLException {
         // make sure the Machine Configuration exists first
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigUUID = ?;");
-        ps.setString(1, machineConfigUUID);
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM machineConfiguration WHERE machineConfigName = ?;");
+        ps.setString(1, machineConfigName);
         ResultSet rs = ps.executeQuery();
 
         if(rs.next()) {
-            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM machineConfiguration WHERE machineConfigUUID = ?;");
-            psDelete.setString(1, machineConfigUUID);
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM machineConfiguration WHERE machineConfigName = ?;");
+            psDelete.setString(1, machineConfigName);
             psDelete.execute();
 
             return true;
@@ -73,33 +64,17 @@ public class MachineConfigurationDAO {
         return false;
     }
 
-    private MachineConfiguration generateMachineConfiguration(ResultSet rs) throws SQLException {
-        if(rs.next()) {
-            String machineConfigName = rs.getString("machineConfigName");
-            String machineConfigUUID = rs.getString("machineConfigUUID");
-            int l1Cache = rs.getInt("l1Cache");
-            int l2Cache = rs.getInt("l2Cache");
-            String chip = rs.getString("chip");
-            int threads = rs.getInt("threads");
-
-            return new MachineConfiguration(machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads);
-        }
-
-        return null;
-    }
-
     private List<MachineConfiguration> generateMachineConfigurations(ResultSet rs) throws SQLException {
         List<MachineConfiguration> result = new ArrayList<>();
 
         while(rs.next()) {
             String machineConfigName = rs.getString("machineConfigName");
-            String machineConfigUUID = rs.getString("machineConfigUUID");
             int l1Cache = rs.getInt("l1Cache");
             int l2Cache = rs.getInt("l2Cache");
             String chip = rs.getString("chip");
             int threads = rs.getInt("threads");
 
-            result.add(new MachineConfiguration(machineConfigName, machineConfigUUID, l1Cache, l2Cache, chip, threads));
+            result.add(new MachineConfiguration(machineConfigName, l1Cache, l2Cache, chip, threads));
         }
 
         return result;

@@ -15,6 +15,10 @@ public class RemoveProblemInstance implements RequestHandler<RemoveProblemInstan
         handler = new RemoveProblemInstanceHandler(new ProblemInstanceDAO(), new BenchmarkDAO());
     }
 
+    public RemoveProblemInstance(RemoveProblemInstanceHandler handler) {
+        this.handler = handler;
+    }
+
     @Override
     public RemoveProblemInstanceResponse handleRequest(RemoveProblemInstanceRequest req, Context context) {
         logger = context.getLogger();

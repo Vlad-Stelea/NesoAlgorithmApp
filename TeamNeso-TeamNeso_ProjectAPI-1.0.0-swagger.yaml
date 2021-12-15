@@ -1191,23 +1191,23 @@ paths:
           application/json: '{"statusCode": 200}'
         type: mock
 
-  /Implementation/Remove/{implementation_id}:
+  /Implementation/Remove/:
     post:
       tags:
         - Implementation
         - Admin
         - RegisteredUser
-      summary: Remove an implementation based on its id
+      summary: Remove an implementation based on its name and what algorithm it belongs to
       consumes: 
         - application/json
       produces:
         - application/json
       parameters:
-        - in: path
-          name: implementation_id
-          type: string
-          required: true
-          description: the implementation the user wants to remove
+        - in: body
+          name: implementation and algorithm objects
+          description: The implementation to be removed
+          schema:
+            $ref: "#/definitions/RemoveImplementationRequest"
       responses:
         200:
           description: Implementation removed successfully
@@ -1237,12 +1237,6 @@ paths:
         - application/json
       produces:
         - application/json
-      parameters:
-        - in: path
-          name: implementation_id
-          type: string
-          required: true
-          description: the implementation the user would like to remove
       responses:
         '200':
           description: Successful operation
@@ -2254,8 +2248,11 @@ definitions:
     type: object
     required:
       - implementationID
+      - algoName
     properties:
       implementationID:
+        type: string
+      algoName:
         type: string
 
   GetImplementationRequest:

@@ -28,12 +28,11 @@ CREATE TABLE `algoApp`.`implementation` (
 );
 CREATE TABLE `algoApp`.`machineConfiguration` (
     `machineConfigName` VARCHAR(40),
-	`machineConfigUUID` CHAR(36),
     `L1Cache` INT,
     `L2Cache` INT,
     `chip` VARCHAR(80),
     `threads` INT,
-    PRIMARY KEY (`machineConfigUUID`)
+    PRIMARY KEY (`machineConfigName`)
 );
 CREATE TABLE `algoApp`.`problemInstance` (
 	`probInstanceUUID` CHAR(36),
@@ -50,12 +49,12 @@ CREATE TABLE `algoApp`.`benchmark` (
     `dateRun` DATE,
     `algoName` VARCHAR(40),
     `implName` VARCHAR(40),
-    `machineConfigUUID` CHAR(36),
+    `machineConfigName` CHAR(36),
     `probInstanceUUID` CHAR(36),
     PRIMARY KEY (`benchmarkUUID`),
     FOREIGN KEY (`algoName`) REFERENCES algorithm(`algoName`),
     FOREIGN KEY (`implName`) REFERENCES implementation(`implName`),
-    FOREIGN KEY (`machineConfigUUID`) REFERENCES machineConfiguration(`machineConfigUUID`),
+    FOREIGN KEY (`machineConfigName`) REFERENCES machineConfiguration(`machineConfigName`),
     FOREIGN KEY (`probInstanceUUID`) REFERENCES problemInstance(`probInstanceUUID`)
 );
 CREATE TABLE `algoApp`.`activityLog` (

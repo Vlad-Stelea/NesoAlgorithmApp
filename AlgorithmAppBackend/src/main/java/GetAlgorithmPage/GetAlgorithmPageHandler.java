@@ -53,7 +53,7 @@ public class GetAlgorithmPageHandler {
         }
         catch (Exception e) {
             e.printStackTrace();
-            response = new GetAlgorithmPageResponse(400, "Unable to get Algorithm Page: " + req.getAlgoName());
+            response = new GetAlgorithmPageResponse(400, "Unable to get Algorithm Page: " + req.getAlgoName() + ".\n" + e);
         }
 
         return response;

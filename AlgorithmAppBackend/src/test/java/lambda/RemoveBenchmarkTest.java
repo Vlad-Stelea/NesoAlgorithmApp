@@ -1,8 +1,8 @@
 package lambda;
 
-import RemoveBenchmark.RemoveBenchmarkHandler;
-import RemoveBenchmark.RemoveBenchmarkRequest;
-import RemoveBenchmark.RemoveBenchmarkResponse;
+import RemoveBenchmark.*;
+
+import com.amazonaws.services.lambda.runtime.Context;
 import db.BenchmarkDAO;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +43,22 @@ public class RemoveBenchmarkTest {
         assertEquals(handleResult.getBenchmarkID(), "rbm_uuid_test");
         assertEquals(handleResult.getHttpCode(), 404);
         assertEquals(handleResult.getError(), "Error: Benchmark with ID rbm_uuid_test not found.");
+    }
+
+    @Test
+    public void testMainRemoveBenchmark() throws SQLException {
+        // mock the main lambda function
+        RemoveBenchmarkHandler mockHandler = mock(RemoveBenchmarkHandler.class);
+        RemoveBenchmark mainLambda = new RemoveBenchmark(mockHandler);
+        RemoveBenchmarkRequest mockRequest = new RemoveBenchmarkRequest("some_UUID");
+        Context mockContext = new TestContext();
+
+        RemoveBenchmarkResponse mockResponse = new RemoveBenchmarkResponse("some_UUID", 200);
+        when(mainLambda.handleRequest(mockRequest, mockContext)).thenReturn(mockResponse);
+        RemoveBenchmarkResponse receivedResponse = mainLambda.handleRequest(mockRequest, mockContext);
+
+        assertEquals(mockResponse, receivedResponse);
+        assertEquals(mockResponse.toString(), receivedResponse.toString());
     }
 
 }

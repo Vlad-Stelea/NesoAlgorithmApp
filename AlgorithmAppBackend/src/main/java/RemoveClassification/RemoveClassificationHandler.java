@@ -54,7 +54,6 @@ public class RemoveClassificationHandler {
                         return new RemoveClassificationResponse(removeAlgoResponse.getHttpCode(), "Error occurred while removing algorithm: " + algoName + "\n" + removeAlgoResponse.getError());
                     }
                 }
-
                 // now that we've removed all algorithms, we can remove all subclassifications
                 for(String subclassName : allSubclassNames) {
                     try {

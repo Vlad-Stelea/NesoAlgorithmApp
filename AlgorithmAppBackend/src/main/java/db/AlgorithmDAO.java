@@ -67,27 +67,6 @@ public class AlgorithmDAO {
         return false;
     }
 
-    public boolean removeAlgorithmsAndChildren(String algoName) throws SQLException {
-
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM algorithm WHERE algoName = ?;");
-        ps.setString(1, algoName);
-        ResultSet rs = ps.executeQuery();
-
-        if(rs.next()) {
-
-            Algorithm a = generateFullAlgorithm(rs);
-            //TODO? delete children iplementations, benchmarks, ect.(we might also just do this in the handler idk
-
-            PreparedStatement psDeleteAlgos = conn.prepareStatement("DELETE FROM algorithm WHERE algoName = ?;");
-            psDeleteAlgos.setString(1, algoName);
-            psDeleteAlgos.execute();
-
-            return true;
-        }
-
-        return false;
-    }
-
     public boolean reclassifyAlgorithm(String algoName, String newClassName) throws SQLException {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM classification WHERE className = ?;");
         ps.setString(1, newClassName);
@@ -127,17 +106,5 @@ public class AlgorithmDAO {
         }
         return ret;
     }
-
-    private Algorithm generateFullAlgorithm(ResultSet rs) throws SQLException {
-        if(!rs.next()){
-            return null;
-        }
-        String algoName = rs.getString("algoName");
-        String parentClassName = rs.getString("className");
-
-        return new Algorithm(algoName, parentClassName);
-
-    }
-
 
 }

@@ -15,6 +15,10 @@ public class RemoveImplementation implements RequestHandler<RemoveImplementation
         handler = new RemoveImplementationHandler(new ImplementationDAO(), new BenchmarkDAO());
     }
 
+    public RemoveImplementation(RemoveImplementationHandler handler) {
+        this.handler = handler;
+    }
+
     @Override
     public RemoveImplementationResponse handleRequest(RemoveImplementationRequest req, Context context) {
         logger = context.getLogger();

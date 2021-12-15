@@ -49,6 +49,32 @@ public class CreateAlgorithmTest extends LambdaTest {
         assertEquals(handleResponce.error, "Algorithm Already Exists");
     }
 
+    @Test
+    public void testFailDBConnection() throws SQLException {
+        // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
+        when(dao.createAlgorithm("childTest", "TestClass")).thenThrow(new NullPointerException());
+        CreateAlgorithmResponse handleResponce = caHandler.handle(reqWithParent);
+        System.out.println(handleResponce);
+        assertEquals(handleResponce.response, "Unable to create Algorithm: childTest(null)");
+        assertEquals(handleResponce.httpCode, 400);
+        assertEquals(handleResponce.error, "");
+    }
+
+    @Test
+    public void testRequestAndResponseClasses() {
+        // add the classification with a null parent, mock that the parent was added already, and ensure the handler responds appropriately
+        CreateAlgorithmRequest req = new CreateAlgorithmRequest();
+        req.setAlgoName("test");
+        assertEquals(req.getAlgoName(), "test");
+        req.setClassName("testClass");
+        assertEquals(req.getClassName(), "testClass");
+        assertEquals(req.toString(), "CreateAlgorithm(test, testClass)");
+        CreateAlgorithmResponse response = new CreateAlgorithmResponse("123", 123, "234");
+        System.out.println(response);
+        assertEquals(response.toString(), "{\"response\":\"123\",\"httpCode\":123,\"error\":\"234\"}");
+
+    }
+
 
 
 }

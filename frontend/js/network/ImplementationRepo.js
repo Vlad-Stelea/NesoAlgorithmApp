@@ -1,24 +1,33 @@
 class ImplementationRepo {
     constructor(apiGatewayUrl) {
         this.apiGatewayUrl = apiGatewayUrl;
-        this.removeImplementationUrl_initial = this.apiGatewayUrl + "/Implementation/Remove/";
+        this.removeImplementationUrl = this.apiGatewayUrl + "/Implementation/Remove/";
         this.createImplementationUrl = this.apiGatewayUrl + "/Implementation";
     }
 
     removeImplementation(implName, algoName, onSuccess, onFail) {
         let xhr = new XMLHttpRequest();
 
-        // TODO: implName concatenated with algo name is a hack, fix when we fix our YAML
-        xhr.open("POST", this.removeImplementationUrl_initial + implName + "," + algoName, true);
-        console.log("sending: " + this.removeImplementationUrl_initial + implName + "," + algoName);
-        xhr.send();
+        let jsonBody = {
+            "implName" : implName,
+            "algoName" : algoName
+        };
+
+        let payload = JSON.stringify(jsonBody);
+        xhr.open("POST", this.removeImplementationUrl, true);
+        xhr.send(payload);
 
         xhr.onloadend = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if(xhr.status === 200) {
-                    onSuccess(xhr);
+            if(xhr.readyState === XMLHttpRequest.DONE) {
+                let parsedPayload = JSON.parse(xhr.response);
+                if(parsedPayload.httpCode === 200) {
+                    let username = vm.user.username;
+                    let action = username + " removed Implementation " + implName + " from " + algoName;
+                    addActivity(username, action);
+                    onSuccess(parsedPayload);
                 } else {
-                    onFail(xhr);
+                    console.log("XHR: " + xhr.responseText);
+                    onFail(parsedPayload);
                 }
             }
         }
@@ -46,6 +55,11 @@ class ImplementationRepo {
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 let parsedPayload = JSON.parse(xhr.response);
                 if(parsedPayload.statusCode === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " added Implementation " + implName + " to " + algoName;
+                    addActivity(username, action);
+
                     onSuccess(parsedPayload);
                 } else {
                     console.log("XHR: " + xhr.responseText);
@@ -66,8 +80,14 @@ class MockImplementationRepo {
         console.log("mocking remove implementation");
 
         let response = {
-            "implementationID" : implName + "," + algoName
+            "implName" : implName,
+            "algoName" : algoName
         };
+
+
+        let username = vm.user.username;
+        let action = username + " removed Implementation " + implName + " from " + algoName;
+        addActivity(username, action);
 
         onSuccess(
             response,
@@ -85,8 +105,10 @@ class MockImplementationRepo {
             language: language
         }
 
-        onSuccess(
-            response
-        )
+        let username = vm.user.username;
+        let action = username + " added Implementation " + implName + " to " + algoName;
+        addActivity(username, action);
+
+        onSuccess(response)
     }
 }

@@ -4,26 +4,28 @@ import com.google.gson.Gson;
 
 public class RemoveImplementationResponse {
 
-    final String implementationID;
+    String implName;
+    String algoName;
     final int httpCode;
     final String error;
 
-    public RemoveImplementationResponse(String s, int code) {
-        this.implementationID = s;
+    public RemoveImplementationResponse(String implName, String algoName, int code) {
+        this.implName = implName;
+        this.algoName = algoName;
         this.httpCode = code;
         this.error = "";
     }
 
-    // 200 means success
-    public RemoveImplementationResponse(String s, int code, String error) {
-        this.implementationID = s;
+    public RemoveImplementationResponse(int code, String error) {
         this.httpCode = code;
         this.error = error;
     }
 
-    public String getImplementationID() {
-        return implementationID;
+    public String getImplName() {
+        return implName;
     }
+
+    public String getAlgoName() { return algoName; }
 
     public int getHttpCode() {
         return httpCode;
