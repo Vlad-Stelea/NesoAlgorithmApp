@@ -75,21 +75,14 @@ class ClassificationRepo {
 
             xhr.onloadend = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
+                    console.log(xhr.response)
+                    let xhrJSON = xhr.response;
 
-                        let username = vm.user.username;
-                        let action = ""
-                        if(parentClassName != null) {
-                            action = username + " added Classification " + className + " to " + parentClassName;
-                        }else{
-                            action = username + " added top Classification " + className;
-                        }
-                        addActivity(username, action);
-
-                        let response = xhr.response;
+                    if (xhrJSON["httpCode"] === 200) {
+                        let response = xhrJSON;
                         onSuccess(response);
                     } else {
-                        onFail(xhr.response, xhr.status);
+                        onFail(xhrJSON);
                     }
                 }
             }
