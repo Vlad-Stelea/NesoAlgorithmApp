@@ -1,8 +1,10 @@
 package lambda;
 
+import RemoveImplementation.RemoveImplementation;
 import RemoveImplementation.RemoveImplementationHandler;
 import RemoveImplementation.RemoveImplementationRequest;
 import RemoveImplementation.RemoveImplementationResponse;
+import com.amazonaws.services.lambda.runtime.Context;
 import db.BenchmarkDAO;
 import db.ImplementationDAO;
 
@@ -50,6 +52,22 @@ public class RemoveImplementationTest {
         RemoveImplementationResponse handleResult = riHandler.handle(req);
         assertEquals(handleResult.getHttpCode(), 404);
         assertEquals(handleResult.getError(), "Implementation not found.");
+    }
+
+    @Test
+    public void testMainRemoveImplementation() throws SQLException {
+        // mock the main lambda function
+        RemoveImplementationHandler mockHandler = mock(RemoveImplementationHandler.class);
+        RemoveImplementation mainLambda = new RemoveImplementation(mockHandler);
+        RemoveImplementationRequest mockRequest = new RemoveImplementationRequest("some_impl_name", "some_algo_name");
+        Context mockContext = new TestContext();
+
+        RemoveImplementationResponse mockResponse = new RemoveImplementationResponse("some_impl_name", "some_algo_name", 200);
+        when(mainLambda.handleRequest(mockRequest, mockContext)).thenReturn(mockResponse);
+        RemoveImplementationResponse receivedResponse = mainLambda.handleRequest(mockRequest, mockContext);
+
+        assertEquals(mockResponse, receivedResponse);
+        assertEquals(mockResponse.toString(), receivedResponse.toString());
     }
 
 }

@@ -14,6 +14,10 @@ public class RemoveMachineConfiguration implements RequestHandler<RemoveMachineC
         this.handler = new RemoveMachineConfigurationHandler(new MachineConfigurationDAO());
     }
 
+    public RemoveMachineConfiguration(RemoveMachineConfigurationHandler handler) {
+        this.handler = handler;
+    }
+
     @Override
     public RemoveMachineConfigurationResponse handleRequest(RemoveMachineConfigurationRequest req, Context context) {
         logger = context.getLogger();
