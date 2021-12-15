@@ -61,4 +61,14 @@ public class RemoveAlgorithmTest {
         assertEquals(handleResult.getError(), "Algorithm not found.");
     }
 
+    @Test
+    public void testRequestAndResponseClasses() throws SQLException {
+        RemoveAlgorithmRequest req = new RemoveAlgorithmRequest();
+        req.setAlgoName("test");
+        assertEquals(req.toString(), "{\"algoName\":\"test\"}");
+
+        RemoveAlgorithmResponse response = new RemoveAlgorithmResponse("123", 123);
+        assertEquals(response.toString(), "{\"algoName\":\"123\",\"httpCode\":123,\"error\":\"\"}");
+    }
+
 }

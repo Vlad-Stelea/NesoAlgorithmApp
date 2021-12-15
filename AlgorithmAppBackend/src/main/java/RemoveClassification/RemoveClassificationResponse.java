@@ -34,7 +34,7 @@ public class RemoveClassificationResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RemoveClassificationResponse that = (RemoveClassificationResponse) o;
-        return Objects.equals(classificationName, that.classificationName);
+        return Objects.equals(classificationName, that.classificationName) && Objects.equals(error, that.error);
     }
 
     @Override
