@@ -24,6 +24,10 @@ public class GetRegisteredUsersResponse {
         this.error = error;
     }
 
+    public int getStatusCode() {
+        return statusCode;
+    }
+
     public List<String> getUsers() {
         return users;
     }
