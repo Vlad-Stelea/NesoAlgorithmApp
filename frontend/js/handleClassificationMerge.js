@@ -46,9 +46,9 @@ function mergeClassification(parentClass,ele){
 
 // Note, this doesn't work since lambda function doesn't return anything other than 200
     let onFailCallback = function (data) {
-        console.log("Status != 200. Merge classification response: " + xhr.responseText);
-        let newJS = JSON.parse(xhr.responseText);
-        let err = newJS["response"];
+        console.log("Status != 200. Merge classification response: " + data);
+
+        let err = data["response"];
         alert(err);
     }
 
