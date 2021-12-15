@@ -38,7 +38,7 @@ public class ActivityLogDAO implements IActivityLogDAO{
 
 
     public ArrayList<UserAction> getUserAction(String userName) throws SQLException {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM activityLog WHERE username = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM activityLog WHERE username = ?;");
             ps.setString(1,userName);
             ResultSet rs = ps.executeQuery();
 

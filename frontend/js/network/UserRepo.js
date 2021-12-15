@@ -14,12 +14,14 @@ class UserRepo {
         xhr.send();
         xhr.onloadend = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let response = xhr.response;
-                    onSuccess(response);
+                let xhrJSON = xhr.response;
+                if(xhrJSON["statusCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr.response, xhr.status);
+                    onFail(xhrJSON);
                 }
+
+                // onSuccess(xhr.response);
             }
 
         }
@@ -33,9 +35,9 @@ class UserRepo {
         xhr.send();
         xhr.onloadend = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                console.log(xhr);
-                let xhrJSON = JSON.parse(xhr.response);
-                if(xhrJSON["httpCode"] === 200) {
+                console.log(xhr.response);
+                let xhrJSON = xhr.response;
+                if(xhrJSON["statusCode"] === 200) {
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);
@@ -55,12 +57,7 @@ class MockUserRepo {
     getUsers(onSuccess, onFail) {
         console.log("mock getting users")
 
-        let response = {"users" : [
-                {"username" : "george"},
-                {"username" : "Lisa"},
-                {"username" : "Huegh"},
-                {"username" : "Micky"}
-                ]}
+        let response = ["george", "Lisa", "Huegh", "Micky"];
 
         onSuccess(
             response,
