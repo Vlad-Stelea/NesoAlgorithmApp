@@ -9,10 +9,11 @@ public class GetUserActionsResponse {
     public List<UserAction> userActionList;
     public final int statusCode;
     public final String error;
+    public String username;
 
-
-    public GetUserActionsResponse(List<UserAction> userActionList, int statusCode) {
+    public GetUserActionsResponse(List<UserAction> userActionList, String username, int statusCode) {
         this.userActionList = userActionList;
+        this.username = username;
         this.statusCode = statusCode;
         this.error = "";
     }
@@ -25,6 +26,14 @@ public class GetUserActionsResponse {
 
     public List<UserAction> getUserActionList() {
         return userActionList;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setUserActionList(List<UserAction> userActionList) {

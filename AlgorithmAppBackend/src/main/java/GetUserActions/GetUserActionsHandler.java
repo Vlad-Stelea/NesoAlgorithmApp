@@ -13,13 +13,12 @@ public class GetUserActionsHandler {
 
     }
 
-    public GetUserActionsResponse handle() {
+    public GetUserActionsResponse handle(GetUserActionsRequest request) {
         GetUserActionsResponse response;
-
         try{
-            List<UserAction> userActionList = activityLogDAO.getAllUserAction();
+            List<UserAction> userActionList = activityLogDAO.getUserAction(request.getUsername());
 
-            response = new GetUserActionsResponse(userActionList,200);
+            response = new GetUserActionsResponse(userActionList, request.getUsername(), 200);
 
         } catch (Exception e){
 

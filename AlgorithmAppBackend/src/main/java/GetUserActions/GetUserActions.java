@@ -5,7 +5,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import db.ActivityLogDAO;
 
-public class GetUserActions implements RequestHandler<Object, GetUserActionsResponse> {
+public class GetUserActions implements RequestHandler<GetUserActionsRequest, GetUserActionsResponse> {
 
     public LambdaLogger logger = null;
     GetUserActionsHandler handler;
@@ -15,12 +15,12 @@ public class GetUserActions implements RequestHandler<Object, GetUserActionsResp
     }
 
     @Override
-    public GetUserActionsResponse handleRequest(Object req, Context context) {
+    public GetUserActionsResponse handleRequest(GetUserActionsRequest req, Context context) {
 
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to get the user actions ...");
 
-        return handler.handle();
+        return handler.handle(req);
     }
 
 }

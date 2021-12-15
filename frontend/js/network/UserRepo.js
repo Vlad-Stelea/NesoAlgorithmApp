@@ -29,15 +29,16 @@ class UserRepo {
         console.log("Getting userActions")
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json"
-        xhr.open("GET", this.getUserActivityUrl, true);
+        xhr.open("GET", this.getUserActivityUrl +"/" + userName, true);
         xhr.send();
         xhr.onloadend = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let response = xhr.response;
-                    onSuccess(response);
+                console.log(xhr);
+                let xhrJSON = JSON.parse(xhr.response);
+                if(xhrJSON["httpCode"] === 200) {
+                    onSuccess(xhrJSON);
                 } else {
-                    onFail(xhr.response, xhr.status);
+                    onFail(xhrJSON);
                 }
             }
         }
