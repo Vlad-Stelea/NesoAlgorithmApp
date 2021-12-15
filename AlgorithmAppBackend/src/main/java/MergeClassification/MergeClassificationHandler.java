@@ -40,7 +40,7 @@ public class MergeClassificationHandler {
 
         } catch (Exception e) {
             e.printStackTrace();
-            response = new MergeClassificationResponse("Unable to merge Classification: " + request.getClass1() + " ," + request.getClass2() + "\n(" + e.getMessage() + ")", 400);
+            response = new MergeClassificationResponse("Unable to merge Classification: " + request.getClass1() + " ," + request.getClass2() + "\n (" + e + ")", 400);
         }
         return response;
 

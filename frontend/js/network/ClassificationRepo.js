@@ -78,7 +78,7 @@ class ClassificationRepo {
                     console.log(xhr.response)
                     let xhrJSON = xhr.response;
 
-                    if (xhrJSON["httpCode"] === 200) {
+                    if (xhrJSON["statusCode"] === 200) {
                         let response = xhrJSON;
                         onSuccess(response);
                     } else {
