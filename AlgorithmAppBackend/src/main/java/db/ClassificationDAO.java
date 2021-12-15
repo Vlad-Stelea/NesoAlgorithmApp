@@ -123,7 +123,7 @@ public class ClassificationDAO {
 
             PreparedStatement updatePS = conn.prepareStatement("UPDATE classification SET parentClassName = ? WHERE parentClassName = ?;");
             updatePS.setString(1, newParentName);
-            updatePS.setString(2, newParentName);
+            updatePS.setString(2, Name);
             updatePS.executeUpdate();
 
 
