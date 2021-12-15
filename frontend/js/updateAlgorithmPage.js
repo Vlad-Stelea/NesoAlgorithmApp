@@ -1,11 +1,10 @@
 function updateAlgorithmPageHierarchy(admin = false) {
     console.log("updatingAlgoHierarchyImpl")
     let onSuccessCallback = function (data) {
-        console.log(data);
         let pis = renderProblemInstanceList(data.algorithmPage.algorithm.problemInstances);
         let mcs = renderMachineConfigurationList(data.algorithmPage.machineConfigurations);
 
-        renderImplementationDisplay(data, pis, mcs, admin);
+        renderImplementationDisplay(data, pis, mcs, admin, data);
     };
 
     let onFailCallback = function (data, status) {
@@ -16,45 +15,46 @@ function updateAlgorithmPageHierarchy(admin = false) {
 
 }
 
-function renderImplementationDisplay(algorithmHierarchy, pis, mcs, admin){
+function renderImplementationDisplay(algorithmHierarchy, pis, mcs, admin, data){
     let output2 = '<ol style="list-style: none;">';
 
-    output2 = output2 + addImplementationList(algorithmHierarchy.algorithmPage.algorithm, pis, mcs, admin)
+    output2 = output2 + addImplementationList(algorithmHierarchy.algorithmPage.algorithm, pis, mcs, admin, data)
 
     let implementation = document.getElementById('Implementation');
     implementation.innerHTML = output2;
 }
 
-function createImplementationView(item, isUserRegistered, admin){
+function createImplementationView(item, isUserRegistered, admin, data){
     //Implementation
     //'<h3 style="margin-left: 20px;" class="button"> Code Url: <a href=' + item.codeURL +' target="_blank">'+item.codeURL + '</a></h3>'+
     let output = '<li class="listItem" style="background-color: sandybrown">' +
         '<h2 style="display:inline;"> Implementation: ' + item.implName +'</h2>';
-    
+
     if(isUserRegistered) {
         output = output + '<button style=" background-color: red; margin-left: 20px;" class="button" onclick="handleImplementationDelete(this, \'' + item.implName + '\', \'' + item.algorithmName + '\')">Del</button>'
     }
+    if(!admin){
+        output += '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleBenchmarkAdd(this, \'' + item.implName + '\', \'' + item.algorithmName + '\', \'' + btoa(JSON.stringify(data.algorithmPage.algorithm.problemInstances)) + '\')">Add Benchmark</button>';
+        output += '<div id="addBenchmarkForm' + item.implName + '"></div>';
+    }
+
     output = output + '<h3 style="margin-left: 20px;" class="language"> Language: ' + item.language + '</h3>'+
         '<h style="display:inline;word-wrap:break-word">Code Download Link: </h>' + '<a href="' + item.codeURL + '">Download</a>' +
         '</li>'+
         '<li style="list-style-type:none">'+
         '<ul style="list-style: none;">'
-    if(item.ProblemInstances){
-        for (var j = 0; j < item.ProblemInstances.length; j++) {
-            output = output + displayProblemInstances(item.ProblemInstances[j],isUserRegistered)
-        }
-    }
+
     output = output + '</ul></li>'
     return output
 }
 
 
-function addImplementationList(item, pis, mcs, admin){
+function addImplementationList(item, pis, mcs, admin, data){
     let output = '';
     //Implementation
     console.log(item)
     for (let j = 0; j < item.implementations.length; j++) {
-        output = output + createImplementationView(item.implementations[j],vm.user.token !== '', admin) +
+        output = output + createImplementationView(item.implementations[j],vm.user.token !== '', admin, data) +
             '<li style="list-style-type:none">'+
             '<ul style="list-style: none;">'
         output = output + renderBenchmarkList(item.implementations[j].benchmark, pis, mcs, item.implementations[j].implName, admin) + '</ul></li>';
@@ -137,12 +137,6 @@ function createProblemInstanceView(problemInstance, isRegisteredUser){
 function createProblemInstanceLabeledView(problemInstance, isRegisteredUser, currImplName, admin) {
     let output = '<li class="listItem" style="background-color: tomato">' +
         '<h2 style="display:inline;">Problem Instance: ' + problemInstance.probInstanceName +'</h2>'
-
-
-    if(!admin){
-        output += '<button style="background-color: green; margin-left: 20px;" class="button" onclick="handleBenchmarkAdd(this, \'' + problemInstance.probInstanceUUID + '\', \'' + currImplName + '\', \'' + problemInstance.algoName + '\')">Add Benchmark</button>';
-        output += '<div id="addBenchmarkForm"></div>';
-    }
 
     if(isRegisteredUser) {
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleProblemInstanceDelete(this, ' + problemInstance.probInstanceUUID + ')">Del</button>';
