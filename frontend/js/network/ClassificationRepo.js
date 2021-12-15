@@ -46,7 +46,9 @@ class ClassificationRepo {
 
             xhr.onloadend = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    let xhrJSON = JSON.parse(xhr.response);
+                    console.log(xhr.response)
+                    let xhrJSON = xhr.response;
+                    // let actualResponse = JSON.parse(xhrJSON);
                     if (xhrJSON["httpCode"] === 200) {
                         let response = xhrJSON;
                         onSuccess(response);

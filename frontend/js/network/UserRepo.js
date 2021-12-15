@@ -1,14 +1,49 @@
 class UserRepo {
     constructor(apiGatewayUrl) {
+        this.apiGatewayUrl = apiGatewayUrl;
+        this.getUserActivityUrl = this.apiGatewayUrl + '/' + "Admin/Activity";
+        this.getUserUrl = this.apiGatewayUrl + '/' + "Admin/Users";
 
     }
 
     getUsers(onSuccess, onFail) {
+        console.log("Getting user")
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("GET", this.getUserUrl, true);
+        xhr.send();
+        xhr.onloadend = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                let xhrJSON = xhr.response;
+                if(xhrJSON["statusCode"] === 200) {
+                    onSuccess(xhrJSON);
+                } else {
+                    onFail(xhrJSON);
+                }
 
+                // onSuccess(xhr.response);
+            }
+
+        }
     }
 
     getUserActivity(userName, onSuccess, onFail) {
-
+        console.log("Getting userActions")
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("GET", this.getUserActivityUrl +"/" + userName, true);
+        xhr.send();
+        xhr.onloadend = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                console.log(xhr.response);
+                let xhrJSON = xhr.response;
+                if(xhrJSON["statusCode"] === 200) {
+                    onSuccess(xhrJSON);
+                } else {
+                    onFail(xhrJSON);
+                }
+            }
+        }
     }
 
 
@@ -22,12 +57,7 @@ class MockUserRepo {
     getUsers(onSuccess, onFail) {
         console.log("mock getting users")
 
-        let response = {"users" : [
-                {"username" : "george"},
-                {"username" : "Lisa"},
-                {"username" : "Huegh"},
-                {"username" : "Micky"}
-                ]}
+        let response = ["george", "Lisa", "Huegh", "Micky"];
 
         onSuccess(
             response,

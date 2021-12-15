@@ -12,7 +12,8 @@ function updateUserActivity() {
 }
 
 function renderActions(data){
-    userActivity = data.activity;
+    let userActivity = data.userActionList;
+    console.log("rendering user activity");
     console.log(userActivity);
 
     let output = '<ol style="list-style: none;">';
@@ -28,11 +29,12 @@ function renderActions(data){
 
 
 function addUserActivityItem(item){
+    let d = new Date(item.date);
     let output = '<li class="listItem" style="background-color: goldenrod">'+
         '<h3 style="display:inline;">+</h3>'+
         '<h3 style="margin-left: 20px;" class="button">' + 'User: ' + item.username + '</h3>' +
         '<h3 style="margin-left: 60px;" >' + 'Action: ' + item.action + '</h3>' +
-        '<h3 style="margin-left: 60px;" >' + 'Time: ' + item.date + '</h3>' +
+        '<h3 style="margin-left: 60px;" >' + 'Date: ' + + (d.getMonth()+1) + '/' + d.getDay() + '/' + d.getFullYear() + '</h3>' +
         '</li>'
 
 
