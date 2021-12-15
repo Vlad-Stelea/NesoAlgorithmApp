@@ -221,8 +221,9 @@ function createBenchmarkView(benchmark, isRegisteredUser){
     if(isRegisteredUser) {
         output = output + '<button style="background-color: red; margin-left: 20px;" class="button" onclick="handleBenchmarkDelete(this, \'' + benchmark.benchID + '\')">Del</button>';
     }
+    let d = new Date(benchmark.dateRun);
     output = output + '<div>' +
-        '<h style="display:inline;"> Time to Run: ' + benchmark.timeToRun + '</h>' + '<h style="display:inline; margin-left: 15px"> Date Run: ' + benchmark.dateRun + '</h>' +
+        '<h style="display:inline;"> Time to Run: ' + benchmark.timeToRun + '</h>' + '<h style="display:inline; margin-left: 15px"> Date Run: ' + (d.getMonth()+1) + '/' + d.getDay() + '/' + d.getFullYear() + '</h>' +
         '</li>';
 
     return output

@@ -23,7 +23,7 @@ public class GetUserActionsHandler {
         } catch (Exception e){
 
             e.printStackTrace();
-            response = new GetUserActionsResponse(400, "Unable to get userActions");
+            response = new GetUserActionsResponse(400, "Unable to get userActions\n" + e);
         }
         return response;
     }

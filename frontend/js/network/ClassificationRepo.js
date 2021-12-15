@@ -46,7 +46,9 @@ class ClassificationRepo {
 
             xhr.onloadend = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    let xhrJSON = JSON.parse(xhr.response);
+                    console.log(xhr.response)
+                    let xhrJSON = xhr.response;
+                    // let actualResponse = JSON.parse(xhrJSON);
                     if (xhrJSON["httpCode"] === 200) {
                         let response = xhrJSON;
                         onSuccess(response);
@@ -65,7 +67,7 @@ class ClassificationRepo {
         if(class2 === "" || newName ==="") {
             alert("Please enter a sibling of the class you are trying to merge and an original new name")
         }else {
-            let js = JSON.stringify(cData);
+            let js = JSON.stringify(iData);
             console.log("Create merge Classification JSON: " + js);
 
             let xhr = new XMLHttpRequest();
