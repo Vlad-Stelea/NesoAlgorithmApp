@@ -24,10 +24,10 @@ function handleProblemInstanceAddFormSubmit(ele) {
         let datasetReadCallback = function addProblemInstanceCallback(datasetPayload, formElement) {
             // gather data we'll need to send to in our request
             let algoHeader = document.getElementById("AlgoNameDisplay");
-            let algoName = algoHeader.textContent;
+            let algoName = algoHeader.textContent.trim();
             let file = document.getElementById("datasetUpload").files[0];
-            let fileExtension = file.name.substr(file.name.lastIndexOf("."))
-            let probInstanceName = formElement.parentElement.children[2].value;
+            let fileExtension = file.name.substr(file.name.lastIndexOf(".")).trim();
+            let probInstanceName = formElement.parentElement.children[2].value.trim();
             console.log("adding " + probInstanceName + " under " + algoName);
             // console.log("contents: "  + datasetPayload);
 
