@@ -96,7 +96,7 @@ public class RemoveClassificationTest {
         when(classDAO.removeClassification("rootClass")).thenReturn(false);
 
         RemoveClassificationResponse actualResponse = handler.handle(request);
-        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find subclassification \"subclass1\" to remove.");
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(404, "Could not find subclassification \"subclass1sub2\" to remove.");
         assertEquals(expectedResponse, actualResponse);
         assertEquals(actualResponse.getHttpCode(), 404);
     }
@@ -155,7 +155,7 @@ public class RemoveClassificationTest {
         when(classDAO.removeClassification(any(String.class))).thenThrow(new NullPointerException());
 
         RemoveClassificationResponse actualResponse = handler.handle(request);
-        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "Error occurred while removing subclass: subclass1");
+        RemoveClassificationResponse expectedResponse = new RemoveClassificationResponse(400, "Error occurred while removing subclass: subclass1sub2");
         assertEquals(expectedResponse, actualResponse);
         assertEquals(actualResponse.getHttpCode(), 400);
     }

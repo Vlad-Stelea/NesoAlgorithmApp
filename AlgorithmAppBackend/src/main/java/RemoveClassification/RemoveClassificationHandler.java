@@ -54,8 +54,11 @@ public class RemoveClassificationHandler {
                         return new RemoveClassificationResponse(removeAlgoResponse.getHttpCode(), "Error occurred while removing algorithm: " + algoName + "\n" + removeAlgoResponse.getError());
                     }
                 }
+
                 // now that we've removed all algorithms, we can remove all subclassifications
-                for(String subclassName : allSubclassNames) {
+                // (reverse order, so we can go back up the hierarchy rather than down)
+                for(int i = allSubclassNames.size()-1; i >= 0; i--) {
+                    String subclassName = allSubclassNames.get(i);
                     try {
                         if(!classDAO.removeClassification(subclassName)) {
                             return new RemoveClassificationResponse(404, "Could not find subclassification \"" + subclassName + "\" to remove.");

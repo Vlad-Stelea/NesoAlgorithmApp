@@ -2,7 +2,7 @@ function handleUserDelete(ele, userName){
     console.log( userName)
     let onSuccessCallback = function (xhr) {
         console.log("XHR: " + JSON.stringify(xhr, null, 4));
-        console.log("removed User: ", action);
+        console.log("removed User: ", xhr["username"]);
         updateUserList();
     }
 
