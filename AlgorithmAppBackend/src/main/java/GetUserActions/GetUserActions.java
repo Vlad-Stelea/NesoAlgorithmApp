@@ -13,6 +13,9 @@ public class GetUserActions implements RequestHandler<GetUserActionsRequest, Get
     public GetUserActions() {
         handler = new GetUserActionsHandler(new ActivityLogDAO());
     }
+    public GetUserActions(GetUserActionsHandler handler) {
+        this.handler = handler;
+    }
 
     @Override
     public GetUserActionsResponse handleRequest(GetUserActionsRequest req, Context context) {
