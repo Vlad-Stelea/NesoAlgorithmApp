@@ -12,8 +12,7 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TestDeleteUserHandler {
     final String username = "username";
@@ -28,10 +27,7 @@ public class TestDeleteUserHandler {
 
     @Test
     public void testSuccessfulDelete() {
-        AWSCognitoIdentityProvider mockProvider = mock(AWSCognitoIdentityProvider.class);
-        when(mockProvider.adminDeleteUser(any())).thenReturn(new AdminDeleteUserResult());
-
-        DeleteUserHandler handler = new DeleteUserHandler(mockProvider, mockDAO);
+        DeleteUserHandler handler = new DeleteUserHandler(mockDAO);
 
         DeleteUserResponse expectedResult = new DeleteUserResponse(200, username);
 
@@ -39,11 +35,10 @@ public class TestDeleteUserHandler {
     }
 
     @Test
-    public void testErrorDelete() {
-        AWSCognitoIdentityProvider mockProvider = mock(AWSCognitoIdentityProvider.class);
-        when(mockProvider.adminDeleteUser(any())).thenThrow(new ResourceNotFoundException("Error resource not found :("));
+    public void testErrorDelete() throws SQLException {
+        doThrow(new SQLException()).when(mockDAO).deleteUser(any());
 
-        DeleteUserHandler handler = new DeleteUserHandler(mockProvider, mockDAO);
+        DeleteUserHandler handler = new DeleteUserHandler(mockDAO);
 
         DeleteUserResponse expectedResult = new DeleteUserResponse(400);
         expectedResult.setError("Error deleting the user");
