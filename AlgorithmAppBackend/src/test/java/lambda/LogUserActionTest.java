@@ -1,8 +1,10 @@
 package lambda;
 
+import LogUserAction.LogUserAction;
 import LogUserAction.LogUserActionHandler;
 import LogUserAction.LogUserActionRequest;
 import LogUserAction.LogUserActionResponse;
+import com.amazonaws.services.lambda.runtime.Context;
 import db.IActivityLogDAO;
 import entities.PrettyDate;
 import org.junit.Before;
@@ -94,6 +96,22 @@ public class LogUserActionTest {
         assertEquals(response.getError(), "567");
         assertEquals(response.getStatusCode(), 123);
         assertEquals(response.toString(), "{\"statusCode\":123,\"activityLogUUID\":\"234\",\"username\":\"345\",\"action\":\"123\",\"date\":{\"month\":2,\"day\":0,\"year\":-99,\"hours\":0,\"minutes\":0,\"seconds\":0},\"error\":\"567\"}");
+    }
+
+    @Test
+    public void testMainRemoveBenchmark() throws SQLException {
+        // mock the main lambda function
+        LogUserActionHandler mockHandler = mock(LogUserActionHandler.class);
+        LogUserAction mainLambda = new LogUserAction(mockHandler);
+        LogUserActionRequest mockRequest = new LogUserActionRequest("username", "did a thing");
+        Context mockContext = new TestContext();
+
+        LogUserActionResponse mockResponse = new LogUserActionResponse(200, "nothing");
+        when(mainLambda.handleRequest(mockRequest, mockContext)).thenReturn(mockResponse);
+        LogUserActionResponse receivedResponse = mainLambda.handleRequest(mockRequest, mockContext);
+
+        assertEquals(mockResponse, receivedResponse);
+        assertEquals(mockResponse.toString(), receivedResponse.toString());
     }
 
 }
