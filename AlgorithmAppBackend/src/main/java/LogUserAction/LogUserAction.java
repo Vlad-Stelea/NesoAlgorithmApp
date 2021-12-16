@@ -12,6 +12,10 @@ public class LogUserAction implements RequestHandler<LogUserActionRequest, LogUs
         handler = new LogUserActionHandler(new ActivityLogDAO());
     }
 
+    public LogUserAction(LogUserActionHandler handler) {
+        this.handler = handler;
+    }
+
 
     @Override
     public LogUserActionResponse handleRequest(LogUserActionRequest request, Context context) {
