@@ -50,6 +50,11 @@ class ClassificationRepo {
                     let xhrJSON = xhr.response;
                     // let actualResponse = JSON.parse(xhrJSON);
                     if (xhrJSON["httpCode"] === 200) {
+
+                        let username = vm.user.username;
+                        let action = username + " added Classification " + className + " to " + parentClassName;
+                        addActivity(username, action);
+
                         let response = xhrJSON;
                         onSuccess(response);
                     } else {
@@ -81,6 +86,11 @@ class ClassificationRepo {
                     let xhrJSON = xhr.response;
 
                     if (xhrJSON["httpCode"] === 200) {
+
+                        let username = vm.user.username;
+                        let action = username + " Merged Classifications " + class1 + " and " + class2 + " to " + newName;
+                        addActivity(username, action);
+
                         let response = xhrJSON;
                         onSuccess(response);
                     } else {
@@ -103,6 +113,11 @@ class ClassificationRepo {
                 console.log(xhr);
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    let username = vm.user.username;
+                    let action = username + " removed Classification " + classificationName;
+                    addActivity(username, action);
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);

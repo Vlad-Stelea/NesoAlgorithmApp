@@ -50,6 +50,7 @@ class ProblemInstanceRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if (xhrJSON["httpCode"] === 200) {
+
                     let username = vm.user.username;
                     let action = username + " removed Problem Instance " + probInstanceUUID;
                     addActivity(username, action);

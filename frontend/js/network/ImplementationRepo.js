@@ -21,9 +21,11 @@ class ImplementationRepo {
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 let parsedPayload = JSON.parse(xhr.response);
                 if(parsedPayload.httpCode === 200) {
+
                     let username = vm.user.username;
                     let action = username + " removed Implementation " + implName + " from " + algoName;
                     addActivity(username, action);
+
                     onSuccess(parsedPayload);
                 } else {
                     console.log("XHR: " + xhr.responseText);
