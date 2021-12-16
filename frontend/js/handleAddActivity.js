@@ -12,6 +12,8 @@ function addActivity(username, action){
             console.log("failed to add Activity.");
         }
 
+        username = username.trim();
+        action = action.trim();
         activityRepo.addActivity(username, action, onSuccessCallback, onFailCallback)
     }
 }

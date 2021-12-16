@@ -33,9 +33,9 @@ function handleClassificationMerge(ele){
 
 function mergeClassification(parentClass,ele){
     console.log("handleClassificationMerge")
-    let class1 = parentClass;
-    let class2 = ele.parentElement.children[2].value;
-    let newName = ele.parentElement.children[5].value;
+    let class1 = parentClass.trim();
+    let class2 = ele.parentElement.children[2].value.trim();
+    let newName = ele.parentElement.children[5].value.trim();
 
 
     let onSuccessCallback = function (data) {
@@ -44,7 +44,6 @@ function mergeClassification(parentClass,ele){
         updateHierarchy();
     }
 
-// Note, this doesn't work since lambda function doesn't return anything other than 200
     let onFailCallback = function (data) {
         console.log("Status != 200. Merge classification response: " + data);
 

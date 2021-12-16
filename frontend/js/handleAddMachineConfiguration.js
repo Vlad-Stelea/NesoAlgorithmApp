@@ -20,10 +20,10 @@ function handleAddMachineConfigurationPrep() {
 function handleAddMachineConfigurationFormSubmit(ele) {
     console.log("handling machine config add submit");
 
-    let machineConfigName = ele.parentElement[0].value;
+    let machineConfigName = ele.parentElement[0].value.trim();
     let l1Cache = ele.parentElement[1].value;
     let l2Cache = ele.parentElement[2].value;
-    let chip = ele.parentElement[3].value;
+    let chip = ele.parentElement[3].value.trim();
     let threads = ele.parentElement[4].value;
 
     if(machineConfigName === "") {

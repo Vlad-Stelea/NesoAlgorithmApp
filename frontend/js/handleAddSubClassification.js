@@ -37,7 +37,6 @@ function addSubClassification(parentClassName, ele){
         updateHierarchy();
     }
 
-    // Note, this doesn't work since lambda function doesn't return anything other than 200
     let onFailCallback = function (data, status) {
         console.log("Status != 200. Actual create response: " + xhr.responseText);
         let newJS = JSON.parse(xhr.responseText);
@@ -45,7 +44,8 @@ function addSubClassification(parentClassName, ele){
         alert(err);
     }
 
-    let className = ele.parentElement.children[2].value;
+    let className = ele.parentElement.children[2].value.trim();
+    parentClassName = parentClassName.trim();
     classificationRepo.addClassification(className, parentClassName, onSuccessCallback, onFailCallback);
 
 }

@@ -4,10 +4,10 @@ function handleAddImpPrep(){
 }
 
 function createImplementation() {
-    let implName = document.getElementById("implNameInput").value;
-    let language = document.getElementById("languageInput").value;
+    let implName = document.getElementById("implNameInput").value.trim();
+    let language = document.getElementById("languageInput").value.trim();
     let selectedFile = document.getElementById("uploadCodeButton").files[0];
-    let algoName = vm.selectedAlgo;
+    let algoName = vm.selectedAlgo.trim();
 
     if(implName && language && selectedFile){
         console.log("submitting implementation");
@@ -27,7 +27,7 @@ function createImplementation() {
                 }
 
                 let file = document.getElementById("uploadCodeButton").files[0];
-                let fileExtension = file.name.substr(file.name.lastIndexOf("."))
+                let fileExtension = file.name.substr(file.name.lastIndexOf(".")).trim();
                 
                 implementationRepo.createImplementation(implName, algoName, base64String, fileExtension, language, onSuccessCallback, onFailCallback)
 

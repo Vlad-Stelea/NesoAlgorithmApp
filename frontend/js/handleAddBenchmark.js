@@ -35,11 +35,13 @@ function handleAddBenchmarkFormSubmit(formElement, implName, algoName) {
     console.log("benchmark form submit");
     console.log(formElement.id)
 
-    let benchmarkName = formElement[0].value;
+    implName = implName.trim();
+    algoName = algoName.trim();
+    let benchmarkName = formElement[0].value.trim();
     let timeToRun = formElement[1].value;
     let dateRun = formElement[2].value;
-    let machineConfigName = formElement[3].value;
-    let problemInstanceUUID = formElement[4].value;
+    let machineConfigName = formElement[3].value.trim();
+    let problemInstanceUUID = formElement[4].value.trim();
 
     if(benchmarkName && machineConfigName) {
         let onSuccessCallback = function (xhr) {

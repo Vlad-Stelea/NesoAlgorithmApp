@@ -46,7 +46,8 @@ function reclassifyAlgorithm(algoName, ele) {
         alert(err);
     }
 
-    let className = ele.parentElement.children[2].value;
+    let className = ele.parentElement.children[2].value.trim();
+    algoName = algoName.trim();
     algorithmRepo.reclassifyAlgorithm(algoName, className, onSuccessCallback, onFailCallback)
 
 }

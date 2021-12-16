@@ -47,7 +47,7 @@ function addAlgorithm(className, ele) {
         alert(err);
     }
 
-    // TODO there has to be a better way to do this
-    let algorithmName = ele.parentElement.children[2].value;
+    let algorithmName = ele.parentElement.children[2].value.trim();
+    className = className.trim();
     algorithmRepo.addAlgorithm(algorithmName, className, onSuccessCallback, onFailCallback)
 }

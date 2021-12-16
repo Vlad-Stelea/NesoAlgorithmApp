@@ -33,7 +33,7 @@ function handleAddTopLevelSubmit(ele){
         alert(err);
     }
 
-    let className = ele.parentElement.children[2].value;
+    let className = ele.parentElement.children[2].value.trim();
     classificationRepo.addClassification(className, null, onSuccessCallback, onFailCallback);
 
 
