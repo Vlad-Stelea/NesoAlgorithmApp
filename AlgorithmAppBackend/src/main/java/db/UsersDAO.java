@@ -38,4 +38,12 @@ public class UsersDAO implements IUsersDAO {
         }
         return users;
     }
+
+    @Override
+    public void deleteUser(String username) throws SQLException {
+        String statement = "DELETE FROM activityLog WHERE username = ?;";
+        PreparedStatement ps = conn.prepareStatement(statement);
+        ps.setString(1, username);
+        ps.executeUpdate();
+    }
 }

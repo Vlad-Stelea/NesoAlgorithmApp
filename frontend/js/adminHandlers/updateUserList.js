@@ -33,7 +33,7 @@ function addUserListItem(item){
         '<h3 style="display:inline;">+</h3>'+
         '<h3 style="margin-left: 20px;" class="button">' + item + '</h3>' +
         '<button style=" background-color: lightblue; margin-left: 10px;" class="button" onclick="navigation.goToAdminUserActivityPage(\'' + item + '\')">View Activity</button>' +
-        '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleUserDelete(this)">Del</button>' +
+        '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleUserDelete(this, \'' + item + '\')">Del</button>' +
         '</li>'
 
     return output
