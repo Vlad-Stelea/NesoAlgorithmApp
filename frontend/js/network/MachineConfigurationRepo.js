@@ -28,8 +28,8 @@ class MachineConfigurationRepo {
                 if(xhrJSON["httpCode"] === 200) {
 
                     let username = vm.user.username;
-                    if(username == null){
-                        let action = "Unregistered user added MachineConfig " + machineConfigName;
+                    if(username != null){
+                        let action = username + " added MachineConfig " + machineConfigName;
                         addActivity(username, action);
                     }
 
