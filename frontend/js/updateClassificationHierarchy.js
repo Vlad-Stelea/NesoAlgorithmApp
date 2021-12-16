@@ -56,10 +56,12 @@ function createClassificationView(classificationName, isUserRegistered, admin, p
         output += '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(\'' + classificationName + '\')">Del</button>'
             '<button style="background-color: limegreen; margin-left: 10px;" class="button" onclick="handleAddAlgorithm(this)">Add Algorithm</button>'+
             '<button style=" background-color: red; margin-left: 10px;" class="button" onclick="handleClassificationDelete(this)">Del</button>'
-        if(parentClassification === null){
-            output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
-        } else {
-            output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
+        if(!admin) {
+            if(parentClassification === null){
+                output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
+            } else {
+                output += '<button style="background-color: purple; margin-left: 50px;" class="button" onclick="handleClassificationMerge(this)">Merge</button>'
+            }
         }
 
     }
