@@ -3,7 +3,7 @@ class UserRepo {
         this.apiGatewayUrl = apiGatewayUrl;
         this.getUserActivityUrl = this.apiGatewayUrl + '/' + "Admin/Activity";
         this.getUserUrl = this.apiGatewayUrl + '/' + "Admin/Users";
-
+        this.removeUserUrl = this.apiGatewayUrl + '/Admin/RemoveUser/';
     }
 
     getUsers(onSuccess, onFail) {
@@ -33,6 +33,31 @@ class UserRepo {
         xhr.responseType = "json"
         xhr.open("GET", this.getUserActivityUrl +"/" + userName, true);
         xhr.send();
+        xhr.onloadend = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                console.log(xhr.response);
+                let xhrJSON = xhr.response;
+                if(xhrJSON["statusCode"] === 200) {
+                    onSuccess(xhrJSON);
+                } else {
+                    onFail(xhrJSON);
+                }
+            }
+        }
+    }
+
+    removeUser(userName, onSuccess, onFail) {
+        console.log("Removing user")
+
+        let body = {
+            "username" : userName
+        }
+
+        let stringedBody = JSON.stringify(body);
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json"
+        xhr.open("POST", this.removeUserUrl + userName, true);
+        xhr.send(stringedBody);
         xhr.onloadend = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 console.log(xhr.response);
