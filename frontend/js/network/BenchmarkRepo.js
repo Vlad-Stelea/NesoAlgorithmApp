@@ -28,6 +28,13 @@ class BenchmarkRepo {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 let xhrJSON = JSON.parse(xhr.response);
                 if(xhrJSON["httpCode"] === 200) {
+
+                    if(vm.user.username != null) {
+                        let username = vm.user.username;
+                        let action = username + " added Benchmark " + benchmarkName + " to " + algoName;
+                        addActivity(username, action);
+                    }
+
                     onSuccess(xhrJSON);
                 } else {
                     onFail(xhrJSON);

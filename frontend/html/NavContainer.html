@@ -40,6 +40,11 @@
         const vm = new ViewModel(false);
         function initContainer() {
             vm.user.token = extractAuthToken();
+            if(vm.user.username != null) {
+                let username = vm.user.username;
+                let action = username + " logged in";
+                addActivity(username, action);
+            }
             // This should be done at end to make sure it initializes correctly
             navigation.goToRegisteredUsersPage();
         }
